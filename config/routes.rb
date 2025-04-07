@@ -1,56 +1,30 @@
 Rails.application.routes.draw do
 
-  namespace :public do
-    get 'trends/show'
-  end
-  namespace :public do
-    get 'tags/index'
-  end
-  namespace :public do
-    get 'favorites/create'
-    get 'favorites/destroy'
-  end
-  namespace :public do
-    get 'search/index'
-  end
-  namespace :public do
-    get 'relationships/create'
-    get 'relationships/destroy'
-    get 'relationships/followers'
-    get 'relationships/followings'
-  end
-  namespace :public do
-    get 'post_comments/create'
-    get 'post_comments/index'
-    get 'post_comments/destroy'
-  end
-  namespace :public do
-    get 'posts/new'
+  namespace :admin do
     get 'posts/index'
     get 'posts/show'
-    get 'posts/create'
-    get 'posts/edit'
-    get 'posts/update'
-    get 'posts/destroy'
   end
-  namespace :public do
-    get 'users/mypage'
-    get 'users/edit'
-    get 'users/show'
-    get 'users/update'
-    get 'users/unsubscribe'
-    get 'users/destroy'
-    get 'users/favorited_post'
+  namespace :admin do
+    get 'homes/top'
   end
+
   # Public（エンドユーザー）用のルーティング
   # エンドユーザーのページはコントローラをpublicで管理、URLにはPublicをつけずに管理する。
   scope module: 'public' do
-    devise_for :users, controllers: {
+    devise_for :users, skip: [:passwords], controllers: {
       registrations: 'public/registrations',
       sessions: 'public/sessions',
-      passwords: 'public/passwords'
     }
-    resources :users, only: [:show, :edit, :update]
+    # resourceの書き方をコントローラに合わせて修正 2025/04/07
+    resources :users, only: [:mypage, :edit, :show, :update, :unsubscribe, :destroy, :favorited_post]
+    resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy]
+    resources :post_comments, only: [:create, :index, :destroy]
+    resources :relationships, only: [:create, :index, :destroy]
+    resources :search, only: [:index]
+    resources :favorites, only: [:create, :destroy]
+    resources :tags, only: [:index]
+    resources :trends, only: [:show]
+
     root to: 'homes#top'
     get '/about' => "homes#about"
     get '/feed' => "homes#feed"
@@ -59,7 +33,7 @@ Rails.application.routes.draw do
   # Admin（管理者）用のルーティング
   # 管理者のページはコントローラもURLも明示的にadminとわかるように管理する。
   namespace :admin do
-    devise_for :admins, controllers: {
+    devise_for :admin, skip: [:registrations, :passwords], controllers: {
       sessions: 'admin/sessions'
     }, path: ''
   end

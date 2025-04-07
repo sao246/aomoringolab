@@ -1,4 +1,5 @@
 class Public::PostsController < ApplicationController
+  #コントローラ追加 2025/04/07
   def new
   end
 

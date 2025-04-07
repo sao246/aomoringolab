@@ -24,4 +24,9 @@ class Admin::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+
+  # ログイン後はユーザーの投稿一覧に遷移させる 2025/04/07 追加
+  def after_sign_in_path_for(resource)
+    admin_posts_index_path
+  end
 end
