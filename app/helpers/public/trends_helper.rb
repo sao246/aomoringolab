@@ -1,0 +1,2 @@
+module Public::TrendsHelper
+end
