@@ -1,0 +1,18 @@
+@use '~bootstrap/scss/bootstrap';
+.custom-green-bg {
+  background-color: rgba(40, 167, 69, 0.6);
+}
+.custom-card {
+  width: 18rem;
+  height: 250px;
+  margin: 20px;
+  background-color: #589ec1;  /* 背景色の設定 */
+  color: white;  /* 文字色を白にする */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 8px;  /* カードの角を丸くする。*/
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 影をつける */
+  text-decoration: none;
+}

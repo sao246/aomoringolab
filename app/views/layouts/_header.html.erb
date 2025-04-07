@@ -1,0 +1,65 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light custom-green-bg m-4">
+    <div class="container">
+      <a class="navbar-brand" href="/"><span>アオモリンゴラボ</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <% if user_signed_in? %>
+            <li>
+              <%= link_to root_path,class: 'nav-link text-light' do %>
+                <i class="fa-solid fa-apple-whole"></i>トップ
+              <% end %>
+            </li>
+            <li>
+              <%=  link_to public_posts_show_path,class: 'nav-link text-light' do %>
+                <i class="fa-regular fa-newspaper"></i> 投稿一覧
+              <% end %>
+            </li>
+            <li>
+              <%=  link_to user_path(current_user),class: 'nav-link text-light' do %>
+                <i class="fa-solid fa-user"></i> マイページ
+              <% end %>
+            </li>
+            <li>
+            </li>
+            <li>
+              <%= link_to destroy_user_session_path, method: :delete,class: 'nav-link text-light' do %>
+                <i class="fas fa-sign-out-alt"></i> ログアウト
+              <% end %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to root_path, class: 'nav-link text-light' do %>
+                <i class="fa-solid fa-apple-whole"></i> トップ
+              <% end %>
+            </li>
+            <li>
+              <%= link_to about_path, class: 'nav-link text-light' do %>
+                <i class="fas fa-link"></i> アオモリンゴラボとは
+              <% end %>
+            </li>
+            <li>
+              <%= link_to new_user_registration_path, class: 'nav-link text-light' do %>
+                <i class="fas fa-user-plus"></i> 新規会員登録
+              <% end %>
+            </li>
+            <li>
+              <%= link_to new_user_session_path, class: 'nav-link text-light' do %>
+                <i class="fas fa-sign-in-alt"></i> 会員ログイン
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+       
+      </div>
+
+    </div>
+
+  </nav>
+  <%= link_to '新規投稿', public_posts_new_path, 
+    style: "position: fixed; top: 100px; right: 20px; background-color: #28a745; color: white; padding: 8px 16px; border-radius: 5px; font-size: 14px;" %>
+
+</header>
