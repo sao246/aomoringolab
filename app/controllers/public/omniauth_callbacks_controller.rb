@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# コントローラ追加 2025/04/06 (devise実装)
 class Public::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # You should configure your model like this:
   # devise :omniauthable, omniauth_providers: [:twitter]

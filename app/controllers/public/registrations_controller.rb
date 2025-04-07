@@ -40,10 +40,11 @@ class Public::RegistrationsController < Devise::RegistrationsController
 
   # protected
 
+  #　サインアップ時にemailとパスワード以外の値（名前）を登録できるように活性化（2025/04/07) 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  def configure_sign_up_params
+     devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

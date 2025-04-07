@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+# コントローラ追加 2025/04/06 (devise実装)
 class Public::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
@@ -24,4 +24,10 @@ class Public::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  
+  # ログイン後はマイページに遷移させる 2025/04/07 追加
+  def after_sign_in_path_for(resource)
+    user_path(current_user)
+  end
 end
+

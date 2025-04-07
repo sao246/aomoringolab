@@ -1,4 +1,9 @@
 class Public::UsersController < ApplicationController
+  
+  before_action :authenticate_user!
+  # ログインユーザーでない場合はアクセスできないようにする。
+  before_action :is_matching_login_user, only: [:edit, :update, :mypage]
+
   def mypage
   end
 
@@ -18,5 +23,13 @@ class Public::UsersController < ApplicationController
   end
 
   def favorited_post
+  end
+
+  private
+  def is_matching_login_user
+    user = User.find(params[:id])
+    unless user.id == current_user.id
+      redirect_to public_posts_path
+    end
   end
 end
