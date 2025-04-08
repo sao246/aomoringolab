@@ -1,2 +1,19 @@
-<h1>Public::Posts#show</h1>
-<p>Find me in app/views/public/posts/show.html.erb</p>
+<%= render 'layouts/errors', resource: @post %>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-8 offset-md-1'>
+  		<h2>投稿詳細</h2>
+        <%= @post.title %></td><br>
+        <% if @post.image.attached? %>
+          <%= image_tag @post.image, size: '400x300' %><br>
+        <% else %>
+          <p>画像はありません</p>
+        <% end %>
+        <%= @post.body %></td><br>
+        <% if @post.user.id == current_user.id %>
+          <%= link_to '投稿を編集する', edit_post_path(@post), class: "btn btn-sm btn-success" %>
+          <%= link_to '投稿を削除する', post_path(@post), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
+        <% end %>
+    </div>
+  </div>
+</div>

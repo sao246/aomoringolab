@@ -1,7 +1,7 @@
 <h2 class="m-4">会員ログイン</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-<%= render 'layouts/error_messages', resource: @user %>
+<%= render 'layouts/errors', resource: @user %>
   <div class="field m-4">
     <%= f.label :email, "メールアドレス" %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
