@@ -1,28 +1,38 @@
-<h2>Sign up</h2>
+<h2 class="m-4">新規会員登録</h2>
+<p class="m-4">以下に必要事項を入力ください。</p>
+<%= render 'layouts/errors', resource: @user %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <%# 名前入力のフィールドを追加 2025/04/08 %>
+  <div class="field m-4">
+    <%= f.label :name, "アカウント名" %>
+    <%= f.text_field :name, autofocus: true, autocomplete: "アカウント名" %><br>
+    <small>アオモリンゴラボで使うアカウント名を設定ください。（ニックネーム可能、20文字以内）</small>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
+  <div class="field m-4">
+    <%= f.label :email, "メールアドレス" %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "メールアドレス" %>
+  </div>
+
+  <div class="field m-4">
+    <%= f.label :password, "パスワード" %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <em>(<%= @minimum_password_length %> 桁以上)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, autocomplete: "パスワード" %>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  <div class="field m-4">
+    <%= f.label :password_confirmation, "パスワード（確認用）" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "パスワード（確認用）" %><br />
+    <small>確認のためパスワードをもう一度入力ください。</small>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+  <div class="actions m-4">
+    <%= f.submit "登録ボタン" %><br />
+    <small>入力が完了したらボタンを押し完了！</small>
   </div>
 <% end %>
 

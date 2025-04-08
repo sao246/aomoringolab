@@ -1,0 +1,47 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        email: "メールアドレス"
+        name: "アカウント名"
+        password: "パスワード"
+        password_confirmation: "パスワード(確認用)"
+        current_password: "現在のパスワード"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "メールアドレスを入力してください"
+            name:
+              blank: "アカウント名を入力してください"
+              too_short: "アカウント名は%{count}文字以上で入力してください"
+              too_long: "アカウント名は%{count}文字以内で入力してください"
+            password:
+              blank: "パスワードを入力してください"
+              too_short: "パスワードは%{count}文字以上で入力してください"
+            password_confirmation:
+              blank: "パスワード(確認用)を入力してください"
+            current_password:
+              blank: "現在のパスワードを入力してください"
+
+  devise:
+    failure:
+      already_authenticated: "既にログイン済みです。"
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+      not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
+      unauthenticated: "続けるにはログインが必要です。"
+    registrations:
+      signed_up: "会員登録が完了しました。ようこそアオモリンゴラボへ！"
+      updated: "パスワードの更新が完了しました。"
+    sessions:
+      signed_in: "ログインが完了しました。"
+      signed_out: "ログアウトが完了しました。"
+      already_signed_out: "ログアウトが完了しました。"
+
+  errors:
+    messages:
+      already_confirmed: "メールアドレスは既に登録されています。"
+      not_saved:
+        one: "エラーが発生しました。以下の入力をご確認ください。"
+        other: "エラーが発生しました。以下の入力をご確認ください。"
