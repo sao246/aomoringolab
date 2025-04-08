@@ -15,4 +15,7 @@ class User < ApplicationRecord
   # 自分をフォローしているユーザの関連付け、データ取得設定
   has_many :inverse_relationships, class_name: 'Relationship', foreign_key: 'followed_id', dependent: :destroy
   has_many :followers, through: :inverse_relationships, source: :follower
+
+   # バリデーション追加 2025/04/08
+  validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
 end
