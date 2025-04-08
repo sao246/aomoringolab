@@ -1,7 +1,7 @@
 <h2>会員情報変更 <%= resource_name.to_s.humanize %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render 'layouts/error_messages', resource: @user %>
+  <%= render 'layouts/errors', resource: @user %>
 
   <div class="field m-4">
     <%= f.label :name, "名前" %>
