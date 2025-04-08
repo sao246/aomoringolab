@@ -1,8 +1,9 @@
 <%# ログインとサインアップ以外は削除 2025/04/07 %>
 <%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name) %><br />
+  <%= link_to "ログイン画面へ", new_session_path(resource_name) %><br />
 <% end %>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+  <%= link_to "新規会員登録をする", new_registration_path(resource_name) %><br />
+  <p>新規会員登録がお済みでない方はこちらからご登録ください</p>
 <% end %>
