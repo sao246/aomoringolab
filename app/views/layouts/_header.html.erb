@@ -10,20 +10,23 @@
           <% if user_signed_in? %>
             <li>
               <%= link_to root_path,class: 'nav-link text-light' do %>
-                <i class="fa-solid fa-apple-whole"></i>トップ
+                <i class="fa-solid fa-apple-whole" style="color:red;"></i>トップ
               <% end %>
             </li>
             <li>
-              <%=  link_to posts_path,class: 'nav-link text-light' do %>
+              <%= link_to posts_path,class: 'nav-link text-light' do %>
                 <i class="fa-regular fa-newspaper"></i> 投稿一覧
+              <% end %>
+            </li>
+            <li>
+              <%=  link_to trend_path(current_user.id),class: 'nav-link text-light' do %>
+                <i class="fa-solid fa-arrow-trend-up" style="color: #bf6396;"></i> トレンド
               <% end %>
             </li>
             <li>
               <%=  link_to user_path(current_user),class: 'nav-link text-light' do %>
                 <i class="fa-solid fa-user"></i> マイページ
               <% end %>
-            </li>
-            <li>
             </li>
             <li>
               <%= link_to destroy_user_session_path, method: :delete,class: 'nav-link text-light' do %>
@@ -33,7 +36,7 @@
           <% else %>
             <li>
               <%= link_to root_path, class: 'nav-link text-light' do %>
-                <i class="fa-solid fa-apple-whole"></i> トップ
+                <i class="fa-solid fa-apple-whole" style="color:red;"></i>トップ
               <% end %>
             </li>
             <li>
@@ -53,13 +56,10 @@
             </li>
           <% end %>
         </ul>
-       
       </div>
-
     </div>
-
   </nav>
+
   <%= link_to '新規投稿', new_post_path, 
     style: "position: fixed; top: 100px; right: 20px; background-color: #28a745; color: white; padding: 8px 16px; border-radius: 5px; font-size: 14px;" %>
-
 </header>

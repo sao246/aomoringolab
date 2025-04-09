@@ -16,31 +16,3 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 影をつける */
   text-decoration: none;
 }
-
-.flash {
-  position: fixed;
-  top: 40px;
-  right: 40px;
-  padding: 12px 20px;
-  border-radius: 6px;
-  color: white;
-  z-index: 1000;
-  opacity: 0.9;
-  animation: fadeOut 1s ease-out forwards;
-  animation-delay: 3s;
-}
-
-.flash.notice {
-  background-color: #4caf50; /* 緑っぽい */
-}
-
-.flash.alert {
-  background-color: #f44336; /* 赤っぽい */
-}
-
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
