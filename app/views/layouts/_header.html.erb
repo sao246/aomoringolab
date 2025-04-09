@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light custom-green-bg fixed-top shadow-sm" style="z-index: 1050; height: 80px; background-color: #218838;">
     <div class="container">
-      <a class="navbar-brand" href="/"><span>アオモリンゴラボ</span></a>
+      <a class="navbar-brand text-light" href="/"><span>アオモリンゴラボ</span></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" style="z-index: 1060;">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -60,12 +60,11 @@
     </div>
   </nav>
 
-  <!-- 新規投稿ボタン -->
+  <%# 新規投稿ボタン %>
   <%= link_to '新規投稿', new_post_path, 
     style: "position: fixed; top: 90px; right: 20px; background-color: rgba(144, 238, 144, 0.3); color: white; padding: 8px 16px; border-radius: 5px; font-size: 14px; z-index: 1060;" %>
 </header>
 
-<!-- ヘッダーの下にコンテンツが隠れないようにマージンを追加 -->
+<%# ヘッダーの下にコンテンツが隠れないようにマージンを追加 %>
 <div style="margin-top: 80px;">
-  <!-- トップページのコンテンツなどをここに配置 -->
 </div>

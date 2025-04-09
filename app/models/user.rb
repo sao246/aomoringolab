@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  # プロフィール写真用の設定 2025/04/09
+  has_one_attached :profile_image
 
   # ユーザーがフォローしている他のユーザーとの関連付け、データ取得設定
   has_many :relationships, dependent: :destroy
@@ -18,4 +20,6 @@ class User < ApplicationRecord
 
    # バリデーション追加 2025/04/08
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
+  # バリデーション追加 2025/04/08
+  validates :introduction, length: { maximum: 200 }
 end

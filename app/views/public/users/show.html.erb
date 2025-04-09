@@ -14,13 +14,25 @@
     <%# プロフィール欄は固定したいのでpostion-stickyで固定。%>
     <div class="col-md-4 col-lg-3">
       <div class="position-sticky" style="top: 180px;">
-        <h4 class="m-4">プロフィール</h4>
+        <h4 class="m-4"><strong>ラボ会員情報</strong></h4>
+        <div class="user-profile" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+          <div class="user-item" style="width: 1000px; margin: 10px; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <div class="user" style="font-weight: bold; margin-bottom: 10px; text-aligned">
+              <p>アカウント名: <%= current_user.name %></p>
+              <p>自己紹介： <%= current_user.introduction %></p>
+              <p>興味関心：自分が好きなタグを後ほどここに設定できるようにする。</p>
+            </div>
+            <div class='row'>
+              <%= link_to edit_user_path(current_user), class: "btn btn-outline-secondary btn-block" do %>
+              <i class="fas fa-user-cog"></i>
+              <% end %>
+            </div>
 
-
-
-        <!-- プロフィール情報や編集フォームなどここに書く -->
+        </div>
+        </div>
       </div>
     </div>
+
     <%# 右カラム：投稿一覧を表示（スクロール）>
     <%# グリッドシステムで、4/12カラム分をプロフィールに使用する。%>
     <div class="col-md-8 col-lg-9">
