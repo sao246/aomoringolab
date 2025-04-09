@@ -30,7 +30,7 @@ ja:
       already_authenticated: "既にログイン済みです。"
       invalid: "メールアドレスまたはパスワードが正しくありません。"
       not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
-      unauthenticated: "続けるにはログインが必要です。"
+      unauthenticated: "続けるにはログインが必要です。以下ログインフォームよりログインをお願いします。"
     registrations:
       signed_up: "会員登録が完了しました。ようこそアオモリンゴラボへ！"
       updated: "パスワードの更新が完了しました。"

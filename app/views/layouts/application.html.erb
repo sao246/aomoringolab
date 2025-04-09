@@ -13,6 +13,14 @@
   <body>
   <%# header、footer追加 2025/04/08%>
     <%= render 'layouts/header' %> 
+    
+    <% flash.each do |key, message| %>
+      <div class="flash <%= key %>" id="flash-message">
+        <%= message %>
+      </div>
+    <% end %>
+
+
     <%= yield %>
     <%= render 'layouts/footer' %>
   </body>

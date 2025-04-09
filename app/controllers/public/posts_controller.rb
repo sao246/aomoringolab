@@ -1,6 +1,10 @@
 class Public::PostsController < ApplicationController
   #コントローラ追加 2025/04/07
+  # パラメータ設定の処理追加
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  # ログインしていない人への処理制御
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+
   def new
     @post = Post.new
   end
