@@ -5,12 +5,16 @@ class Public::UsersController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update, :mypage]
 
   def mypage
+    @user = User.find(params[:id])
+    @posts = @user.posts
   end
 
   def edit
   end
 
   def show
+    @user = User.find(params[:id])
+    @posts = @user.posts
   end
 
   def update
