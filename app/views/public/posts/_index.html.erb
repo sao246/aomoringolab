@@ -1,0 +1,20 @@
+<div class="post-list" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+  <% @posts.each do |post| %>
+    <div class="post-item" style="width: 1000px; margin: 10px; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+      <div class="post-user" style="font-weight: bold; margin-bottom: 10px;">
+        <%= link_to post.user.name, user_path(post.user) %><br>
+      </div>
+      <div class="post-title" style="font-size: 1.2em; color: #333;">
+        <%= link_to post.title, post %><br>
+        <% if post.image.attached? %>
+          <%= image_tag post.image, size: '400x300' %>
+        <% else %>
+        <% end %>
+      </div>
+      <%= post.body %><br>
+      <div class="post-actions" style="margin-top: 10px;">
+        <!-- 他のアクション（例えばいいね、コメント）をここに追加できます -->
+      </div>
+    </div>
+  <% end %>
+</div>
