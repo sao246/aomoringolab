@@ -4,12 +4,8 @@ class Public::UsersController < ApplicationController
   # ログインユーザーでない場合はアクセスできないようにする。
   before_action :is_matching_login_user, only: [:edit, :update, :mypage]
 
-  def mypage
-    @user = User.find(params[:id])
-    @posts = @user.posts
-  end
-
   def edit
+    @user = current_user
   end
 
   def show
@@ -18,18 +14,32 @@ class Public::UsersController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to user_path(params[:id]), notice: "会員情報を更新しました！"
+    else
+      render :edit
+    end
   end
 
   def unsubscribe
+    @user = current_user
   end
 
   def destroy
+    #devise標準（＝データベースの物理削除のケース）ならば記載不要。
+    #論理削除であればここに記載が必要。
+
   end
 
   def favorited_post
   end
 
   private
+  def user_params
+    params.require(:user).permit(:name, :introduction, :profile_image)
+  end
+
   def is_matching_login_user
     user = User.find(params[:id])
     unless user.id == current_user.id

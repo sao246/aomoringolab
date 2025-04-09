@@ -16,7 +16,12 @@ Rails.application.routes.draw do
       sessions: 'public/sessions',
     }
     # resourceの書き方をコントローラに合わせて修正 2025/04/07
-    resources :users, only: [:mypage, :edit, :show, :update, :unsubscribe, :destroy, :favorited_post]
+    resources :users, only: [:mypage, :edit, :show, :update, :unsubscribe, :destroy, :favorited_post] do
+    # 会員の退会処理（unsubscribe）用のルーティング 2025/04/09
+      member do
+        get 'unsubscribe'
+      end
+    end
     resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy]
     resources :post_comments, only: [:create, :index, :destroy]
     resources :relationships, only: [:create, :index, :destroy]

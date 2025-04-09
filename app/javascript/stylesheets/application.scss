@@ -16,6 +16,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 影をつける */
   text-decoration: none;
 }
+/* レスポンシブ対応 */
 @media (max-width: 767px) {
   .sticky-top {
     top: 40px; /* 小さい画面での調整 */

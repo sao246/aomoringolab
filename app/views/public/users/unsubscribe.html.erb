@@ -1,2 +1,12 @@
-<h1>Public::Users#unsubscribe</h1>
-<p>Find me in app/views/public/users/unsubscribe.html.erb</p>
+
+<section class="inner">
+  <h2 class="section-ttl">本当に退会しますか？</h2>
+  <h3 class="text-center">退会すると、会員登録情報や<br>
+  これまでの投稿や他の会員の投稿は閲覧できなくなります。<br>
+  退会する場合は、「退会する」をクリックしてください。</h3>
+  <div class="flex justify-around mt2">
+    <%= link_to "マイページに戻る", user_path(current_user), class: "btn btn-primary" %>
+    <%= button_to "退会する", user_registration_path, method: :delete, data: { confirm: "OKを押すと退会処理がされます。本当によろしいですか？" }, class: "btn btn-danger" %>
+
+  </div>
+</section>
