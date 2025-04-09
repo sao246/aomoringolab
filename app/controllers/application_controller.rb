@@ -8,4 +8,5 @@ class ApplicationController < ActionController::Base
     # ユーザー編集時
     devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
+
 end
