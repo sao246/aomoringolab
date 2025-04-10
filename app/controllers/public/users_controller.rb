@@ -2,7 +2,7 @@ class Public::UsersController < ApplicationController
   
   before_action :authenticate_user!
   # ログインユーザーでない場合はアクセスできないようにする。
-  before_action :is_matching_login_user, only: [:edit, :update, :mypage]
+  before_action :is_matching_login_user, only: [:edit, :update, :mypage, :destroy, :unsubscribe]
 
   def edit
     @user = current_user
@@ -23,13 +23,14 @@ class Public::UsersController < ApplicationController
   end
 
   def unsubscribe
-    @user = current_user
+    # 退会確認ページへ遷移
+    # ここで実際に退会処理を行うことはなく、destroyは`destroy` アクションに任せる
+    render :unsubscribe # 退会確認ページに遷移
   end
 
   def destroy
     #devise標準（＝データベースの物理削除のケース）ならば記載不要。
     #論理削除であればここに記載が必要。
-
   end
 
   def favorited_post

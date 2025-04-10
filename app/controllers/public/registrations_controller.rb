@@ -24,10 +24,11 @@ class Public::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+  #　退会処理実装のため、活性化（2025/04/10）
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+     super
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

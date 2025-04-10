@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     # 会員の退会処理（unsubscribe）用のルーティング 2025/04/09
       member do
         get 'unsubscribe'
+        delete :destroy   # ユーザー削除
       end
     end
     resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy]

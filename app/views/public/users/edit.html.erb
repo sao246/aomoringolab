@@ -8,16 +8,19 @@
         <%= f.label :name, "アカウント名" %>
         <%= f.text_field :name, class: "form-control name" %>
       </div>
-
       <div class="form-group">
         <%= f.label :introduction, "自己紹介" %>
         <%= f.text_area :introduction, class: "form-control introduction" %>
       </div>
-      <div class="form-group">
-        <%= f.submit "更新します", class: 'btn btn-secondary' %>
+      <div>
+        <%= f.label :profile_image, "プロフィール画像" %><br>
+        <%= f.file_field :profile_image %>
       </div>
-      <div class="form-group">
-        <%= button_to "退会確認ページへ", unsubscribe_user_path(current_user), class: 'btn btn-danger' %>
+      <div class="form-group m-4">
+        <%= f.submit "プロフィール情報を更新", class: 'btn btn-sm', style: "background-color: #66cdaa ; color: white;" %>
+      </div>
+      <div class="form-group m-4">
+        <%= link_to "アオモリンゴラボを退会する", unsubscribe_user_path(current_user), class: 'btn btn-sm btn-danger' %>
       </div>
     <% end %>
   </div>

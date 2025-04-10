@@ -11,13 +11,11 @@ class User < ApplicationRecord
   has_one_attached :profile_image
 
   # ユーザーがフォローしている他のユーザーとの関連付け、データ取得設定
-  has_many :relationships, dependent: :destroy
-  has_many :followed_users, through: :relationships, source: :followed
+  # 後ほど追加
 
   # 自分をフォローしているユーザの関連付け、データ取得設定
-  has_many :inverse_relationships, class_name: 'Relationship', foreign_key: 'followed_id', dependent: :destroy
-  has_many :followers, through: :inverse_relationships, source: :follower
-
+  # 後ほど追加
+  
    # バリデーション追加 2025/04/08
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   # バリデーション追加 2025/04/08

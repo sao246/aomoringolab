@@ -1,7 +1,4 @@
 @use '~bootstrap/scss/bootstrap';
-.custom-green-bg {
-  background-color: rgba(40, 167, 69, 0.6);
-}
 .custom-card {
   width: 18rem;
   height: 250px;
@@ -53,4 +50,19 @@
   /* メニュー項目のホバー時の文字色 */
   .navbar-nav .nav-link:hover {
     color: #fff !important;
+  }
+
+  /* ロゴリンクのサイズ調整　*/
+  .logo-img {
+    width: 100%;
+    max-width: 240px; // PCではこの最大サイズまで
+    height: auto;
+    display: block;
+  }
+  
+  // スマホ（画面幅768px以下）のときは少しだけ縮小
+  @media (max-width: 768px) {
+    .logo-img {
+      max-width: 160px;
+    }
   }
