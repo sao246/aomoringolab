@@ -2,7 +2,11 @@ class Public::UsersController < ApplicationController
   
   before_action :authenticate_user!
   # ログインユーザーでない場合はアクセスできないようにする。
-  before_action :is_matching_login_user, only: [:edit, :update, :mypage, :destroy, :unsubscribe]
+  before_action :is_matching_login_user, only: [:edit, :update, :destroy, :unsubscribe]
+  def mypage
+    @user = current_user
+    @posts = current_user.posts
+  end
 
   def edit
     @user = current_user

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       sessions: 'public/sessions',
     }
     # resourceの書き方をコントローラに合わせて修正 2025/04/07
-    resources :users, only: [:mypage, :edit, :show, :update, :unsubscribe, :destroy, :favorited_post] do
+    resources :users, only: [:edit, :show, :update, :unsubscribe, :destroy, :favorited_post] do
     # 会員の退会処理（unsubscribe）用のルーティング 2025/04/09
       member do
         get 'unsubscribe'
@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get '/about' => "homes#about"
     get '/feed' => "homes#feed"
+    get 'mypage', to: 'users#mypage', as: 'mypage'
   end
 
   # Admin（管理者）用のルーティング

@@ -27,7 +27,11 @@ class Public::SessionsController < Devise::SessionsController
   
   # ログイン後はマイページに遷移させる 2025/04/07 追加
   def after_sign_in_path_for(resource)
-    user_path(current_user)
+    mypage_path
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    root_path
   end
 end
 
