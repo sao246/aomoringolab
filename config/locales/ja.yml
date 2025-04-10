@@ -45,5 +45,3 @@ ja:
       not_saved:
         one: "エラーが発生しました。以下の入力をご確認ください。"
         other: "エラーが発生しました。以下の入力をご確認ください。"
-  notice:
-    unsubscribe_success: "退会処理が完了しました。"
