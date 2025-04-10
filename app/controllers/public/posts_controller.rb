@@ -14,6 +14,12 @@ class Public::PostsController < ApplicationController
   end
 
   def show
+    #set_postメソッドを用意しているので個別の変数設定は不要。
+    if user_signed_in?
+    else
+      flash[:alert] = "投稿詳細をご覧になるにはログインが必要です。下記ボタンよりゲストユーザーログインまたは会員ログインしてから詳細をご覧ください。"
+      redirect_to root_path
+    end
   end
 
   def create
@@ -27,9 +33,11 @@ class Public::PostsController < ApplicationController
   end
 
   def edit
+      #set_postメソッドを用意しているので個別の変数設定は不要。
   end
 
   def update
+    #set_postメソッドを用意しているので個別の変数設定は不要。
     if @post.update(post_params)
       redirect_to posts_path, notice: '投稿が更新されました。'
     else
@@ -38,6 +46,7 @@ class Public::PostsController < ApplicationController
   end
 
   def destroy
+    #set_postメソッドを用意しているので個別の変数設定は不要。
     @post.destroy
     redirect_to posts_path, notice: '投稿が削除されました。'
   end

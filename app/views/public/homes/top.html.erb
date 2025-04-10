@@ -20,29 +20,29 @@
       "
     >
       <div style="height: 100%; position: absolute; top: 0; left: 0; right: 0;">
-        <div>
-          <h3 class="display-3 m-4" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">ようこそアオモリンゴラボへ</h3>
-          <p class="lead m-4" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">りんごの魅力・アイディアをラボから発信</p>
-          <p class="lead m-4" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">〜青森とりんごを愛する農家と消費者みんなでつながろう盛り上げよう〜</p>
-          <%= image_tag("aomoringolab_hakase.png", alt: "りんご博士", class: "ringohakase", style: "width: 200px; height: 200px;") %>
+        <div> <%= image_tag("aomoringolab_hakase.png", alt: "りんご博士", class: "ringohakase", style: "width: 200px; height: 200px;") %>
+          <h3 class="display-3" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">ようこそアオモリンゴラボへ</h3>
+          <p class="lead" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">りんごの魅力・アイディアをラボから発信</p>
+          <p class="lead" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">〜青森とりんごを愛する農家と消費者みんなでつながろう盛り上げよう〜</p>
         </div>
       </div>
     </header>
+
     <main class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-4 mb-4 mt-5">
+      <div class="row justify-content-center g-4">
+        <div class="col-12 col-sm-6 col-md-3 mb-4 mt-4">
           <%= link_to new_user_session_path, class: "card custom-card", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class = "m-4">
+            <div class="p-4">
               <h5 class="card-title">ゲストユーザーログイン</h5>
             </div>
           <% end %>
-            <p class="text-top text-muted" style="font-size: 0.9rem; margin-top: 10px;">
-              アカウントを作らずまずはお試しされたい方はこちら
-            </p>
+          <p class="text-top text-muted" style="font-size: 0.9rem; margin-top: 10px;">
+            アカウントを作らずまずはお試ししてみたい方はこちら
+          </p>
         </div>
-        <div class="col-12 col-md-4 mb-4 mt-5">
+        <div class="col-12 col-sm-6 col-md-3 mb-4 mt-4">
           <%= link_to new_user_session_path, class: "card custom-card", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class = "m-4">
+            <div class="p-4">
               <h5 class="card-title">ログイン</h5>
             </div>
           <% end %>
@@ -50,9 +50,9 @@
             アカウントをお持ちの方はこちら
           </p>
         </div>
-        <div class="col-12 col-md-4 mb-4 mt-5">
+        <div class="col-12 col-sm-6 col-md-3 mb-4 mt-4">
           <%= link_to new_user_registration_path, class: "card custom-card", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class = "m-4">
+            <div class="p-4">
               <h5 class="card-title">新規登録</h5>
             </div>
           <% end %>
@@ -62,8 +62,8 @@
         </div>
       </div>
       <div class="col-12 col-md-4 mb-4 mt-5">
-      <h2> 新着投稿 </h2>
-      <%= render 'public/posts/index', posts: @posts %>
+        <h2> 新着投稿 </h2>
+        <%= render 'public/posts/index', posts: @posts %>
       </div>
     </main>
   </body>

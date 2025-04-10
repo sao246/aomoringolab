@@ -7,7 +7,6 @@
         <% if @post.image.attached? %>
           <%= image_tag @post.image, size: '400x300' %><br>
         <% else %>
-          <p>画像はありません</p>
         <% end %>
         <%= @post.body %></td><br>
         <% if @post.user.id == current_user.id %>
