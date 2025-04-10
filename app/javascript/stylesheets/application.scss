@@ -1,18 +1,25 @@
 @use '~bootstrap/scss/bootstrap';
-.custom-card {
-  width: 18rem;
-  height: 250px;
-  margin: 20px;
-  background-color: #589ec1;  /* 背景色の設定 */
-  color: white;  /* 文字色を白にする */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-radius: 8px;  /* カードの角を丸くする。*/
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 影をつける */
-  text-decoration: none;
+@media (max-width: 768px) {
+  .custom-card {
+    margin-bottom: 1.5rem; /* 下部の余白を調整 */
+    padding: 1.5rem; /* カード内部のパディングを増やす */
+  }
+
+  .card {
+    width: 100%; /* 幅を100%にして、カードが画面幅に収まるようにする */
+  }
 }
+
+@media (max-width: 576px) {
+  .custom-card {
+    margin-bottom: 1rem; /* さらに狭いデバイス向けに余白を調整 */
+  }
+
+  .card {
+    width: 100%; /* 幅を100%にして、モバイル画面に最適化 */
+  }
+}
+
 /* レスポンシブ対応 */
 @media (max-width: 767px) {
   .sticky-top {
