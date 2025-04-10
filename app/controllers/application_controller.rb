@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   # リダイレクト時にフラッシュをクリア
   after_action :clear_flash, only: [:new, :create, :edit, :update, :destroy]
+ 
+
   protected
   def configure_permitted_parameters
     # ユーザー登録時

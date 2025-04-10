@@ -30,9 +30,10 @@
 
     <main class="container">
       <div class="row justify-content-center g-4">
-        <div class="col-12 col-sm-6 col-md-3 mb-4 mt-4">
-          <%= link_to new_user_session_path, class: "card custom-card", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="p-4">
+        <!-- カードを小さめに調整 -->
+        <div class="col-12 col-sm-6 col-md-4 mb-4 mt-4">
+          <%= link_to new_user_session_path, class: "card custom-card d-flex flex-column h-100 text-center", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
+            <div class="p-4 d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
               <h5 class="card-title">ゲストユーザーログイン</h5>
             </div>
           <% end %>
@@ -40,9 +41,10 @@
             アカウントを作らずまずはお試ししてみたい方はこちら
           </p>
         </div>
-        <div class="col-12 col-sm-6 col-md-3 mb-4 mt-4">
-          <%= link_to new_user_session_path, class: "card custom-card", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="p-4">
+
+        <div class="col-12 col-sm-6 col-md-4 mb-4 mt-4">
+          <%= link_to new_user_session_path, class: "card custom-card d-flex flex-column h-100 text-center", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
+            <div class="p-4 d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
               <h5 class="card-title">ログイン</h5>
             </div>
           <% end %>
@@ -50,9 +52,10 @@
             アカウントをお持ちの方はこちら
           </p>
         </div>
-        <div class="col-12 col-sm-6 col-md-3 mb-4 mt-4">
-          <%= link_to new_user_registration_path, class: "card custom-card", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="p-4">
+
+        <div class="col-12 col-sm-6 col-md-4 mb-4 mt-4">
+          <%= link_to new_user_registration_path, class: "card custom-card d-flex flex-column h-100 text-center", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
+            <div class="p-4 d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
               <h5 class="card-title">新規登録</h5>
             </div>
           <% end %>
