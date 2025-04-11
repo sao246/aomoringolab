@@ -21,6 +21,14 @@ class User < ApplicationRecord
   # バリデーション追加 2025/04/08
   validate :introduction_length_within_limit
 
+  # ゲストログイン用の情報設定 2025/04/11
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.name = 'ゲストユーザー'
+    end
+  end
+
   private
   def introduction_length_within_limit
     if introduction && introduction.mb_chars.length > 200

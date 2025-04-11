@@ -6,7 +6,11 @@ class Public::PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   def new
-    @post = Post.new
+    if current_user.email == "guest@example.com"
+      redirect_to root_path, alert: 'ゲストユーザーは新規投稿ができません。投稿を行う場合はまず新規会員登録を行なってください。'
+    else
+      @post = Post.new
+    end
   end
 
   def index

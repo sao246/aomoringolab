@@ -3,6 +3,9 @@ class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   # ログインユーザーでない場合はアクセスできないようにする。
   before_action :is_matching_login_user, only: [:edit, :update, :destroy, :unsubscribe]
+  # ゲストログインユーザーの編集不可とする 2025/04/11
+  before_action :ensure_guest_user, only: [:edit]
+
   def mypage
     @user = current_user
     @posts = current_user.posts
@@ -51,4 +54,11 @@ class Public::UsersController < ApplicationController
       redirect_to public_posts_path
     end
   end
+
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    if @user.email == "guest@example.com"
+      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+    end
+  end 
 end

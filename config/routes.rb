@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'posts/index'
-    get 'posts/show'
-  end
-  namespace :admin do
-    get 'homes/top'
-  end
-
   # Public（エンドユーザー）用のルーティング
   # エンドユーザーのページはコントローラをpublicで管理、URLにはPublicをつけずに管理する。
   scope module: 'public' do
@@ -15,6 +7,9 @@ Rails.application.routes.draw do
       registrations: 'public/registrations',
       sessions: 'public/sessions',
     }
+    devise_scope :user do
+      post '/guest_sign_in', to: 'sessions#guest_sign_in'
+    end
     # resourceの書き方をコントローラに合わせて修正 2025/04/07
     resources :users, only: [:edit, :show, :update, :unsubscribe, :destroy, :favorited_post] do
     # 会員の退会処理（unsubscribe）用のルーティング 2025/04/09
@@ -34,7 +29,7 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     get '/about' => "homes#about"
     get '/feed' => "homes#feed"
-    get 'mypage', to: 'users#mypage', as: 'mypage'
+    get '/mypage', to: 'users#mypage', as: 'mypage'
   end
 
   # Admin（管理者）用のルーティング
@@ -44,4 +39,7 @@ Rails.application.routes.draw do
       sessions: 'admin/sessions'
     }, path: ''
   end
+  get 'homes/top'
+  get 'posts/index'
+  get 'posts/show'
 end
