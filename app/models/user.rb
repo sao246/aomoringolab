@@ -17,7 +17,14 @@ class User < ApplicationRecord
   # 後ほど追加
   
    # バリデーション追加 2025/04/08
-  validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
+  validates :name, length: { minimum: 3, maximum: 15 }, uniqueness: true
   # バリデーション追加 2025/04/08
-  validates :introduction, length: { maximum: 200 }
+  validate :introduction_length_within_limit
+
+  private
+  def introduction_length_within_limit
+    if introduction && introduction.mb_chars.length > 200
+      errors.add(:introduction, "は200文字以内で入力してください（現在#{introduction.mb_chars.length}文字）")
+    end
+  end
 end

@@ -8,10 +8,11 @@
   </head>
 
   <body>
+  <%# flexboxを使用して、要素（items,text）を全体に中央寄せにする。%>
     <header 
       class="d-flex align-items-center justify-content-center text-white text-center m-4"
       style="
-        background-image: url(<%= asset_path('aomoringolab_top.jpg') %>);
+        background-image: url(<%= asset_path('aomoringolab_top.jpg') %>);  <%# 背景画像の指定 %>
         background-size: cover;
         background-position: center;
         min-height: 50vh;
