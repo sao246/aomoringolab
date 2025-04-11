@@ -23,6 +23,7 @@ class Public::PostsController < ApplicationController
   end
 
   def create
+    puts "送信された本文の文字数: #{params[:post][:body].length}"
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     if @post.save

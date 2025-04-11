@@ -10,6 +10,20 @@ class Post < ApplicationRecord
   # バリデーション追加（入力必須項目）2025/04/08
   validates :title, presence: true
   validates :body, presence: true
-  validates :body, length: { maximum: 1000 }
+  validate :title_length_within_limit
+  validate :body_length_within_limit
   validates :user_id, presence: true
+
+  private
+  def title_length_within_limit
+    if title.present? && title.mb_chars.length > 20
+      errors.add(:title, "は20文字以内で入力してください（現在#{title.mb_chars.length}文字）")
+    end
+  end
+  
+  def body_length_within_limit
+    if body.present? && body.mb_chars.length > 500
+      errors.add(:body, "は500文字以内で入力してください（現在#{body.mb_chars.length}文字）")
+    end
+  end
 end
