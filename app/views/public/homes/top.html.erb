@@ -32,7 +32,7 @@
     <main class="container">
       <div class="row justify-content-center g-4">
         <div class="col-12 col-sm-6 col-md-4 mb-4 mt-4">
-          <%= link_to new_user_session_path, class: "card custom-card d-flex flex-column h-100 text-center", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
+          <%= link_to guest_sign_in_path, method: :post, class: "card custom-card d-flex flex-column h-100 text-center", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
             <div class="p-4 d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
               <h5 class="card-title">ゲストユーザーログイン</h5>
             </div>
