@@ -7,8 +7,8 @@ ruby '3.1.2'
 gem 'rails', '~> 6.1.7', '>= 6.1.7.10'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
-# Use Puma as the app server
-gem 'puma', '~> 5.0'
+# Use Puma as the app server #2025/04/12 ver5.0から3.11へ変更
+gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -56,3 +56,17 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
+
+# MySQLを利用するためのGEM追加 2025/04/12
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end
+
+# 以下のインストールで、Rubyでメールの送受信をプログラム制御できるようにする。2025/04/12
+# SMTPプロトコル（メール送信）
+gem "net-smtp"
+# POPプロトコル（メール受信）
+gem "net-pop"
+# IMAPプロトコル（メール受信・操作）
+gem "net-imap"

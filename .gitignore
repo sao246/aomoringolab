@@ -38,3 +38,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# 2025/04/12 mysqlインストールのために追加（注：トラッキング防止のためコメント行はこのように記載している行とは分けて記載する！）
+/.env
