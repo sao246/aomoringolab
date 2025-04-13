@@ -31,7 +31,7 @@ class Public::SessionsController < Devise::SessionsController
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    root_path
+    about_path
   end
   # ゲストログイン 2025/04/11 追加
   def guest_sign_in

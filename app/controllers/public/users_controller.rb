@@ -48,10 +48,11 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
 
+   # ログインユーザーではない人の編集ができないように制御 2025/04/13
   def is_matching_login_user
     user = User.find(params[:id])
     unless user.id == current_user.id
-      redirect_to public_posts_path
+      redirect_to user_path(current_user), alert: "他のユーザーの情報は編集できません。"
     end
   end
 

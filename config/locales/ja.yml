@@ -48,6 +48,9 @@ ja:
     registrations:
       signed_up: "会員登録が完了しました。ようこそアオモリンゴラボへ！"
       updated: "パスワードの更新が完了しました。"
+      destroyed: "アカウントを削除しました。ご利用ありがとうございました。"
+      user:
+        destroyed: "アカウントを削除しました。ご利用ありがとうございました。"
     sessions:
       signed_in: "ログインが完了しました。"
       signed_out: "ログアウトが完了しました。"

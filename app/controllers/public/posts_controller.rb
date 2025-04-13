@@ -4,7 +4,8 @@ class Public::PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   # ログインしていない人への処理制御
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-
+  # ログインユーザーではない人の編集ができないように制御 2025/04/13
+  before_action :is_matching_post_login_user, only: [:edit, :update, :destroy, :unsubscribe]
   def new
     if current_user.email == "guest@example.com"
       redirect_to root_path, alert: 'ゲストユーザーは新規投稿ができません。投稿を行う場合はまず新規会員登録を行なってください。'
@@ -31,7 +32,7 @@ class Public::PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     if @post.save
-      redirect_to posts_path, notice: '投稿が完了しました'
+      redirect_to post_path(@post), notice: '投稿が完了しました'
     else
       render :new
     end
@@ -63,5 +64,12 @@ class Public::PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :body, :image)
+  end
+
+   # ログインユーザーではない人の編集ができないように制御 2025/04/13
+  def is_matching_post_login_user
+    unless @post.user == current_user
+    redirect_to posts_path, alert: "他のユーザーの投稿は編集できません。"
+    end
   end
 end
