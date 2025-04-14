@@ -18,6 +18,10 @@
         <%= message %>
       </div>
     <% end %>
+    <%# 検索ボックスの追加 2025/04/14%>
+    <div class="search-form" style="display: flex; justify-content: left; flex-wrap: wrap; margin-top: 20px;">
+      <%= render 'public/search/form' %>
+    </div> 
     <%= yield %>
   </body>
 </html>
