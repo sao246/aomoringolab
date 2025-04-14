@@ -29,6 +29,19 @@ class User < ApplicationRecord
     end
   end
 
+  # 検索ボックス追加用のメソッド 2025/04/14
+  def self.search_for(content, method)
+    if method == 'perfect'
+      User.where(name: content)
+    elsif method == 'forward'
+      User.where('name LIKE ?', content + '%')
+    elsif method == 'backward'
+      User.where('name LIKE ?', '%' + content)
+    else
+      User.where('name LIKE ?', '%' + content + '%')
+    end
+  end
+  
   private
   def introduction_length_within_limit
     if introduction && introduction.mb_chars.length > 200
