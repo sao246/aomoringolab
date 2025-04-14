@@ -1,0 +1,20 @@
+<%# ユーザー検索結果表示用にのみ使用の想定で　indexの部分テンプレを追加 2025/04/14%>
+<div class="post-list" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+  <% users.each do |user| %>
+    <div class="user-item" style="width: 1000px; margin: 10px; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+      <div class="user" style="font-weight: bold; margin-bottom: 10px;">
+        <%= link_to user.name, user_path(user) %><br>
+      </div>
+      <div class="user-image" style="font-size: 1.2em; color: #333;">
+      <% if user.profile_image.attached? %>
+        <%= image_tag user.profile_image, width: 100, height: 100, style: "object-fit: cover; border-radius: 50%;" %>
+      <% else %>
+        <%= image_tag 'profile_noimage.jpg', width: 100, height: 100, style: "object-fit: cover; border-radius: 50%;" %>
+      <% end %>
+      </div>
+      <div class="user-actions" style="margin-top: 10px;">
+        <!-- 他のアクション（いいね、コメント数の表示）を後ほど追加する。 -->
+      </div>
+    </div>
+  <% end %>
+</div>
