@@ -10,6 +10,10 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
           <% if user_signed_in? %>
+            <%# 新規投稿ボタンの位置を調整 2025/04/14%>
+            <div class="search-form" style="display: flex; justify-content: left; flex-wrap: wrap; margin-top: 5px; margin-right: 10px">
+              <%= link_to "新規投稿", new_post_path, class: 'btn', style: "background-color: #008b8b; color: white;"%>
+            </div> 
             <li class="nav-item">
               <%= link_to root_path, class: 'nav-link text-light' do %>
                 <i class="fa-solid fa-apple-whole" style="color:red;"></i>トップ
@@ -35,10 +39,7 @@
                 <i class="fas fa-sign-out-alt"></i> ログアウト
               <% end %>
             </li>
-            <li>
-              <%= link_to '新規投稿', new_post_path, 
-                  style: "position: fixed; top: 90px; right: 20px; background-color: #008b8b; color: white; padding: 8px 16px; border-radius: 5px; font-size: 14px; z-index: 1060;" %>
-            </li>
+            </div>
           <% else %>
             <li class="nav-item">
               <%= link_to root_path, class: 'nav-link text-light' do %>
