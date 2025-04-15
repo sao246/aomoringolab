@@ -18,8 +18,10 @@ Rails.application.routes.draw do
         delete :destroy   # ユーザー削除
       end
     end
-    resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy]
-    resources :post_comments, only: [:create, :index, :destroy]
+    # postsとcommentsコントローラのルーティング見直し 2025/04/15
+    resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
+      resources :comments, only: [:create, :index, :destroy]
+    end
     resources :relationships, only: [:create, :index, :destroy]
     resources :search, only: [:index]
     resources :favorites, only: [:create, :destroy]

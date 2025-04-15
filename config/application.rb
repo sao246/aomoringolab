@@ -19,5 +19,9 @@ module Aomoringolab
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    
+    # 日本時間（JST）に設定 2025/04/15
+    config.time_zone = 'Tokyo' # ビュー・コントローラ表示用の時間設定
+    config.active_record.default_timezone = :local # DB保存の時間設定
   end
 end
