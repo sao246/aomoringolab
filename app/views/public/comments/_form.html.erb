@@ -1,0 +1,4 @@
+<%= form_with(model: [@post, @comment], local: true) do |f| %>
+  <%= f.text_area :body, rows:'5',placeholder: "コメントをここに入力してください", class: "w-100" %>
+  <%= f.submit "コメントを送る", class: 'btn', style: "background-color: #66cdaa ; color: white;" %>
+<% end %>
