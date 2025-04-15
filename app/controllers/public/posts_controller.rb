@@ -19,6 +19,8 @@ class Public::PostsController < ApplicationController
   end
 
   def show
+    @post = Post.find(params[:id])
+    @comment = Comment.new
     #set_postメソッドを用意しているので個別の変数設定は不要。
     if user_signed_in?
     else
@@ -45,7 +47,7 @@ class Public::PostsController < ApplicationController
   def update
     #set_postメソッドを用意しているので個別の変数設定は不要。
     if @post.update(post_params)
-      redirect_to posts_path, notice: '投稿が更新されました。'
+      redirect_to posts_path, notice: '投稿を更新しました。'
     else
       render :edit
     end
@@ -54,7 +56,7 @@ class Public::PostsController < ApplicationController
   def destroy
     #set_postメソッドを用意しているので個別の変数設定は不要。
     @post.destroy
-    redirect_to posts_path, notice: '投稿が削除されました。'
+    redirect_to posts_path, notice: '投稿を削除しました。'
   end
 
   private
