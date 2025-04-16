@@ -8,65 +8,62 @@
   </head>
 
   <body>
-  <%# flexboxを使用して、要素（items,text）を全体に中央寄せにする。%>
     <header 
-      class="d-flex align-items-center justify-content-center text-white text-center m-4"
+      class="text-white text-center"
       style="
-        background-image: url(<%= asset_path('aomoringolab_top.jpg') %>);  <%# 背景画像の指定 %>
+        background-image: url(<%= asset_path('aomoringolab_top.jpg') %>);
         background-size: cover;
         background-position: center;
         min-height: 50vh;
-        padding-bottom: 2rem;
+        padding-bottom: 5rem;
         position: relative;
       "
     >
-      <div style="height: 100%; position: absolute; top: 0; left: 0; right: 0;">
-        <div> <%= image_tag("aomoringolab_hakase.png", alt: "りんご博士", class: "ringohakase", style: "width: 200px; height: 200px;") %>
-          <h3 class="display-3" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">ようこそアオモリンゴラボへ</h3>
-          <p class="lead" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">りんごの魅力・アイディアをラボから発信</p>
-          <p class="lead" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">〜青森とりんごを愛する農家と消費者みんなでつながろう盛り上げよう〜</p>
-        </div>
+      <div class="container-fluid d-flex flex-column align-items-center justify-content-center" style="height: 100%; position: relative; z-index: 2;">
+        <%= image_tag("aomoringolab_hakase.png", alt: "りんご博士", class: "ringohakase img-fluid", style: "max-width: 200px; height: auto;") %>
+        <h3 class="display-4" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">ようこそアオモリンゴラボへ</h3>
+        <p class="lead" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">りんごの魅力・アイディアをラボから発信</p>
+        <p class="lead" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">〜青森とりんごを愛する農家と消費者みんなでつながろう盛り上げよう〜</p>
       </div>
+      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.0); z-index: 1;"></div>
     </header>
 
-    <main class="container">
+    <main class="container-xl px-4">
       <div class="row justify-content-center g-4">
-        <div class="col-12 col-sm-6 col-md-4 mb-4 mt-4">
-          <%= link_to guest_sign_in_path, method: :post, class: "card custom-card d-flex flex-column h-100 text-center", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="p-4 d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
+        <%# 各カードブロック %>
+        <div class="col-12 col-sm-6 col-md-4 mb-4">
+          <%= link_to guest_sign_in_path, method: :post, class: "card custom-card text-center h-100", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
               <h5 class="card-title">ゲストユーザーログイン</h5>
             </div>
           <% end %>
-          <p class="text-top text-muted" style="font-size: 0.9rem; margin-top: 10px;">
-            アカウントを作らずまずはお試ししてみたい方はこちら
-          </p>
+          <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントを作らずまずはお試ししてみたい方はこちら</p>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-4 mb-4 mt-4">
-          <%= link_to new_user_session_path, class: "card custom-card d-flex flex-column h-100 text-center", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="p-4 d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
+        <div class="col-12 col-sm-6 col-md-4 mb-4">
+          <%= link_to new_user_session_path, class: "card custom-card text-center h-100", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
               <h5 class="card-title">ログイン</h5>
             </div>
           <% end %>
-          <p class="text-top text-muted" style="font-size: 0.9rem; margin-top: 10px;">
-            アカウントをお持ちの方はこちら
-          </p>
+          <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントをお持ちの方はこちら</p>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-4 mb-4 mt-4">
-          <%= link_to new_user_registration_path, class: "card custom-card d-flex flex-column h-100 text-center", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="p-4 d-flex flex-column justify-content-center align-items-center" style="flex: 1;">
+        <div class="col-12 col-sm-6 col-md-4 mb-4">
+          <%= link_to new_user_registration_path, class: "card custom-card text-center h-100", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
               <h5 class="card-title">新規登録</h5>
             </div>
           <% end %>
-          <p class="text-top text-muted" style="font-size: 0.9rem; margin-top: 10px;">
-            アカウントをお持ちでない方はこちらから登録ください
-          </p>
+          <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントをお持ちでない方はこちらから登録ください</p>
         </div>
       </div>
-      <div class="col-12 col-md-4 mb-4 mt-5">
-        <h2> 新着投稿 </h2>
-        <%= render 'public/posts/index', posts: @posts %>
+
+      <div class="row justify-content-center mt-5">
+        <div class="col-12 col-md-8">
+          <h2 class="mb-4">新着投稿</h2>
+          <%= render 'public/posts/index', posts: @posts %>
+        </div>
       </div>
     </main>
   </body>
