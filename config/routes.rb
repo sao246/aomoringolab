@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # Public（エンドユーザー）用のルーティング
   # エンドユーザーのページはコントローラをpublicで管理、URLにはPublicをつけずに管理する。
   scope module: 'public' do
@@ -40,8 +39,8 @@ Rails.application.routes.draw do
     sessions: 'admin/sessions'
   }, path: 'admin'
   namespace :admin do
-    resources :posts, only: [:index, :show] do
-      resources :comments, only: [:create, :index, :show, :destroy]
+    resources :posts, only: [:index, :show, :destroy] do
+      resources :comments, only: [:index, :destroy]
     end
     resources :trends, only: [:index]
     resources :relationships, only: [:create, :index, :destroy]

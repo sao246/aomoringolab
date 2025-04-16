@@ -24,6 +24,7 @@ class Public::CommentsController < ApplicationController
   end
 
   def index
+    # ビュー呼び出しだけなのでOK。
   end
 
   private
