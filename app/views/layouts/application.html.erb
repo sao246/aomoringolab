@@ -10,18 +10,18 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body style="padding-top: 80px;">
-  <%# header、エラーメッセージの出力追加 2025/04/08%>
+  <body style="padding-top: 80px; margin: 0; font-family: sans-serif; background-image: url('/your-background.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
     <%= render 'layouts/header' %> 
+
     <% flash.each do |key, message| %>
-      <div class="flash <%= key %>" id="flash-message">
+      <div class="flash <%= key %>" id="flash-message" 
+           style="width: 90%; max-width: 1200px; margin: 20px auto; padding: 12px; border-radius: 8px; text-align: center; background-color: rgba(255,255,255,0.9);">
         <%= message %>
       </div>
     <% end %>
-    <%# 検索ボックスの追加 2025/04/14%>
-    <div class="search-form" style="display: flex; justify-content: left; flex-wrap: wrap; margin-top: 20px;">
-      <%= render 'public/search/form' %>
-    </div> 
-    <%= yield %>
+
+    <div class="main-content" style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 20px; background-color: rgba(255,255,255,0.95); border-radius: 8px;">
+      <%= yield %>
+    </div>
   </body>
 </html>
