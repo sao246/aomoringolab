@@ -11,6 +11,11 @@ ja:
       post:
         title: "投稿タイトル"
         body: "本文"
+  enums:
+    user:
+      status:
+        active: "アクティブ"
+        deactivated: "退会済"
     errors:
       models:
         user:
@@ -45,6 +50,7 @@ ja:
       invalid: "メールアドレスまたはパスワードが正しくありません。"
       not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
       unauthenticated: "続けるにはログインが必要です。以下ログインフォームよりログインをお願いします。"
+      account_deactivated: "アオモリンゴラボをご利用いただきありがとうございます。お客様のアカウントは現在、運営の判断により一時的にご利用を制限させていただいております。詳細につきましては、お気軽にご連絡ください。"
     registrations:
       signed_up: "会員登録が完了しました。ようこそアオモリンゴラボへ！"
       updated: "パスワードの更新が完了しました。"

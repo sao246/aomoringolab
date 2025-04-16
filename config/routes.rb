@@ -39,7 +39,11 @@ Rails.application.routes.draw do
     sessions: 'admin/sessions'
   }, path: 'admin'
   namespace :admin do
-    resources :users, only: [:index, :show, :edit, :update, :destroy]
+    resources :users, only: [:index, :show, :edit, :update, :destroy] do
+      member do
+        patch :update
+      end
+    end
     resources :posts, only: [:index, :show, :destroy] do
       resources :comments, only: [:index, :destroy]
     end
