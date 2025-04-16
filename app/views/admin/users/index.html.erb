@@ -1,2 +1,29 @@
-<h1>Admin::Users#index</h1>
-<p>Find me in app/views/admin/users/index.html.erb</p>
+<div class="container my-4">
+  <div style="max-height: 600px; overflow-y: auto; border: 1px solid #ccc; border-radius: 8px; max-width: 1000px; margin: 0 auto;">
+    
+    <%# Stickyヘッダー %>
+    <div style="position: sticky; top: 0; z-index: 10; background-color: #e9ecef; display: flex; padding: 10px 20px; border-bottom: 2px solid #ccc; font-weight: bold;">
+      <div style="width: 100px;">画像</div>
+      <div style="flex: 1;">アカウント名</div>
+      <div style="width: 150px;">ステータス</div>
+    </div>
+
+    <% @users.each do |user| %>
+      <div style="display: flex; padding: 20px; border-bottom: 1px solid #ddd; background-color: #fff;">
+        <div style="width: 100px;">
+          <% if user.profile_image.attached? %>
+            <%= image_tag user.profile_image, width: 60, height: 60, style: "object-fit: cover; border-radius: 50%; border: 1px solid #ccc;" %>
+          <% else %>
+            <%= image_tag 'profile_noimage.jpg', width: 60, height: 60, style: "object-fit: cover; border-radius: 50%; border: 1px solid #ccc;" %>
+          <% end %>
+        </div>
+        <div style="flex: 1;">
+          <%= link_to user.name, admin_user_path(user), style: "text-decoration: none; color: #007bff; font-weight: 500;" %>
+        </div>
+        <div style="width: 150px;">
+          <%= I18n.t("enums.user.status.#{user.status}") %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

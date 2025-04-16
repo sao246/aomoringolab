@@ -11,3 +11,27 @@ Admin.create!(
   password: "password123",
   password_confirmation: "password123"
 )
+
+# 農家ユーザー10件の作成
+10.times do |i|
+  User.create!(
+    email: "farmer#{i + 1}@email",
+    password: "farmer#{i + 1}password",  # ユーザーごとに異なるパスワード
+    password_confirmation: "farmer#{i + 1}password",
+    name: "農家#{i + 1}",
+    introduction: "テストユーザーです。",
+    status: 0  # active
+  )
+end
+
+# りんご愛好家ユーザー10件の作成
+10.times do |i|
+  User.create!(
+    email: "applelover#{i + 1}@email",
+    password: "applelover#{i + 1}password",  # ユーザーごとに異なるパスワード
+    password_confirmation: "applelover#{i + 1}password",
+    name: "りんご愛好家#{i + 1}",
+    introduction: "テストユーザーです。",
+    status: 0  # active
+  )
+end

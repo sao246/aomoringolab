@@ -3,6 +3,16 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  # 管理者が使う会員の退会ステータス（Enum利用） 2025/04/16
+  enum status: { active: 0, deactivated: 1 }
+  def active_for_authentication?
+    super && active?  # activeステータスならログインOKとする
+  end
+
+  def inactive_message
+    deactivated? ? :account_deactivated : super  # 退会済みならメッセージを変更する。
+  end
+
   # アソシエーション追加 2025/04/08
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
