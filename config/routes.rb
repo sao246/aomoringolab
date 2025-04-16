@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # Public（エンドユーザー）用のルーティング
   # エンドユーザーのページはコントローラをpublicで管理、URLにはPublicをつけずに管理する。
   scope module: 'public' do
@@ -36,12 +35,17 @@ Rails.application.routes.draw do
 
   # Admin（管理者）用のルーティング
   # 管理者のページはコントローラもURLも明示的にadminとわかるように管理する。
+  devise_for :admins, skip: [:registrations, :passwords], controllers: {
+    sessions: 'admin/sessions'
+  }, path: 'admin'
   namespace :admin do
-    devise_for :admin, skip: [:registrations, :passwords], controllers: {
-      sessions: 'admin/sessions'
-    }, path: ''
+    resources :posts, only: [:index, :show, :destroy] do
+      resources :comments, only: [:index, :destroy]
+    end
+    resources :trends, only: [:index]
+    resources :relationships, only: [:create, :index, :destroy]
+    resources :search, only: [:index]
+    resources :tags, only: [:index]
+    get 'homes/top'
   end
-  get 'homes/top'
-  get 'posts/index'
-  get 'posts/show'
 end
