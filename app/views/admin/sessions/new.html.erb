@@ -1,4 +1,4 @@
-<h2 class="text-center mb-4">管理者ログイン</h2>
+<h2 class="text-center mb-4"><i class="fa-solid fa-flask-vial" style="color: #218838;"></i>管理者ログイン<i class="fa-solid fa-apple-whole" style="color: red;"></i></h2>
 
 <div class="container d-flex justify-content-center align-items-center min-vh-50">
   <div class="col-12 col-md-6 col-lg-4">
@@ -16,12 +16,12 @@
       <% if devise_mapping.rememberable? %>
         <div class="form-check">
           <%= f.check_box :remember_me, class: "form-check-input" %>
-          <%= f.label :remember_me, "アカウント情報を保存", class: "form-check-label" %>
+          <%= f.label :remember_me, "次回から自動的にログインする", class: "form-check-label" %>
         </div>
       <% end %>
 
       <div class="form-group text-center">
-        <%= f.submit "ログイン", class: "btn btn-primary btn-block" %>
+        <%= f.submit "ログイン", class: "btn btn-block", style: "background-color: #87ceed ; color: white;" %>
       </div>
     <% end %>
 
