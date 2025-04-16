@@ -1,2 +1,29 @@
-<h1>Admin::Posts#show</h1>
-<p>Find me in app/views/admin/posts/show.html.erb</p>
+<%= render 'layouts/errors', resource: @post %>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-8 offset-md-1'>
+      <h2>投稿詳細</h2>
+        <p>
+          <% if @post.user.profile_image.attached? %>
+            <%= image_tag @post.user.profile_image, width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
+          <% else %>
+            <%= image_tag 'profile_noimage.jpg', width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
+          <% end %>
+          <%= @post.user.name %>さんの投稿
+        </p>
+        <%= @post.title %><br>
+        <% if @post.image.attached? %>
+          <%= image_tag @post.image, size: '400x300' %><br>
+        <% else %>
+        <% end %>
+        <%= @post.body %></td><br>
+        <div class="post_detail" style="display: flex; justify-content: right; flex-wrap: wrap; margin-top: 20px; margin-bottom: 20px;">
+      </div>
+        <%= link_to '投稿を削除する', admin_post_path(@post), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
+    </div>
+      <%# 投稿へのコメント機能/一覧表示を追加 2025/04/15 %>
+      <%= render "admin/comments/index", comments: @post.comments %>
+  </div>
+</div>
+<%= link_to '<<投稿一覧に戻る', admin_posts_path, class: "btn btn-sm btn-secondary" %>
+
