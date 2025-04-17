@@ -24,8 +24,9 @@
         <% end %>
     </div>
       <%# 投稿へのコメント機能/一覧表示を追加 2025/04/15 %>
+      <%= render 'layouts/errors', resource: @comment %>
       <%= render "public/comments/form", post: @post, comment: @comment %>
-      <%= render "public/comments/index", comments: @post.comments %>
+      <%= render "public/comments/index", comments: @comments %>
       <%= link_to '<<投稿一覧に戻る', posts_path, class: "btn btn-sm btn-secondary" %>
     </div>
   </div>
