@@ -21,6 +21,7 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @comment = Comment.new
+    @comments = @post.comments.includes(:user)
     #set_postメソッドを用意しているので個別の変数設定は不要。
     if user_signed_in?
     else

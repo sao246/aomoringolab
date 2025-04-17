@@ -11,6 +11,8 @@ ja:
       post:
         title: "投稿タイトル"
         body: "本文"
+      comment:
+        body: "コメント"
   enums:
     user:
       status:
@@ -40,6 +42,11 @@ ja:
           attributes:
             title:
               blank: "を入力してください"
+            body:
+              blank: "を入力してください"
+              too_long: "は%{count}文字以内で入力してください"
+        comment:
+          attributes:
             body:
               blank: "を入力してください"
               too_long: "は%{count}文字以内で入力してください"
