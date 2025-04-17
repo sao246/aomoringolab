@@ -1,0 +1,22 @@
+<%# ユーザー、投稿検索共通の結果一覧表示ビューの追加 それぞれ検索結果は実際には部分テンプレを呼び出す。 2025/04/17 %>
+<div class="container my-4">
+<% if @records.present? %>
+  <% if @model == 'user' %>
+    <h5>ユーザーの検索 "<%= @content %>"</h5>
+    <%= render 'admin/users/index', users: @records %>
+  <% elsif @model == 'post' %>
+    <h5>投稿の検索 "<%= @content %>"</h5>
+    <%= render 'admin/posts/index', posts: @records %>
+  <% end %>
+<% elsif @content.present? %>
+  <% if @model == 'user' %>
+    <h5>ユーザーの検索 "<%= @content %>"</h5>
+      <p>該当する結果が見つかりませんでした。</p>
+      <%= link_to "ユーザー一覧に戻る", admin_users_path %>
+  <% elsif @model == 'post' %>
+    <h5>投稿の検索 "<%= @content %>"</h5>
+    <p>該当する結果が見つかりませんでした。</p>
+    <%= link_to "投稿一覧に戻る", admin_posts_path %>
+  <% end %>
+<% end %>
+</div>
