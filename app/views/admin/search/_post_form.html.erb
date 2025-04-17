@@ -1,0 +1,21 @@
+<%= form_with url: admin_search_index_path, method: :get, local: true do |f| %>
+  <div class="input-group m-2" style="width: 300px;">
+
+    <%# Postモデルの送信 %>
+    <%= f.hidden_field :model, value: "post" %>
+
+    <%# 部分検索のメソッド送信 %>
+    <%= f.hidden_field :method, value: "partial" %>
+
+    <%# 検索入力ボックス %>
+    <div class="input-group-prepend">
+      <span class="input-group-text" style="height: 40px;"><i class="fa fa-search"></i></span>
+    </div>
+    <%= f.text_field :content, placeholder: "アオモリンゴラボの検索", class: "form-control mb-2 rounded-3", style: "height: 40px;" %>
+
+    <%# 検索ボタン %>
+    <div class="input-group-append">
+      <%= f.submit '検索', class: "btn rounded-3 search-btn", style: "background-color: #00bfff; height: 40px;" %>
+    </div>
+  </div>
+<% end %>

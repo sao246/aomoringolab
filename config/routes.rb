@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'search/index'
+  end
   # Public（エンドユーザー）用のルーティング
   # エンドユーザーのページはコントローラをpublicで管理、URLにはPublicをつけずに管理する。
   scope module: 'public' do
