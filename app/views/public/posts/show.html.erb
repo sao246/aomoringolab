@@ -1,23 +1,38 @@
+<%# エラー処理 %>
 <%= render 'layouts/errors', resource: @post %>
-<div class='container'>
-  <div class='row'>
+
+<div class='container my-4'>
+  <div class='row justify-content-center'>
     <div class='col-md-8 offset-md-1'>
-      <h2>投稿詳細</h2>
-        <p>
+      <h4 class="m-4" style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>投稿詳細</strong></h4>
+        <div class="post-user" style="font-weight: bold; margin-bottom: 10px;">
+        <%# プロフィール写真の追加 %>
           <% if @post.user.profile_image.attached? %>
             <%= image_tag @post.user.profile_image, width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
           <% else %>
             <%= image_tag 'profile_noimage.jpg', width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
           <% end %>
-          <%= @post.user.name %>さんの投稿
-        </p>
-        <%= @post.title %><br>
+          <%= link_to @post.user.name, user_path(@post.user.id) %><strong>さんの投稿</strong>
+        </div>
+
+        <%# 投稿タイトル %>
+        <h5 class="mb-3"><strong><%= @post.title %></strong></h5>
+        <%# 投稿画像があれば追加 %>
         <% if @post.image.attached? %>
-          <%= image_tag @post.image, size: '400x300' %><br>
-        <% else %>
+          <div class="mb-3">
+            <%= image_tag @post.image, class: "img-fluid", style: "max-width: 100%; height: auto;" %>
+          </div>
         <% end %>
-        <%= @post.body %></td><br>
-        <div class="post_detail" style="display: flex; justify-content: right; flex-wrap: wrap; margin-top: 20px; margin-bottom: 20px;">
+
+        <div class="post-body" style="font-size: 1.2em; color: #333;">
+          <%# 投稿本文 %>
+          <p><%= @post.body %></p><br>
+          <%# 投稿日付 %>
+          <h6>投稿日：<%= @post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= @post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
+        </div>
+
+        <%# 投稿者本人の投稿なら編集、削除ボタンを表示%>
+        <div class="post_detail" style="display: flex; justify-content: end; flex-wrap: wrap; margin-top: 20px; margin-bottom: 20px;">
         <% if @post.user.id == current_user.id %>
           <%= link_to '投稿を編集する', edit_post_path(@post), class: 'btn btn-sm', style: "background-color: #66cdaa ; color: white;" %>
           <%= link_to '投稿を削除する', post_path(@post), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
