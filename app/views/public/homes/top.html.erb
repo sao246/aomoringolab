@@ -1,70 +1,71 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>トップページ</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  </head>
+<%# ヒーローヘッダー %>
+<%# backgroundsize cover:画像の縦横比を保ちつつ、要素全体を覆うサイズに調整 %>
+<%# min-heightを50vhとし画面の高さの50%（vh = viewport height）で、画面の半分以上の高さをヘッダーが占めるように設定する。 %>
+<%# 5rem=約80pxで、paddingを下につける。 %>
+<header 
+  class="text-white text-center"
+  style="
+    background-image: url(<%= asset_path('aomoringolab_top.jpg') %>);
+    background-size: cover;
+    background-position: center;
+    min-height: 50vh;
+    padding-bottom: 5rem;
+    position: relative;
+  "
+>
+<%# container-fluidで画面の横いっぱいに広がるようにする。%>
+<%# z-index: 2;という設定で、ヒーローヘッダーの背景画像よりもこのセクションが全面に表示されるように設定する。%>
+<%# flex-columnで要素縦並べにしつつ、配置は画面真ん中に（justify-content-center）%>
+<%# りんご博士、ロゴの配置はimg-fluidでレスポンシブ対応する。博士の大きさはmax-widthで画面に対して大きくなりすぎないようにする。%>
+<%# imageタグの設定は問題なし（確認済み）%>
+<%# ロゴ下の説明はtext-shadowで影付きのフォントにする。leadはちょっと大きめフォントになるような設定（Bootstrap）%>
+  <div class="container-fluid d-flex flex-column align-items-center justify-content-center" style="height: 100%; position: relative; z-index: 2;">
+    <%= image_tag("aomoringolab_hakase.png", alt: "りんご博士", class: "ringohakase img-fluid", style: "max-width: 200px; height: auto;") %>
+    <%= image_tag("logolink_for_top.png", alt: "ロゴリンク", class: "logolink img-fluid") %>
+    <p class="lead fs-4 fs-sm-5 fs-md-6 fs-lg-5" style="color: #186779; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">りんごの魅力・アイディアをラボから発信</p>
+    <p class="lead fs-4 fs-sm-5 fs-md-6 fs-lg-5" style="color: #186779; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">〜青森とりんごを愛するみんなでつながろう盛り上げよう〜</p>
+  </div>
+  <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.0); z-index: 1;"></div>
+</header>
 
-  <body>
-    <header 
-      class="text-white text-center"
-      style="
-        background-image: url(<%= asset_path('aomoringolab_top.jpg') %>);
-        background-size: cover;
-        background-position: center;
-        min-height: 50vh;
-        padding-bottom: 5rem;
-        position: relative;
-      "
-    >
-      <div class="container-fluid d-flex flex-column align-items-center justify-content-center" style="height: 100%; position: relative; z-index: 2;">
-        <%= image_tag("aomoringolab_hakase.png", alt: "りんご博士", class: "ringohakase img-fluid", style: "max-width: 200px; height: auto;") %>
-        <h3 class="display-4" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">ようこそアオモリンゴラボへ</h3>
-        <p class="lead" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">りんごの魅力・アイディアをラボから発信</p>
-        <p class="lead" style="color: #186779; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">〜青森とりんごを愛する農家と消費者みんなでつながろう盛り上げよう〜</p>
-      </div>
-      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.0); z-index: 1;"></div>
-    </header>
-
-    <main class="container-xl px-4">
-      <div class="row justify-content-center g-4">
-        <%# 各カードブロック %>
-        <div class="col-12 col-sm-6 col-md-4 mb-4">
-          <%= link_to guest_sign_in_path, method: :post, class: "card custom-card text-center h-100", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-              <h5 class="card-title">ゲストユーザーログイン</h5>
-            </div>
-          <% end %>
-          <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントを作らずまずはお試ししてみたい方はこちら</p>
+<%# container-xl: Bootstrapのコンテナ利用で画面の幅に合わせて自動的に中央揃え＆余白つきのレイアウトにする。 %>
+<%# g-4: Bootstrapのgapユーティリティを使い、グリッド間のスペースが上下左右とも4（=1.5rem）の余白ができるようにする。%>
+<main class="container-xl px-4">
+  <div class="row justify-content-center g-4">
+    <%# カードのサイズ設定col-12: スマホ（極小）で1列（100%）、col-sm-6: 小画面以上では2列（50%）で表示、col-md-4: 中画面以上で3列（33.3%）表示　%>
+    <div class="col-12 col-sm-6 col-md-4 mb-4">
+      <%= link_to guest_sign_in_path, method: :post, class: "card text-center", style: "background-color: #589ec1; color: white; text-decoration: none; min-height: 100px;" do %>
+        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+          <h5 class="card-title">ゲストユーザーログイン</h5>
         </div>
+      <% end %>
+      <%# text-mutedはグレー文字（Bootstrapの淡色テキスト）%>
+      <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントを作らずまずはお試しの方はこちら</p>
+    </div>
 
-        <div class="col-12 col-sm-6 col-md-4 mb-4">
-          <%= link_to new_user_session_path, class: "card custom-card text-center h-100", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-              <h5 class="card-title">ログイン</h5>
-            </div>
-          <% end %>
-          <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントをお持ちの方はこちら</p>
+    <div class="col-12 col-sm-6 col-md-4 mb-4">
+      <%= link_to new_user_session_path, class: "card text-center h-auto", style: "background-color: #589ec1; color: white; text-decoration: none; min-height: 100px;" do %>
+        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+          <h5 class="card-title">ログイン</h5>
         </div>
+      <% end %>
+      <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントをお持ちの方はこちら</p>
+    </div>
 
-        <div class="col-12 col-sm-6 col-md-4 mb-4">
-          <%= link_to new_user_registration_path, class: "card custom-card text-center h-100", style: "background-color: #589ec1; color: white; text-decoration: none;" do %>
-            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-              <h5 class="card-title">新規登録</h5>
-            </div>
-          <% end %>
-          <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントをお持ちでない方はこちらから登録ください</p>
+    <div class="col-12 col-sm-6 col-md-4 mb-4">
+      <%= link_to new_user_registration_path, class: "card text-center h-auto", style: "background-color: #589ec1; color: white; text-decoration: none; min-height: 100px;" do %>
+        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+          <h5 class="card-title">新規登録</h5>
         </div>
-      </div>
+      <% end %>
+      <p class="text-muted text-center" style="font-size: 0.9rem;">アカウントをお持ちでない方はこちらから登録ください</p>
+    </div>
+  </div>
 
-      <div class="row justify-content-center mt-5">
-        <div class="col-12 col-md-8">
-          <h2 class="mb-4">新着投稿</h2>
-          <%= render 'public/posts/index', posts: @posts %>
-        </div>
-      </div>
-    </main>
-  </body>
-</html>
+  <div class="row justify-content-center mt-5">
+    <div class="col-12 col-md-8">
+      <h2 class="mb-4">新着投稿</h2>
+      <%= render 'public/posts/index', posts: @posts %>
+    </div>
+  </div>
+</main>
