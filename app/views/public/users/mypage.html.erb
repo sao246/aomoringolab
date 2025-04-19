@@ -10,12 +10,13 @@
   <div class="row justify-content-center">
     <%# 左カラム:プロフィールを表示（固定） %>
     <%# グリッドシステムで、4/12カラム分をプロフィールに使用する。%>
-    <%# プロフィール欄は固定したいのでpostion-stickyで固定。%>
+    <%# プロフィール欄は固定したいのでposition-stickyで固定。%>
     <div class="col-12 col-md-4 col-lg-3">
       <div class="position-sticky" style="top: 180px;">
         <h4 class="m-4 text-left"><strong>ラボ会員情報</strong></h4>
         <div class="user-profile" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
           <div class="user-item" style="width: 100%; max-width: 100%; margin: 10px auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <%# プロフィール画像が添付されていればそれを表示、ない場合はデフォルトのnoimageの画像を表示させる。%>
             <% if current_user.profile_image.attached? %>
               <%= image_tag current_user.profile_image, width: 100, height: 100, style: "object-fit: cover; border-radius: 50%;" %>
             <% else %>
@@ -27,9 +28,10 @@
               <p>興味関心：自分が好きなタグを後ほどここに設定できるようにする。</p>
             </div>
             <div class='row'>
+            <%# マイページはログインユーザーしか表示されない。ただし、ゲストユーザーは編集されると困るのでcurrent_userがゲストユーザーではない場合に限り、ユーザー編集ボタンを表示。%>
               <% if current_user.email != "guest@example.com" %>
                 <%= link_to edit_user_path(current_user), class: "btn btn-outline-secondary btn-block" do %>
-                  <i class="fas fa-user-cog"></i>
+                  <i class="fas fa-user-cog">会員情報編集</i>
                 <% end %>
               <% end %>
             </div>
@@ -43,6 +45,7 @@
       <h4 style="text-align: center; border-bottom: 2px solid #ccc; padding-bottom: 8px; margin-bottom: 30px;">
         <strong>投稿一覧</strong>
       </h4> 
+      <%# 投稿一覧用部分テンプレートの呼び出し %>
       <%= render 'public/posts/index', posts: @posts %>
     </div>
   </div>

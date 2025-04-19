@@ -4,17 +4,18 @@
     <div class='col-md-8 offset-md-1'>
       <h2>投稿を編集</h2>
 
+      <%# タイトル編集 %>
       <%= form_with model: @post, local: true do |f| %>
         <div class="form-group m-4">
           <%= f.label :title, "投稿タイトル" %>
           <%= f.text_field :title, class: 'form-control', value: @post.title %>
         </div>
-
+      <%# 本文編集 %>
         <div class="form-group m-4">
           <%= f.label :body, "投稿本文" %>
           <%= f.text_area :body, class: 'form-control', value: @post.body %>
         </div>
-
+      <%# 画像添付 %>
         <div class="form-group m-4">
           <i class="fa-solid fa-paperclip"></i><h4>画像を再選択する場合は、こちらから</h4>
           <%= f.file_field :image, accept: "image/*" %>

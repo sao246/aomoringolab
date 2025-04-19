@@ -7,6 +7,7 @@
       <h4 class="mb-4" style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>投稿詳細</strong></h4>
       <p class="d-flex align-items-center gap-2 mb-3">
         <%# プロフィール写真の追加 %>
+        <%# プロフィール画像が添付されていればそれを表示、ない場合はデフォルトのnoimageの画像を表示させる。%>
         <% if @post.user.profile_image.attached? %>
           <%= image_tag @post.user.profile_image, width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
         <% else %>

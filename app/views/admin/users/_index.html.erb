@@ -1,4 +1,3 @@
-<%# 検索結果表示用の部分テンプレート %>
 <div class="container my-4">
   <div style="max-height: 600px; overflow-y: auto; border: 1px solid #ccc; border-radius: 8px; max-width: 1000px; margin: 0 auto;">
     
@@ -12,15 +11,18 @@
     <% users.each do |user| %>
       <div style="display: flex; padding: 20px; border-bottom: 1px solid #ddd; background-color: #fff;">
         <div style="width: 100px;">
+        <%# プロフィール画像が添付されていればそれを表示、ない場合はデフォルトのnoimageの画像を表示させる。%>
           <% if user.profile_image.attached? %>
             <%= image_tag user.profile_image, width: 60, height: 60, style: "object-fit: cover; border-radius: 50%; border: 1px solid #ccc;" %>
           <% else %>
             <%= image_tag 'profile_noimage.jpg', width: 60, height: 60, style: "object-fit: cover; border-radius: 50%; border: 1px solid #ccc;" %>
           <% end %>
         </div>
+        <%# ユーザー名リンク %>
         <div style="flex: 1;">
           <%= link_to user.name, admin_user_path(user), style: "text-decoration: none; color: #007bff; font-weight: 500;" %>
         </div>
+        <%# 会員ステータス %>
         <div style="width: 150px;">
           <%= I18n.t("enums.user.status.#{user.status}") %>
         </div>

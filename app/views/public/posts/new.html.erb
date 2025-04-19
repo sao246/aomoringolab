@@ -2,14 +2,16 @@
   <%= form_with model:@post do |f| %>
     <%= render 'layouts/errors', resource:@post %>
     <div class="form-group m-4 text-left">
+    <%# 投稿タイトルフォーム %>
       <strong><%= f.label :title, "投稿タイトル" %></strong>
       <%= f.text_field :title, class: 'form-control post_title' %>
     </div>
+    <%# 投稿本文フォーム %>
     <div class="form-group m-4 text-left">
       <strong><%= f.label :body, "投稿本文" %></strong>
       <%= f.text_area :body, class: 'form-control post_body' %>
     </div>
-
+    <%# 投稿画像添付フォーム %>
     <div class="form-group m-4 text-left">
       <i class="fa-solid fa-paperclip"></i>
       <%= f.file_field :image, accept: "image/*" %>

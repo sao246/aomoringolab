@@ -1,4 +1,6 @@
 <div style="text-align: end; padding-bottom: 8px; margin-bottom: 30px;">
+<%# 投稿検索の部分テンプレートを呼び出し %>
   <%= render 'admin/search/post_form' %>
 </div>
+<%# 投稿一覧画面の部分テンプレートを呼び出し %>
 <%= render 'admin/posts/index', posts: @posts %>
