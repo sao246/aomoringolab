@@ -48,7 +48,7 @@ class Public::PostsController < ApplicationController
   def update
     #set_postメソッドを用意しているので個別の変数設定は不要。
     if @post.update(post_params)
-      redirect_to posts_path, notice: '投稿を更新しました。'
+      redirect_to post_path(@post.id), notice: '投稿を更新しました。'
     else
       render :edit
     end

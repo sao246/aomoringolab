@@ -40,15 +40,10 @@ class User < ApplicationRecord
   end
 
   # 検索ボックス追加用のメソッド 2025/04/14
+  # 部分一致検索だけ、名前かemail検索ができるように変更。2025/04/19
   def self.search_for(content, method)
-    if method == 'perfect'
-      User.where(name: content)
-    elsif method == 'forward'
-      User.where('name LIKE ?', content + '%')
-    elsif method == 'backward'
-      User.where('name LIKE ?', '%' + content)
-    else
-      User.where('name LIKE ?', '%' + content + '%')
+    if method == 'partial'
+      User.where('name LIKE :q OR email LIKE :q', q: "%#{content}%")
     end
   end
   
