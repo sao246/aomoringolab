@@ -1,29 +1,35 @@
+<%# エラー処理 %>
 <%= render 'layouts/errors', resource: @post %>
 
 <div class="container my-4">
   <div class="row justify-content-center">
     <div class="col-md-10 col-lg-8">
-      <h2 class="mb-4" style="border-bottom: 2px solid #ccc; padding-bottom: 8px;">投稿詳細</h2>
-
+      <h4 class="mb-4" style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>投稿詳細</strong></h4>
       <p class="d-flex align-items-center gap-2 mb-3">
+        <%# プロフィール写真の追加 %>
+        <%# プロフィール画像が添付されていればそれを表示、ない場合はデフォルトのnoimageの画像を表示させる。%>
         <% if @post.user.profile_image.attached? %>
           <%= image_tag @post.user.profile_image, width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
         <% else %>
           <%= image_tag 'profile_noimage.jpg', width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
         <% end %>
-        <strong><%= @post.user.name %>さんの投稿</strong>
+        <strong><%= link_to @post.user.name, admin_user_path(@post.user.id) %>さんの投稿</strong>
       </p>
-
-      <h4 class="mb-3"><%= @post.title %></h4>
-
+      <%# 投稿タイトル %>
+      <h5 class="mb-3"><strong><%= @post.title %></strong></h5>
+      <%# 投稿画像があれば追加 %>
       <% if @post.image.attached? %>
         <div class="mb-3">
           <%= image_tag @post.image, class: "img-fluid", style: "max-width: 100%; height: auto;" %>
         </div>
       <% end %>
-
-      <p class="mb-4"><%= simple_format(@post.body) %></p>
-
+      <div class="post-body" style="font-size: 1.2em; color: #333;">
+        <%# 投稿本文 %>
+        <p class="mb-4"><%= simple_format(@post.body) %></p>
+        <%# 投稿日付 %>
+        <h6>投稿日：<%= @post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= @post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
+      </div>
+      <%# 削除ボタンを表示%>
       <div class="d-flex justify-content-end mb-4">
         <%= link_to '投稿を削除する', admin_post_path(@post), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
       </div>

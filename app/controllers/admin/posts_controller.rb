@@ -2,7 +2,7 @@ class Admin::PostsController < ApplicationController
   # パラメータ設定の処理追加
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   # ログインしていない人への処理制御
-  before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy, :index, :show]
   def index
     @posts = Post.all.order(created_at: :desc)
   end

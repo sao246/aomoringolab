@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   namespace :admin do
+    get 'trends/index'
+  end
+  namespace :admin do
     get 'search/index'
   end
   # Public（エンドユーザー）用のルーティング

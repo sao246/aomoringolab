@@ -13,11 +13,7 @@ ja:
         body: "本文"
       comment:
         body: "コメント"
-  enums:
-    user:
-      status:
-        active: "アクティブ"
-        deactivated: "退会済"
+
     errors:
       models:
         user:
@@ -50,6 +46,11 @@ ja:
             body:
               blank: "を入力してください"
               too_long: "は%{count}文字以内で入力してください"
+  enums:
+    user:
+      status:
+        active: "アクティブ"
+        deactivated: "退会済"
 
   devise:
     failure:

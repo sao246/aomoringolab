@@ -1,37 +1,39 @@
-<%= render 'admin/search/post_form' %>
-
+<%# 投稿一覧表示用の部分テンプレート %>
 <h4 style="text-align: center; border-bottom: 2px solid #ccc; padding-bottom: 8px; margin-bottom: 30px;">
   <strong>投稿一覧</strong>
 </h4>
 
 <div class="post-list" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
   <% posts.each do |post| %>
-    <div class="post-item" style="width: 1000px; margin: 10px; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+     <div class="post-item" style="max-width: 90%; width: 1000px; margin: 10px auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
       <div class="post-user" style="font-weight: bold; margin-bottom: 10px;">
         <p>
+          <%# プロフィール画像が添付されていればそれを表示、ない場合はデフォルトのnoimageの画像を表示させる。%>
           <% if post.user.profile_image.attached? %>
             <%= image_tag post.user.profile_image, width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
           <% else %>
             <%= image_tag 'profile_noimage.jpg', width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
           <% end %>
-          <%= post.user.name %>
+          <%= link_to post.user.name, admin_user_path(post.user.id) %>
         </p>
       </div>
-
+      <%# 投稿タイトル %>
       <div class="post-title" style="font-size: 1.2em; color: #333;">
         <%= link_to post.title, admin_post_path(post) %><br>
         <% if post.image.attached? %>
-          <%= image_tag post.image, size: '400x300' %>
+          <%= image_tag post.image, style: "width: 100%; height: auto; border-radius: 4px;" %>
         <% end %>
       </div>
-
-      <div class="post-body" style="margin-top: 10px;">
+      <%# 投稿本文 %>
+      <div class="post-body" style="font-size: 1.0em; color: #333;">
         <%= post.body %><br>
+        <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
       </div>
+    </div>
 
-      <div class="post-actions" style="margin-top: 10px;">
-        <!-- 他のアクション（いいね、コメント数の表示）を後ほど追加する。 -->
-      </div>
+    <%# そのほかいいね等のアクション処理 %>
+    <div class="post-actions" style="margin-top: 10px;">
+      <!-- 他のアクション（いいね、コメント数の表示）を後ほど追加する。 -->
     </div>
   <% end %>
 </div>
