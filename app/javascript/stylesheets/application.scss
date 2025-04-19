@@ -1,26 +1,6 @@
 @use '~bootstrap/scss/bootstrap';
-@media (max-width: 768px) {
-  .custom-card {
-    margin-bottom: 1.5rem; /* 下部の余白を調整 */
-    padding: 1.5rem; /* カード内部のパディングを増やす */
-  }
-
-  .card {
-    width: 100%; /* 幅を100%にして、カードが画面幅に収まるようにする */
-  }
-}
-
-@media (max-width: 576px) {
-  .custom-card {
-    margin-bottom: 1rem; /* さらに狭いデバイス向けに余白を調整 */
-  }
-
-  .card {
-    width: 100%; /* 幅を100%にして、モバイル画面に最適化 */
-  }
-}
-
-/* レスポンシブ対応 */
+/* マイページとヘッダーのレスポンシブ対応 */
+/* sticky-top 画面上でスクロールしても固定表示となるようにする設定詳しくはビューの設定を確認する。 */
 @media (max-width: 767px) {
   .sticky-top {
     top: 40px; /* 小さい画面での調整 */
@@ -30,44 +10,42 @@
     top: 100px; /* プロフィールの位置を調整 */
   }
 }
-  /* ハンバーガーメニュー */
+
+/* ハンバーガーメニューに関する個別設定*/
+/* ハンバーガーメニューの背景色をヘッダーの色に合わせて設定する。*/
   .navbar-toggler {
     background-color: #218838;
   }
 
-  /* プルダウンメニューの背景 */
+/* ハンバーガーでプルダウンメニューを開いた際の背景色もヘッダーの設定に合わせる。 */
   .navbar-collapse {
     background-color: #218838;
   }
-
+/* プルダウンは背景色だけでなく、要素の背景色も変えないと違和感あるので合わせる。 */
   .navbar-nav .nav-item {
     background-color: #218838;
   }
-
-  /* プルダウンメニュー項目が選択時に背景色を維持 */
+/* プルダウンメニュー項目が選択時に背景色を維持 */
   .navbar-nav .nav-item:hover {
     background-color: #218838;
   }
-
-  /* メニュー項目の文字色が白のままで表示されるように */
+/* メニュー項目の文字色が白のままで表示されるように設定 */
   .navbar-nav .nav-link {
     color: white !important;
   }
-
-  /* メニュー項目のホバー時の文字色 */
+/* メニュー項目のホバー時（カーソル当て時）の文字色 */
   .navbar-nav .nav-link:hover {
     color: #fff !important;
   }
 
-  /* ロゴリンクのサイズ調整　*/
+/* ロゴリンクのサイズ調整 最大幅を240pxにする。画像の縦横比は変わらないようにheight :autoで設定。 */
   .logo-img {
     width: 100%;
     max-width: 240px; // PCではこの最大サイズまで
     height: auto;
     display: block;
   }
-  
-  // スマホ（画面幅768px以下）のときは少しだけ縮小
+  /* スマホ（画面幅768px以下）のときは少しだけ縮小。最大幅160pxにする。 */
   @media (max-width: 768px) {
     .logo-img {
       max-width: 160px;

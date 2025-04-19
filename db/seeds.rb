@@ -6,11 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# 管理者ログインアカウント作成
 Admin.create!(
   email: "admin@example.com",
   password: "password123",
   password_confirmation: "password123"
 )
+
 # 農家ユーザー作成
 farmers = [
   { name: "頑張る農家", email: "farmer1@email", introduction: "弘前市で農家をやっています。" },
@@ -20,10 +22,11 @@ farmers = [
   { name: "りんご一筋", email: "farmer5@email", introduction: "板柳町の農家です。" }
 ]
 
+# ここでDBに登録。（画像添付も行う）
 farmers.each do |user_data|
   # メールアドレスの先頭部分（@の前）を取り出して、それに"password"を追加
   user_prefix = user_data[:email].split('@').first
-  generated_password = "#{user_prefix}password"  # 例: "farmer1password"
+  generated_password = "#{user_prefix}password"
   
   # ユーザー作成
   user = User.create!(user_data.merge(password: generated_password))  
@@ -49,6 +52,7 @@ fans = [
   { name: "りんご留学生", email: "fan6@email", introduction: "台湾から来ました。大学で留学しています。りんご生産に興味あり、農家のお手伝いをしています。" }
 ]
 
+# ここでDBに登録。（画像添付も行う）
 fans.each do |user_data|
   # メールアドレスの先頭部分（@の前）を取り出して、それに"password"を追加
   user_prefix = user_data[:email].split('@').first
@@ -66,23 +70,25 @@ fans.each do |user_data|
   end
 end
 
-# 投稿
-# 愛好家チームの投稿データ
+# 投稿・投稿コメントデータの作成
+
+# 愛好家のアカウントをDB登録順に変数格納。（農家の方は投稿ごとに先に設定を入れてしまったので問題なし）
 fan_users = User.where("email LIKE ?", "fan%").order(:id)
+
 # 農家太郎（弘前市）の投稿
 farmer1 = User.find_by(email: 'farmer1@email') # 農家太郎
 post1 = Post.create!(
   user_id: farmer1.id,
   title: "摘果作業が始まりました",
-  body: "今年もいよいよ摘果作業の季節。無駄な実を落とすことで、残るりんごがしっかり育ってくれます。",
-  created_at: Time.new(2024, 5, 15)
+  body: "GWも終わり、今年もいよいよ摘果作業の季節。無駄な実を落とすことで、残るりんごがしっかり育ってくれます。",
+  created_at: Time.new(2024, 5, 15),
+  updated_at: Time.new(2024, 5, 15)
 )
 image_path = Rails.root.join("app", "assets", "images", "tekika.jpg")
 if File.exist?(image_path)
   post1.image.attach(io: File.open(image_path), filename: "tekika.jpg")
   puts "Image attached to post 1"
 end
-
 # コメントを追加
 Comment.create!(
   post: post1,
@@ -99,15 +105,20 @@ Comment.create!(
   updated_at: Time.new(2024, 5, 16)
 )
 
-# 農家花子（黒石市）の投稿
-farmer2 = User.find_by(email: 'farmer2@email') # 農家花子
+# 農家はなこ（黒石市）の投稿
+farmer2 = User.find_by(email: 'farmer2@email') # 農家はなこ
 post2 = Post.create!(
   user_id: farmer2.id,
   title: "害虫対策奮闘中",
-  body: "今年はカメムシが多くて葉っぱに被害が出ています。防除のタイミングが重要で、例年以上に気を使っています。",
-  created_at: Time.new(2024, 4, 25)
+  body: "こんにちは。先日農作業の合間にお休みを取って弘前公園へ行ってきました。弘前の桜は最高ですね。今年はカメムシが多くて葉っぱに被害が出ています。防除のタイミングが重要で、例年以上に気を使っています。写真はカメムシ、ではなく桜の綺麗な写真です笑",
+  created_at: Time.new(2024, 4, 25),
+  updated_at: Time.new(2024, 4, 25)
 )
-
+image_path = Rails.root.join("app", "assets", "images", "hirosaki1.jpg")
+if File.exist?(image_path)
+  post2.image.attach(io: File.open(image_path), filename: "hirosaki1.jpg")
+  puts "Image attached to post 1"
+end
 # コメントを追加
 Comment.create!(
   post: post2,
@@ -118,21 +129,21 @@ Comment.create!(
 )
 Comment.create!(
   post: post2,
-  user_id: farmer2.id,
+  user_id: farmer1.id,
   body: "今年は例年に比べて多いですね。互いに頑張りましょう！！",
   created_at: Time.new(2024, 4, 26),
   updated_at: Time.new(2024, 4, 26)
 )
 
-# 山の上農園（西目屋村）の投稿
-farmer3 = User.find_by(email: 'farmer3@email') # 山の上農園
+# りんご一筋の投稿
+farmer5 = User.find_by(email: 'farmer5@email') # りんご一筋
 post3 = Post.create!(
-  user_id: farmer3.id,
+  user_id: farmer5.id,
   title: "霜対策・ミツバチとの共生",
   body: "霜対策には防霜ファンと囲いを活用しています。ミツバチとの共生が作物の品質にも大きく影響します。",
-  created_at: Time.new(2024, 3, 10)
+  created_at: Time.new(2024, 3, 10),
+  updated_at: Time.new(2024, 3, 10)
 )
-
 # コメントを追加
 Comment.create!(
   post: post3,
@@ -145,12 +156,12 @@ Comment.create!(
 # 石川農園の投稿
 farmer4 = User.find_by(email: 'farmer4@email') # 石川農園
 post4 = Post.create!(
-  user_id: 3,
+  user_id: 4,
   title: "子供と一緒の農作業体験いかがですか？",
   body: "今年も子供と一緒に農作業をしています。石川農園ではボランティアでりんごの収穫体験もできます。体験は9月15日頃より開始予定です。詳しくはプロフィールのお問合せ先よりご連絡ください。皆さんのご参加お待ちしております〜！",
-  created_at: Time.new(2024, 8, 15)
+  created_at: Time.new(2024, 8, 15),
+  updated_at: Time.new(2024, 8, 15)
 )
-
 # コメントを追加
 Comment.create!(
   post: post4,
@@ -167,20 +178,20 @@ Comment.create!(
   updated_at: Time.new(2024, 8, 16)
 )
 
-# りんご一筋（鶴田町）の投稿
-farmer5 = User.find_by(email: 'farmer5@email') # りんご一筋
+# 山の上農園（西目屋村）の投稿
+farmer3 = User.find_by(email: 'farmer3@email') # 山の上農園
 post5 = Post.create!(
-  user_id: farmer5.id,
+  user_id: farmer3.id,
   title: "色付きチェック・糖度チェック",
-  body: "今年のりんごは色付きも良好で、糖度も順調に上がっています。もう少しで収穫です。9月25日から道の駅つがるにて直売も開始します！",
-  created_at: Time.new(2024, 9, 20)
+  body: "今年のりんごは色付きも良好で、糖度も順調に上がっています。もう少しで収穫です。9月25日から道の駅つがるにて直売も開始します！直売情報はリンゴラボの投稿でもお知らせいたします。",
+  created_at: Time.new(2024, 9, 20),
+  updated_at: Time.new(2024, 9, 20)
 )
 image_path = Rails.root.join("app", "assets", "images", "chokubaijo.jpg")
 if File.exist?(image_path)
   post5.image.attach(io: File.open(image_path), filename: "chokubaijo.jpg")
   puts "Image attached to post 5"
 end
-
 # コメントを追加
 Comment.create!(
   post: post5,
@@ -190,13 +201,56 @@ Comment.create!(
   updated_at: Time.new(2024, 9, 21)
 )
 
+# 山の上農園の投稿
+farmer4= User.find_by(email: 'farmer4@email') # 山の上農園
+post6 = Post.create!(
+  user_id: farmer4.id,
+  title: "マメコバチの受粉",
+  body: "こんにちは、山の上農園です。
+りんごの花が満開のこの季節、僕らの畑では“マメコバチ”たちが大活躍中です。
+ミツバチに比べて体は小さいけれど、働きぶりはすごいんです。
+マメコバチは花の近くを地道にコツコツまわって、確実に受粉してくれます。
+特に寒い日や曇りの日でも動いてくれるのがありがたい。
+最近はミツバチの数が減ってきていることもあり、こういう在来種の存在がますます大事になってきてます。
+ちなみに、マメコバチは刺さないので人にも優しい！
+受粉の手助けをしてくれる小さなヒーローたちに感謝しながら、今日もりんごの花を見守ってます。",
+  created_at: Time.new(2024, 5, 1),
+  updated_at: Time.new(2024, 5, 1)
+)
+image_path = Rails.root.join("app", "assets", "images", "aomoringolab_other1.jpg")
+if File.exist?(image_path)
+  post6.image.attach(io: File.open(image_path), filename: "aomoringolab_other1.jpg")
+  puts "Image attached to post 5"
+end
+# コメントを追加
+Comment.create!(
+  post: post6,
+  user_id: fan_users[3].id, # 愛好家ユーザーID
+  body: "受粉にはマメコバチが働いてくれてるんですね！子供にも教えたいと思います！",
+  created_at: Time.new(2024, 5, 2),
+  updated_at: Time.new(2024, 5, 2)
+)
+Comment.create!(
+  post: post6,
+  user_id: fan_users[4].id, # 愛好家ユーザーID
+  body: "さすがマメコバチ。働き蜂ですね〜りんごを支えてます。",
+  created_at: Time.new(2024, 5, 2),
+  updated_at: Time.new(2024, 5, 2)
+)
+
 # アップルパイは弘前で決まり！
 post1 = Post.create!(
   user_id: fan_users[0].id,
   title: "アップルパイは弘前で決まり！",
-  body: "久々に弘前を訪れました！3軒はしごして食べ比べ🍎してみました。ふじを使ったタイプが美味しかったです〜。",
-  created_at: Time.new(2024, 5, 15)
+  body: "久々に弘前を訪れました！3軒はしごして食べ比べしてみました。ふじを使ったタイプが美味しかったです〜。",
+  created_at: Time.new(2024, 5, 15),
+  updated_at: Time.new(2024, 5, 15)
 )
+image_path = Rails.root.join("app", "assets", "images", "applepie.jpg")
+if File.exist?(image_path)
+  post1.image.attach(io: File.open(image_path), filename: "applepie.jpg")
+  puts "Image attached to post 3"
+end
 # コメントを追加
 Comment.create!(
   post: post1,
@@ -210,8 +264,9 @@ Comment.create!(
 post2 = Post.create!(
   user_id: fan_users[4].id,
   title: "珍しい品種の食べ比べ会レポ",
-  body: "アオモリンゴラボのイベント食べ比べ会に今年も参加してきました！星の金貨・つがる姫・こうとく、どれも個性があって面白い！",
-  created_at: Time.new(2024, 9, 30)
+  body: "アオモリンゴラボのイベント食べ比べ会に今年も参加してきました！星の金貨・彩香・ジョナゴールド、どれも個性があって面白い！",
+  created_at: Time.new(2024, 9, 30),
+  updated_at: Time.new(2024, 9, 30)
 )
 # コメントを追加
 Comment.create!(
@@ -222,12 +277,13 @@ Comment.create!(
   updated_at: Time.new(2024, 10, 1)
 )
 
-# 岩木さんとりんご畑を撮る
+# 岩木山とりんご畑を撮る
 post3 = Post.create!(
   user_id: fan_users[2].id,
   title: "岩木山とりんご畑",
   body: "このアングルからの岩木山とりんご畑の組み合わせは絶景そのもの。今年も来れて良かった。山の上農園さんにお世話になっています。",
-  created_at: Time.new(2024, 10, 20)
+  created_at: Time.new(2024, 10, 20),
+  updated_at: Time.new(2024, 10, 20)
 )
 image_path = Rails.root.join("app", "assets", "images", "mt_iwaki.jpg")
 if File.exist?(image_path)
@@ -254,8 +310,9 @@ Comment.create!(
 post4 = Post.create!(
   user_id: fan_users[3].id,
   title: "農業体験で子供も大興奮",
-  body: "石川農園さんにて収穫体験させていただきました。子供も手が土だらけになっても笑顔！一緒にりんごの重さも測りました。",
-  created_at: Time.new(2024, 9, 30)
+  body: "石川農園さんにて収穫体験させていただきました。子供も終始楽しく作業！一緒にりんごの重さも測りました。",
+  created_at: Time.new(2024, 9, 30),
+  updated_at: Time.new(2024, 9, 30)
 )
 # コメントを追加
 Comment.create!(
@@ -265,13 +322,21 @@ Comment.create!(
   created_at: Time.new(2024, 10, 1),
   updated_at: Time.new(2024, 10, 1)
 )
+Comment.create!(
+  post: post4,
+  user_id: farmer4.id, # 農家ユーザーID
+  body: "りんご親子さん、先日は収穫体験にご参加いただきありがとうございました。楽しく作業いただいたようで私も嬉しいです。",
+  created_at: Time.new(2024, 10, 2),
+  updated_at: Time.new(2024, 10, 2)
+)
 
 # 王林の香りにやられた
 post5 = Post.create!(
   user_id: fan_users[1].id,
   title: "王林の香りにやられた",
   body: "他のりんごにはない独特の芳香、ついついリピ買いしちゃいます。アップルパイも作ろうかな。いいレシピがあれば教えて下さい〜",
-  created_at: Time.new(2024, 9, 20)
+  created_at: Time.new(2024, 9, 20),
+  updated_at: Time.new(2024, 9, 20)
 )
 # コメントを追加
 Comment.create!(
@@ -294,7 +359,8 @@ post6 = Post.create!(
   user_id: fan_users[5].id,
   title: "農家のボランティア",
   body: "リンゴラボの投稿を見て、山の上農園さんにお手伝いに行きました。台湾でもりんごは人気ですがその生産はたくさんの努力があったことを初めて学びました。弘前のりんご農家さんの丁寧な作業あっての美味しいりんごなのだと改めて感じました。",
-  created_at: Time.new(2024, 10, 10)
+  created_at: Time.new(2024, 10, 10),
+  updated_at: Time.new(2024, 10, 10)
 )
 # コメントを追加
 Comment.create!(
