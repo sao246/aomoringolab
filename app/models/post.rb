@@ -15,15 +15,10 @@ class Post < ApplicationRecord
   validates :user_id, presence: true
 
   # 検索ボックス追加用のメソッド 2025/04/14
+  # 部分一致検索だけ、投稿本文かタイトルのキーワード検索ができるように変更。2025/04/19
   def self.search_for(content, method)
-    if method == 'perfect'
-      Post.where(title: content)
-    elsif method == 'forward'
-      Post.where('title LIKE ?', content+'%')
-    elsif method == 'backward'
-      Post.where('title LIKE ?', '%'+content)
-    else
-      Post.where('title LIKE ?', '%'+content+'%')
+    if method == 'partial'
+      Post.where('title LIKE :q OR body LIKE :q', q: "%#{content}%")
     end
   end
 

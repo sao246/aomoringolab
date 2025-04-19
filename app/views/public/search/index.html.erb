@@ -3,8 +3,8 @@
   <% if @records.present? %>
     <% if @model == 'post' %>
       <h5>投稿の検索 "<%= @content %>"</h5>
-      <%= render 'public/posts/index', posts: @records %>
       <%= link_to "投稿一覧に戻る", posts_path %>
+      <%= render 'public/posts/index', posts: @records %>
     <% end %>
   <% elsif @content.present? %>
     <% if @model == 'post' %>
