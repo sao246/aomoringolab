@@ -1,9 +1,12 @@
+<%# 投稿一覧表示用の部分テンプレート %>
 <div class="post-list" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
   <% posts.each do |post| %>
 
+    <%# ユーザープロフィール画像と、名前の表示%>
     <div class="post-item" style="max-width: 90%; width: 1000px; margin: 10px auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
       <div class="post-user" style="font-weight: bold; margin-bottom: 10px;">
         <p>
+          <%# プロフィール画像が添付されていればそれを表示、ない場合はデフォルトのnoimageの画像を表示させる。%>
           <% if post.user.profile_image.attached? %>
             <%= image_tag post.user.profile_image, width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
           <% else %>
@@ -12,6 +15,7 @@
           <%= link_to post.user.name, user_path(post.user.id) %>
         </p>
       </div>
+
       <%# 投稿タイトル %>
       <div class="post-title" style="font-size: 1.2em; color: #333;">
         <strong><%= link_to post.title, post %></strong><br>
@@ -21,6 +25,7 @@
           </div>
         <% end %>
       </div>
+
       <%# 投稿本文 %>
       <div class="post-body" style="font-size: 1.0em; color: #333; margin-top: 10px;">
         <%= post.body %><br>
@@ -28,6 +33,7 @@
       </div>
     </div>
 
+    <%# そのほかいいね等のアクション処理 %>
     <div class="post-actions" style="margin-top: 10px;">
       <!-- 他のアクション（いいね、コメント数の表示）を後ほど追加する。 -->
     </div>

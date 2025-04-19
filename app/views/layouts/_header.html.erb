@@ -13,6 +13,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
+          <%# ユーザーログイン時の設定 %>
           <% if user_signed_in? %>
             <%# 新規投稿ボタンの位置を調整 2025/04/14%>
             <div class="search-form" style="display: flex; justify-content: left; flex-wrap: wrap; margin-top: 5px; margin-right: 10px">
@@ -44,6 +45,7 @@
               <% end %>
             </li>
             </div>
+          <%# adminログイン時の設定 %>
           <% elsif admin_signed_in? %>
             <li class="nav-item">
               <%= link_to admin_homes_top_path, class: 'nav-link text-light' do %>
@@ -71,6 +73,7 @@
               <% end %>
             </li>
             </div>
+          <%# それ以外（ログアウト時）の設定 %>
           <% else %>
             <li class="nav-item">
               <%= link_to root_path, class: 'nav-link text-light' do %>

@@ -3,25 +3,32 @@
     <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
     <h2 class="m-4">会員情報の編集</h2>
     <%= form_with model:@user, local:true do |f| %>
+      <%# エラーメッセージ処理%>
       <%= render 'layouts/errors', resource: @user %>
       <div class="form-group">
+      <%# アカウント名設定フォーム %>
         <%= f.label :name, "アカウント名" %>
         <%= f.text_field :name, class: "form-control name" %>
       </div>
+      <%# 自己紹介設定フォーム %>
       <div class="form-group">
         <%= f.label :introduction, "自己紹介" %>
         <%= f.text_area :introduction, class: "form-control introduction" %>
       </div>
+      <%# プロフィール画像設定フォーム %>
       <div>
         <%= f.label :profile_image, "プロフィール画像" %><br>
         <%= f.file_field :profile_image %>
       </div>
+      <%# 更新処理 %>
       <div class="form-group m-4">
         <%= f.submit "プロフィール情報を更新", class: 'btn btn-sm', style: "background-color: #66cdaa ; color: white;" %>
       </div>
+      <%# 戻るボタン %>
       <div class="form-group m-4">
         <%= link_to "<<会員情報詳細ページへ戻る", user_path(current_user), class: 'btn btn-sm btn-secondary' %>
       </div>
+      <%# 退会処理画面へ進むボタン %>
       <div class="form-group m-4">
         <%= link_to "アオモリンゴラボを退会する", unsubscribe_user_path(current_user), class: 'btn btn-sm btn-danger' %>
       </div>
