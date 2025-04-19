@@ -1,7 +1,6 @@
 <%# マイページのタイトル部分が固定になるようにsticky-topで設定。%>
-<%# 添付の画像が透けて見えるように、背景色を設定。%>
 <div class="sticky-top" style="background-image: url('/assets/aomoringolab_profile.jpg'); background-size: cover; background-position: top; z-index: 1040; top: 80px; width: 100% height: 300px;">
-  <div class="text-center py-3" style="background-color: rgba(255, 255, 255, 0.7);">
+  <div class="text-center py-3">
     <h1>ラボ会員のページ</h1>
   </div>
 </div>
@@ -17,6 +16,7 @@
         <h4 class="m-4"><strong>会員情報</strong></h4>
         <div class="user-profile" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
           <div class="user-item" style="width: 1000px; margin: 10px; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <%# プロフィール画像が添付されていればそれを表示、ない場合はデフォルトのnoimageの画像を表示させる。%>
             <% if @user.profile_image.attached? %>
               <%= image_tag @user.profile_image, width: 100, height: 100, style: "object-fit: cover; border-radius: 50%;" %>
             <% else %>
@@ -28,6 +28,7 @@
               <p>興味関心：自分が好きなタグを後ほどここに設定できるようにする。</p>
             </div>
             <div class='row'>
+              <%# 当画面自体がadmin権限でログインした場合のみしか閲覧できないようにコントローラ側で制御実装済み。ゲストユーザーへの制限のみ念の為かける。 %>
               <% if current_admin.email != "guest@example.com" %>
                   <%= link_to edit_admin_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
                   <i class="fas fa-user-cog"></i>

@@ -1,19 +1,21 @@
-  <% comments.each do |comment| %>
-    <div class="comment-item" style="width: 700px; margin: 5px; padding: 10px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-      <div class="comment" style="font-weight: bold; margin-bottom: 10px;">
-        <p>
-          <% if comment.user.profile_image.attached? %>
-            <%= image_tag comment.user.profile_image, width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
-          <% else %>
-            <%= image_tag 'profile_noimage.jpg', width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
-          <% end %>
-          <%= link_to comment.user.name, user_path(comment.user)%>
-        </p>
+<% comments.each do |comment| %>
+  <div class="comment-item" style="max-width: 90%; margin: 10px auto; padding: 10px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+    <div class="comment" style="margin-bottom: 10px;">
+      <p>
+        <% if comment.user.profile_image.attached? %>
+          <%= image_tag comment.user.profile_image, width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
+        <% else %>
+          <%= image_tag 'profile_noimage.jpg', width: 50, height: 50, style: "object-fit: cover; border-radius: 50%;" %>
+        <% end %>
+        <%= link_to comment.user.name, user_path(comment.user)%>
+      </p>
+      <div class="comment-body" style="font-size: 1.0em; color: #333;">
         <p><%= comment.body %></p>
         <p>投稿日：<%= comment.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= comment.updated_at.strftime("%Y年%m月%d日 %H:%M") %></p>
-        <% if comment.user.id == current_user.id %>
-          <%= link_to '投稿を削除する', post_comment_path(comment.post, comment), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
-        <% end %>
       </div>
+      <% if comment.user.id == current_user.id %>
+        <%= link_to '投稿を削除する', post_comment_path(comment.post, comment), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
+      <% end %>
     </div>
-  <% end %>
+  </div>
+<% end %>
