@@ -26,6 +26,8 @@
       <div class="post-body" style="font-size: 1.2em; color: #333;">
         <%# 投稿本文 %>
         <p class="mb-4"><%= simple_format(@post.body) %></p>
+        <%# Adminユーザーはいいね（りんご）カウント数のみ閲覧できるようにする（いいねはできない）%>
+        <%= @post.favorites.count %> <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i>
         <%# 投稿日付 %>
         <h6>投稿日：<%= @post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= @post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
       </div>

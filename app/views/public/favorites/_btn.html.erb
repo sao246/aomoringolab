@@ -1,16 +1,18 @@
-<!-- app/views/posts/show.html.erb など -->
-<% if user_signed_in? %>
-  <% if post.favorited_by?(current_user) %>
-    <%= link_to favorite_path(post), method: :delete, data: { confirm: "いいねを取り消しますか？" } do %>
-      <i class="fas fa-heart" aria-hidden="true"></i>
-      <%= post.favorites.count %>
-    <% end %>
-  <% else %>
-    <%= link_to favorite_path(post), method: :post do %>
-      <i class="fa-solid fa-apple-whole" style="color: #ee2f2f;", aria-hidden="true" ></i>
-      <%= post.favorites.count %>
-    <% end %>
+<%# いいね（りんご）ボタンの実装 2025/04/20 %>
+<%# favoriteモデルのメソッド呼び出しで、ログインユーザーが投稿にいいねをしているかを確認する。 %>
+<% if post.favorited_by?(current_user) %>
+<% favorite = post.favorites.find_by(user_id: current_user.id) %>
+<%# いいね解除のロジック  %>
+  <%= link_to post_favorite_path(post, favorite), method: :delete, style: "color: red;" do %>
+    <p>
+      <%= post.favorites.count %> <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i>
+    </p>
   <% end %>
 <% else %>
-  <p>ログインすると「いいね」できます！</p>
+<%# いいねロジック  %>
+  <%= link_to post_favorites_path(post), method: :post, style: "color: red;" do %>
+    <p>
+      <%= post.favorites.count %> <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i>
+    </p>
+  <% end %>
 <% end %>
