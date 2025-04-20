@@ -13,6 +13,9 @@ class Post < ApplicationRecord
   validate :title_length_within_limit
   validate :body_length_within_limit
   validates :user_id, presence: true
+  
+  # 1ユーザー1投稿につき1いいねまでの制限をつける 2025/04/20
+  validates :user_id, uniqueness: { scope: :post_id }
 
   # 検索ボックス追加用のメソッド 2025/04/14
   # 部分一致検索だけ、投稿本文かタイトルのキーワード検索ができるように変更。2025/04/19
@@ -22,9 +25,12 @@ class Post < ApplicationRecord
     end
   end
 
+  # いいね（りんご）ボタン用のメソッド 2025/04/20
   def favorited_by?(user)
-    favorites.where(user_id: user.id).exists?
-  end
+    # 未ログイン時にTop画面呼び出しなどで、current_userが呼ばれてエラーになるのを防ぐ。
+    return false if user.nil?
+    favorites.exists?(user_id: user.id)
+  end  
 
   private
   def title_length_within_limit

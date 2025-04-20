@@ -30,7 +30,15 @@
       <div class="post-body" style="font-size: 1.0em; color: #333; margin-top: 10px;">
         <%= post.body %><br>
         <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %></h6>
-              <%= render "public/favorites/btn", post: post %>
+        <%# いいねボタン呼び出し%>
+        <p><%= render "public/favorites/btn", post: post %>
+        <%# コメント件数表示、投稿詳細画面へのリンク（コメントマーク） %>
+        コメント<%= post.comments.count %>件 
+          <%= link_to post_path(post), style: "text-decoration: none;" do %>
+            <i class="fa-solid fa-comment text-success icon-hover" style="color: #07e921;"></i>
+          <% end %>
+        </p>
+        <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
       </div>
     </div>
 
