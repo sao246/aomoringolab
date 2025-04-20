@@ -22,6 +22,10 @@ class Post < ApplicationRecord
     end
   end
 
+  def favorited_by?(user)
+    favorites.where(user_id: user.id).exists?
+  end
+
   private
   def title_length_within_limit
     if title.present? && title.mb_chars.length > 20
