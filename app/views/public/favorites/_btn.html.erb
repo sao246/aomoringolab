@@ -1,0 +1,16 @@
+<!-- app/views/posts/show.html.erb など -->
+<% if user_signed_in? %>
+  <% if post.favorited_by?(current_user) %>
+    <%= link_to favorite_path(post), method: :delete, data: { confirm: "いいねを取り消しますか？" } do %>
+      <i class="fas fa-heart" aria-hidden="true"></i>
+      <%= post.favorites.count %>
+    <% end %>
+  <% else %>
+    <%= link_to favorite_path(post), method: :post do %>
+      <i class="fa-solid fa-apple-whole" style="color: #ee2f2f;", aria-hidden="true" ></i>
+      <%= post.favorites.count %>
+    <% end %>
+  <% end %>
+<% else %>
+  <p>ログインすると「いいね」できます！</p>
+<% end %>

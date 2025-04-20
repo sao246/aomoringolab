@@ -30,12 +30,13 @@
       <div class="post-body" style="font-size: 1.0em; color: #333; margin-top: 10px;">
         <%= post.body %><br>
         <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %></h6>
+              <%= render "public/favorites/btn", post: post %>
       </div>
     </div>
 
     <%# そのほかいいね等のアクション処理 %>
     <div class="post-actions" style="margin-top: 10px;">
-      <!-- 他のアクション（いいね、コメント数の表示）を後ほど追加する。 -->
+
     </div>
   <% end %>
 </div>
