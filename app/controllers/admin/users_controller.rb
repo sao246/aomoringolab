@@ -11,7 +11,7 @@ class Admin::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    posts = @user.posts
+    @posts = @user.posts
   end
 
   def update
