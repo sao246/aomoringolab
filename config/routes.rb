@@ -26,10 +26,11 @@ Rails.application.routes.draw do
     # postsとcommentsコントローラのルーティング見直し 2025/04/15
     resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
       resources :comments, only: [:create, :index, :destroy]
+      resources :favorites, only: [:create, :destroy]
     end
     resources :relationships, only: [:create, :index, :destroy]
     resources :search, only: [:index]
-    resources :favorites, only: [:create, :destroy]
+
     resources :tags, only: [:index]
     resources :trends, only: [:show]
 
