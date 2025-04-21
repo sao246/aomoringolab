@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
   # 管理者が使う会員の退会ステータス（Enum利用） 2025/04/16
   enum status: { active: 0, deactivated: 1 }
   def active_for_authentication?
@@ -20,11 +21,16 @@ class User < ApplicationRecord
   # プロフィール写真用の設定 2025/04/09
   has_one_attached :profile_image
 
-  # ユーザーがフォローしている他のユーザーとの関連付け、データ取得設定
-  # 後ほど追加
-
-  # 自分をフォローしているユーザの関連付け、データ取得設定
-  # 後ほど追加
+  
+  # 自分がフォローされる（被フォロー）側の関係性
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  # 被フォロー関係を通じて参照→自分をフォローしている人
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+  
+  # 自分がフォローする（与フォロー）側の関係性
+  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  # 与フォロー関係を通じて参照→自分がフォローしている人
+  has_many :followings, through: :relationships, source: :followed
   
    # バリデーション追加 2025/04/08
   validates :name, length: { minimum: 3, maximum: 15 }, uniqueness: true
@@ -47,6 +53,26 @@ class User < ApplicationRecord
     end
   end
   
+  # ユーザーにプロフィール画像が添付されているかを検索するメソッド
+  def get_profile_image
+    (profile_image.attached?) ? profile_image : 'no_image.jpg'
+  end
+  
+  # フォロー処理メソッド
+  def follow(user)
+    relationships.create(followed_id: user.id)
+  end
+
+  # フォロー解除処理メソッド
+  def unfollow(user)
+    relationships.find_by(followed_id: user.id).destroy
+  end
+
+  # 対象ユーザがフォローしているかを確認するメソッド
+  def following?(user)
+    followings.include?(user)
+  end
+
   private
   def introduction_length_within_limit
     if introduction && introduction.mb_chars.length > 200

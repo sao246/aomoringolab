@@ -1,5 +1,4 @@
 class Public::UsersController < ApplicationController
-  
   before_action :authenticate_user!
   # ログインユーザーでない場合はアクセスできないようにする。
   before_action :is_matching_login_user, only: [:edit, :update, :destroy, :unsubscribe]
@@ -10,6 +9,8 @@ class Public::UsersController < ApplicationController
     @user = current_user
     @posts = current_user.posts
   end
+
+  # indexは部分テンプレートのみ（index.html.erbとは別物）なので、今回は実装なし。
 
   def edit
     @user = current_user
