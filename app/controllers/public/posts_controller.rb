@@ -35,6 +35,7 @@ class Public::PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     if @post.save
+      save_tags(@post, params[:tag_names])
       redirect_to post_path(@post), notice: '投稿が完了しました'
     else
       render :new
@@ -58,6 +59,11 @@ class Public::PostsController < ApplicationController
     #set_postメソッドを用意しているので個別の変数設定は不要。
     @post.destroy
     redirect_to posts_path, notice: '投稿を削除しました。'
+  end
+
+  def save_tags(post, tag_names)
+    tag_list = tag_names.to_s.split(',').map(&:strip).reject(&:blank?).uniq
+    post.tags = tag_list.map { |name| Tag.find_or_create_by(name: name) }
   end
 
   private

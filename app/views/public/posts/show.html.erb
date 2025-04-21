@@ -30,10 +30,18 @@
           <p><%= @post.body %></p><br>
           <%# いいねボタン呼び出し %>
           <%= render "public/favorites/btn", post: @post %>
+          <% if @post.tags.any? %>
+          <div class="post-tags">
+            <p><i class="fa-solid fa-tag" style="color: #019367;"></i>
+              <% @post.tags.each do |tag| %>
+                <%= link_to "##{tag.name}", tags_path, class: "tag-link" %>
+              <% end %>
+            </p>
+          </div>
+          <% end %>
           <%# 投稿日付 %>
           <h6>投稿日：<%= @post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= @post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
         </div>
-
         <%# 投稿者本人の投稿なら編集、削除ボタンを表示%>
         <div class="post_detail" style="display: flex; justify-content: end; flex-wrap: wrap; margin-top: 20px; margin-bottom: 20px;">
         <% if @post.user.id == current_user.id %>
