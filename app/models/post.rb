@@ -18,7 +18,9 @@ class Post < ApplicationRecord
   # 部分一致検索だけ、投稿本文かタイトルのキーワード検索ができるように変更。2025/04/19
   def self.search_for(content, method)
     if method == 'partial'
-      Post.where('title LIKE :q OR body LIKE :q', q: "%#{content}%")
+      # joinsでPostテーブルと、Tagテーブルを結びつける。(INNER JOIN)
+      # q:〜で部分一致、distinctはDISTINCT（重複排除するSQL）。
+      Post.joins(:tags).where('posts.title LIKE :q OR posts.body LIKE :q OR tags.name LIKE :q', q: "%#{content}%").distinct
     end
   end
 
@@ -28,23 +30,25 @@ class Post < ApplicationRecord
     return false if user.nil?
     favorites.exists?(user_id: user.id)
   end  
+  
+  # タグ登録処理用
   attr_accessor :tag_names
-
   validate :validate_tag_names
-  
+
+  # 登録タグのバリデーションチェック
   def validate_tag_names
-    return if tag_names.blank?
-  
+    return if tag_names.blank? # タグが空文字なら戻る。
     tag_list = tag_names.split(',').map(&:strip).reject(&:blank?).uniq
     tag_list.each do |name|
-      if name.match?(/[<>\/]/)
+      if name.match?(/[<>\/]/) # 不正文字の入力防止
         errors.add(:tag_names, "に使用できない文字（<, >, /）が含まれています")
-      elsif name.length > 20
+      elsif name.length > 20 # タグは20文字以内で登録させる
         errors.add(:tag_names, "は20文字以内で入力してください（\現在#{name.length}文字）")
       end
     end
   end
 
+  # タグの登録処理
   def save_tags
     return if tag_names.blank?
   
