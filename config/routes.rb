@@ -63,7 +63,8 @@ Rails.application.routes.draw do
 
     resources :trends, only: [:index]
     resources :search, only: [:index]
-    resources :tags, only: [:index]
+    # 名前付きパス：tag/特定のタグ名でURL指定するようにする。
+    get 'tags/:tag_name', to: 'tags#index', as: 'tag'
     get 'homes/top'
   end
 end

@@ -5,7 +5,7 @@
 
 <div class="post-list" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
   <% posts.each do |post| %>
-     <div class="post-item" style="max-width: 90%; width: 1000px; margin: 10px auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+    <div class="post-item" style="max-width: 90%; width: 1000px; margin: 10px auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
       <div class="post-user" style="font-weight: bold; margin-bottom: 10px;">
         <p>
           <%# プロフィール画像が添付されていればそれを表示、ない場合はデフォルトのnoimageの画像を表示させる。%>
@@ -17,6 +17,7 @@
           <%= link_to post.user.name, admin_user_path(post.user.id) %>
         </p>
       </div>
+
       <%# 投稿タイトル %>
       <div class="post-title" style="font-size: 1.2em; color: #333;">
         <%= link_to post.title, admin_post_path(post) %><br>
@@ -24,24 +25,35 @@
           <%= image_tag post.image, style: "width: 100%; height: auto; border-radius: 4px;" %>
         <% end %>
       </div>
+
       <%# 投稿本文 %>
       <div class="post-body" style="font-size: 1.0em; color: #333;">
         <%= post.body %><br>
+
+        <%# タグ付け表示 %>
+        <div class="post-tag">
+          <% if post.tags.any? %>
+            <i class="fa-solid fa-tag" style="color: #019367;"></i>
+              <% post.tags.each do |tag| %>
+                <%# adminのtag_pathを呼ぶ。%>
+                <%= link_to "##{tag.name}", admin_tag_path(tag.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 14px;" %>
+              <% end %>
+          <% end %>
+        </div>
+
         <%# Adminユーザーはいいね（りんご）カウント数のみ閲覧できるようにする（いいねはできない）%>
-        <p><%= post.favorites.count %> <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i>
+        <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i><%= post.favorites.count %><br>
+
         <%# コメント件数表示、投稿詳細画面へのリンク（コメントマーク） %>
-          コメント<%= post.comments.count %>件 
+        <div class="post-comment">
           <%= link_to admin_post_path(post), style: "text-decoration: none;" do %>
             <i class="fa-solid fa-comment text-success icon-hover" style="color: #07e921;"></i>
+            コメント<%= post.comments.count %>件 
           <% end %>
-        </p>
-        <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
-      </div>
-    </div>
+        </div>
 
-    <%# そのほかいいね等のアクション処理 %>
-    <div class="post-actions" style="margin-top: 10px;">
-      <!-- 他のアクション（いいね、コメント数の表示）を後ほど追加する。 -->
+        <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %><br> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
+      </div>
     </div>
   <% end %>
 </div>

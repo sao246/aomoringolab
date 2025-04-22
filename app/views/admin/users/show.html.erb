@@ -26,8 +26,9 @@
               <p><strong>アカウント名: </strong><%= @user.name %></p>
               <p><strong>自己紹介： </strong><br><%= @user.introduction %></p>
               <p><strong>興味関心：  </strong><br>自分が好きなタグを後ほどここに設定できるようにする。</p>
-              <p><strong>フォロー数: </strong><%= link_to @user.followings.count, followings_admin_user_path(@user.id) %>
-              <strong>フォロワー数:</strong><%= link_to @user.followers.count, followers_admin_user_path(@user.id) %></p>
+              <p><strong><%= link_to "フォロー数: #{@user.followings.count}", followings_admin_user_path(@user.id) %></strong>
+              <i class="fa-solid fa-apple-whole" style="color: #ff7f7f;"></i>
+              <strong><%= link_to "フォロワー数: #{@user.followers.count}", followers_admin_user_path(@user.id) %></strong></p>
             </div>
             <div class='row'>
               <%# 当画面自体がadmin権限でログインした場合のみしか閲覧できないようにコントローラ側で制御実装済み。ゲストユーザーへの制限のみ念の為かける。 %>
