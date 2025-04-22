@@ -27,14 +27,15 @@
               <p><strong>アカウント名:  </strong><%= @user.name %></p>
               <p><strong>自己紹介：</strong><br> <%= @user.introduction %></p>
               <p><strong>興味関心：</strong><br>自分が好きなタグを後ほどここに設定できるようにする。</p>
-              <p><strong>フォロー数: </strong><%= link_to @user.followings.count, followings_user_path(@user) %>
-              <strong>フォロワー数:</strong><%= link_to @user.followers.count, followers_user_path(@user) %></p>
+              <p><strong><%= link_to "フォロー数: #{@user.followings.count}", followings_user_path(@user) %></strong>
+              <i class="fa-solid fa-apple-whole" style="color: #ff7f7f;"></i>
+              <strong><%= link_to "フォロワー数: #{@user.followers.count}", followers_user_path(@user) %></strong></p>
               <%# ユーザーがログインしていて、フォロー処理対象のユーザーがログイン中のユーザー本人ではないことを確認する%>
               <% if user_signed_in? && current_user != @user %>
               <%# 処理対象のユーザーはフォローしているかを確認（コントローラメソッド） %>
                 <% if current_user.following?(@user) %>
                 <%# すでにフォローしている場合、ボタンを押すとフォロー解除する %>
-                  <%= button_to 'フォロー中', user_relationships_path(@user), method: :delete, class: "btn btn-danger" %>
+                  <%= button_to 'フォロー中', user_relationships_path(@user), method: :delete, class: "btn", style: "background-color: #ff7f7f ; color: white;" %>
                 <% else %>
                 <%# フォローしていない状態でこのボタンを押すとフォロー状態になる %>
                   <%= button_to 'フォローする', user_relationships_path(@user), method: :post, class: "btn btn-primary" %>

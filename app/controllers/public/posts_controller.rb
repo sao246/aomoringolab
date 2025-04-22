@@ -31,10 +31,13 @@ class Public::PostsController < ApplicationController
   end
 
   def create
-    puts "送信された本文の文字数: #{params[:post][:body].length}"
     @post = Post.new(post_params)
     @post.user_id = current_user.id
-    if @post.save
+    @post.tag_names = params[:tag_names]
+  
+    if @post.valid?
+      @post.save
+      @post.save_tags
       redirect_to post_path(@post), notice: '投稿が完了しました'
     else
       render :new
@@ -42,13 +45,17 @@ class Public::PostsController < ApplicationController
   end
 
   def edit
-      #set_postメソッドを用意しているので個別の変数設定は不要。
+    #set_postメソッドを用意しているので個別の変数設定は不要。
   end
 
   def update
-    #set_postメソッドを用意しているので個別の変数設定は不要。
-    if @post.update(post_params)
-      redirect_to post_path(@post.id), notice: '投稿を更新しました。'
+    @post.assign_attributes(post_params)
+    @post.tag_names = params[:tag_names]
+    
+    if @post.valid?
+      @post.save
+      @post.save_tags
+      redirect_to post_path(@post), notice: '投稿を更新しました。'
     else
       render :edit
     end
@@ -65,6 +72,7 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+  # tagはPostモデルの属性ではないので、post_paramsには含めない
   def post_params
     params.require(:post).permit(:title, :body, :image)
   end

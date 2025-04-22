@@ -39,4 +39,4 @@
 #### photoAC （ https://www.photo-ac.com/ ）
 #### illustAC （ https://www.ac-illust.com/ ）
 #### Fontawesome （ https://fontawesome.com/ ）
-#### 半透過マルチアイコンfavicon.icoを作ろう! （ https://ao-system.net/alphaicon/ ）
+#### Canva （https://www.canva.com/）

@@ -26,8 +26,10 @@
               <p><strong>アカウント名: </strong><%= current_user.name %></p>
               <p><strong>自己紹介： </strong><br><%= current_user.introduction %></p>
               <p><strong>興味関心：</strong><br>自分が好きなタグを後ほどここに設定できるようにする。</p>
-              <p><strong>フォロー数: </strong><%= link_to current_user.followings.count, followings_user_path(current_user) %>
-              <strong>フォロワー数:</strong><%= link_to current_user.followers.count, followers_user_path(current_user) %></p>
+              <p>
+              <strong><%= link_to "フォロー数: #{current_user.followings.count}", followings_user_path(current_user) %></strong>
+              <i class="fa-solid fa-apple-whole" style="color: #ff7f7f;"></i>
+              <strong><%= link_to "フォロワー数: #{current_user.followers.count}", followers_user_path(current_user) %></strong></p>
             </div>
             <div class='row'>
             <%# マイページはログインユーザーしか表示されない。ただし、ゲストユーザーは編集されると困るのでcurrent_userがゲストユーザーではない場合に限り、ユーザー編集ボタンを表示。%>
