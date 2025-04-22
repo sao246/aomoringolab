@@ -1,8 +1,9 @@
-<%= render 'layouts/errors', resource: @post %>
+
 <div class='container'>
   <div class='row'>
     <div class='col-md-8 offset-md-1'>
-      <h2>投稿を編集</h2>
+    <%= render 'layouts/errors', resource: @post %>
+      <h2 class='m-4'>投稿を編集</h2>
 
       <%# タイトル編集 %>
       <%= form_with model: @post, local: true do |f| %>
@@ -17,10 +18,17 @@
         </div>
       <%# 画像添付 %>
         <div class="form-group m-4">
-          <i class="fa-solid fa-paperclip"></i><h4>画像を再選択する場合は、こちらから</h4>
+        <h6>画像を再選択する場合は、こちらから</h6>
+          <i class="fa-solid fa-paperclip"></i>
           <%= f.file_field :image, accept: "image/*" %>
         </div>
-
+      <%# タグ付けフォーム %>
+        <div class="form-group m-4 text-left">
+          <p><i class="fa-solid fa-tag"></i>
+          タグ カンマ（,）でタグワードを区切ると複数のタグが設定できます！<br>（例：りんご,農家と入力すると#りんご #農家 の2件のタグが登録されます）
+          <%= text_field_tag :tag_names, @post.tags.pluck(:name).join(','), placeholder: "タグをカンマで区切って入力", class: "form-control" %>
+          </p>
+        </div>
         <div class="form-group m-4">
           <%= f.submit "投稿を更新する", class: 'btn', style: "background-color: #66cdaa ; color: white;" %>
         </div>

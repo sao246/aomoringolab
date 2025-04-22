@@ -28,32 +28,44 @@
         <div class="post-body" style="font-size: 1.2em; color: #333;">
           <%# 投稿本文 %>
           <p><%= @post.body %></p><br>
+
           <%# いいねボタン呼び出し %>
           <%= render "public/favorites/btn", post: @post %>
+
+          <%# タグ付けがあれば表示させる %>
           <% if @post.tags.any? %>
           <div class="post-tags">
             <p><i class="fa-solid fa-tag" style="color: #019367;"></i>
               <% @post.tags.each do |tag| %>
-                <%= link_to "##{tag.name}", tags_path, class: "tag-link" %>
+                <%= link_to "##{tag.name}", tag_path(tag.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 14px;" %>
               <% end %>
             </p>
           </div>
           <% end %>
+
           <%# 投稿日付 %>
-          <h6>投稿日：<%= @post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= @post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
+          <h6>投稿日：<%= @post.created_at.strftime("%Y年%m月%d日 %H:%M") %><br>最終更新： <%= @post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
         </div>
+        
         <%# 投稿者本人の投稿なら編集、削除ボタンを表示%>
         <div class="post_detail" style="display: flex; justify-content: end; flex-wrap: wrap; margin-top: 20px; margin-bottom: 20px;">
         <% if @post.user.id == current_user.id %>
+        <div class="m-2">
           <%= link_to '投稿を編集する', edit_post_path(@post), class: 'btn btn-sm', style: "background-color: #66cdaa ; color: white;" %>
+        </div>
+        <div class="m-2">
           <%= link_to '投稿を削除する', post_path(@post), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>
+        </div>
         <% end %>
     </div>
+
       <%# 投稿へのコメント機能/一覧表示を追加 2025/04/15 %>
       <%= render 'layouts/errors', resource: @comment %>
       <%= render "public/comments/form", post: @post, comment: @comment %>
       <%= render "public/comments/index", comments: @comments %>
-      <%= link_to '<<投稿一覧に戻る', posts_path, class: "btn btn-sm btn-secondary" %>
+      <div class='m-4'>
+        <%= link_to '<<投稿一覧に戻る', posts_path, class: "btn btn-sm btn-secondary" %>
+      </div>
     </div>
   </div>
 </div>

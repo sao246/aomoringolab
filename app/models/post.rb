@@ -28,7 +28,31 @@ class Post < ApplicationRecord
     return false if user.nil?
     favorites.exists?(user_id: user.id)
   end  
+  attr_accessor :tag_names
 
+  validate :validate_tag_names
+  
+  def validate_tag_names
+    return if tag_names.blank?
+  
+    tag_list = tag_names.split(',').map(&:strip).reject(&:blank?).uniq
+    tag_list.each do |name|
+      if name.match?(/[<>\/]/)
+        errors.add(:tag_names, "に使用できない文字（<, >, /）が含まれています")
+      elsif name.length > 20
+        errors.add(:tag_names, "は20文字以内で入力してください（\現在#{name.length}文字）")
+      end
+    end
+  end
+
+  def save_tags
+    return if tag_names.blank?
+  
+    tag_list = tag_names.split(',').map(&:strip).reject(&:blank?).uniq
+    tags = tag_list.map { |name| Tag.find_or_create_by(name: name) }
+    self.tags = tags
+  end
+  
   private
   def title_length_within_limit
     if title.present? && title.mb_chars.length > 20

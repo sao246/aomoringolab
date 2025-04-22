@@ -1,7 +1,12 @@
 class Public::TagsController < ApplicationController
   #コントローラ追加 2025/04/07
   def index
-    @tag = Tag.find(params[:id])
-    @posts = @tag.posts.includes(:user).order(created_at: :desc)
+    @tag = Tag.find_by(name: params[:tag_name])
+    if @tag
+      @posts = @tag.posts.order(created_at: :desc)
+    else
+      @posts = []
+      flash.now[:alert] = "指定されたタグは存在しません"
+    end
   end
 end

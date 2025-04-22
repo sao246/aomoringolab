@@ -29,16 +29,28 @@
       <%# 投稿本文 %>
       <div class="post-body" style="font-size: 1.0em; color: #333; margin-top: 10px;">
         <%= post.body %><br>
-        <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %></h6>
+
         <%# いいねボタン呼び出し%>
         <p><%= render "public/favorites/btn", post: post %>
+        
+        <%# 投稿にタグ付けがあれば表示させる %>
+        <% if post.tags.any? %>
+          <div class="post-tags">
+            <p><i class="fa-solid fa-tag" style="color: #019367;"></i>
+              <% post.tags.each do |tag| %>
+                <%= link_to "##{tag.name}", tag_path(tag.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 14px;" %>
+              <% end %>
+            </p>
+          </div>
+        <% end %>
+
         <%# コメント件数表示、投稿詳細画面へのリンク（コメントマーク） %>
-        コメント<%= post.comments.count %>件 
-          <%= link_to post_path(post), style: "text-decoration: none;" do %>
-            <i class="fa-solid fa-comment text-success icon-hover" style="color: #07e921;"></i>
-          <% end %>
-        </p>
-        <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
+        <%= link_to post_path(post), style: "text-decoration: none;" do %>
+        <i class="fa-solid fa-comment icon-hover" style="color: #7fbfff;"></i>
+          コメント<%= post.comments.count %>件
+        <% end %>
+
+        <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %><br>最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
       </div>
     </div>
 
