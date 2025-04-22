@@ -26,11 +26,24 @@
       <div class="post-body" style="font-size: 1.2em; color: #333;">
         <%# 投稿本文 %>
         <p class="mb-4"><%= simple_format(@post.body) %></p>
+        
         <%# Adminユーザーはいいね（りんご）カウント数のみ閲覧できるようにする（いいねはできない）%>
-        <%= @post.favorites.count %> <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i>
+        <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= @post.favorites.count %>
+        
+        <%# タグ付けがあれば表示させる %>
+        <div class="post-tags">
+          <% if @post.tags.any? %>
+            <i class="fa-solid fa-tag" style="color: #019367;"></i>
+              <% @post.tags.each do |tag| %>
+                <%= link_to "##{tag.name}", admin_tag_path(tag.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 14px;" %>
+              <% end %>
+          <% end %>
+        </div>
+        
         <%# 投稿日付 %>
-        <h6>投稿日：<%= @post.created_at.strftime("%Y年%m月%d日 %H:%M") %> 最終更新： <%= @post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
+        <h6>投稿日：<%= @post.created_at.strftime("%Y年%m月%d日 %H:%M") %><br> 最終更新： <%= @post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
       </div>
+
       <%# 削除ボタンを表示%>
       <div class="d-flex justify-content-end mb-4">
         <%= link_to '投稿を削除する', admin_post_path(@post), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger" %>

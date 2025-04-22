@@ -1,5 +1,4 @@
-class Public::TagsController < ApplicationController
-  #コントローラ追加 2025/04/07
+class Admin::TagsController < ApplicationController
   def index
     @tag = Tag.find_by(name: params[:tag_name])
     if @tag
