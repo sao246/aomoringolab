@@ -1,6 +1,7 @@
 <div class="container d-flex justify-content-center">
-  <%= form_with model:@post do |f| %>
+  <%= form_with model:@post, local: true do |f| %>
     <%= render 'layouts/errors', resource:@post %>
+
     <div class="form-group m-4 text-left">
     <%# 投稿タイトルフォーム %>
       <strong><%= f.label :title, "投稿タイトル" %></strong>
@@ -18,7 +19,8 @@
       <h6>画像添付はこちらをクリック</h6>
     </div>
     <div class="form-group m-4 text-left">
-      <p><i class="fa-solid fa-tag" style="color: #019367;"></i>
+      <p><i class="fa-solid fa-tag"></i>
+        タグ カンマ（,）でタグワードを区切ると複数のタグが設定できます！<br>（例：りんご,農家と入力すると#りんご #農家 の2件のタグが登録されます）
       <%= text_field_tag :tag_names, nil, placeholder: "タグをカンマで区切って入力", class: "form-control" %>
       </p>
     </div>

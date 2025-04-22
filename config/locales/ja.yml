@@ -11,6 +11,7 @@ ja:
       post:
         title: "投稿タイトル"
         body: "本文"
+        tag_names: "タグ名"
       comment:
         body: "コメント"
 
