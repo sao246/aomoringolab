@@ -4,15 +4,11 @@
 <% favorite = post.favorites.find_by(user_id: current_user.id) %>
 <%# いいね解除のロジック  %>
   <%= link_to post_favorite_path(post, favorite), method: :delete, style: "color: red;" do %>
-    <p>
       <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= post.favorites.count %>
-    </p>
   <% end %>
 <% else %>
 <%# いいねロジック  %>
   <%= link_to post_favorites_path(post), method: :post, style: "color: red;" do %>
-    <p>
       <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= post.favorites.count %>
-    </p>
   <% end %>
 <% end %>
