@@ -1,5 +1,6 @@
 <div class="container d-flex justify-content-center">
   <%= form_with model:@post, local: true do |f| %>
+    <%# エラー処理 %>
     <%= render 'layouts/errors', resource:@post %>
 
     <div class="form-group m-4 text-left">
@@ -7,23 +8,29 @@
       <strong><%= f.label :title, "投稿タイトル" %></strong>
       <%= f.text_field :title, class: 'form-control post_title' %>
     </div>
+
     <%# 投稿本文フォーム %>
     <div class="form-group m-4 text-left">
       <strong><%= f.label :body, "投稿本文" %></strong>
       <%= f.text_area :body, class: 'form-control post_body' %>
     </div>
+
     <%# 投稿画像添付フォーム %>
     <div class="form-group m-4 text-left">
       <i class="fa-solid fa-paperclip"></i>
       <%= f.file_field :image, accept: "image/*" %>
       <h6>画像添付はこちらをクリック</h6>
     </div>
+
+    <%# 投稿画像添付フォーム %>
     <div class="form-group m-4 text-left">
       <p><i class="fa-solid fa-tag"></i>
         タグ カンマ（,）でタグワードを区切ると複数のタグが設定できます！<br>（例：りんご,農家と入力すると#りんご #農家 の2件のタグが登録されます）
       <%= text_field_tag :tag_names, nil, placeholder: "タグをカンマで区切って入力", class: "form-control" %>
       </p>
     </div>
+    
+    <%# 投稿submit %>
     <div class="form-group m-4 text-left">
       <%= f.submit "投稿する", class: 'btn', style: "background-color: #66cdaa ; color: white;" %>
     </div>
