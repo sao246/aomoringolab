@@ -13,13 +13,17 @@ Admin.create!(
   password_confirmation: "password123"
 )
 
-# 農家ユーザー作成
+# 農家・企業ユーザー作成
 farmers = [
   { name: "頑張る農家", email: "farmer1@email", introduction: "弘前市で農家をやっています。" },
   { name: "農家はなこ", email: "farmer2@email", introduction: "黒石市で農家をやっています。" },
   { name: "山の上農園", email: "farmer3@email", introduction: "西目屋村でりんご農園を営んでいます。（直通）電話番号：01xx-xx-xx" },
   { name: "石川農園", email: "farmer4@email", introduction: "平川市のりんご農園です。直売所あります。お問い合わせは（直通）電話番号：01xx-xx-xx までよろしくお願いいたします。"},
-  { name: "りんご一筋", email: "farmer5@email", introduction: "板柳町の農家です。" }
+  { name: "りんご一筋", email: "farmer5@email", introduction: "板柳町の農家です。" },
+  { name: "安全りんご農園", email: "farmer6@email", introduction: "無農薬・無化学肥料の栽培に挑戦しづける。弘前のりんご農園です。（直通）01xx-xx-xx" },
+  { name: "ナチュラルファーム", email: "farmer7@email", introduction: "自然のままに。美味しいりんごを。平川市のりんご農家です。（直通）01xx-xx-xx" },
+  { name: "スイーツ農園", email: "farmer8@email", introduction: "自然のままに。美味しいりんごを。平川市のりんご農家です。（直通）01xx-xx-xx" },
+  { name: "株式会社りんごワールド", email: "farmer9@email", introduction: "日本の美味しい果物を世界に！東京都の青果輸出企業です。HPはこちら：https://xxx.com" }
 ]
 
 # ここでDBに登録。（画像添付も行う）
@@ -49,7 +53,9 @@ fans = [
   { name: "りんご大好きカメラマン", email: "fan3@email", introduction: "写真が趣味。千葉県住みですが青森を旅行してはりんご農家さんにお邪魔しています。" },
   { name: "りんご親子", email: "fan4@email", introduction: "弘前市の主婦です。子供にも農体験をさせたく親子でチャレンジ中" },
   { name: "りんごソムリエ", email: "fan5@email", introduction: "板柳在住。りんごの食べ比べが趣味です。甘味酸味などにうるさいです笑" },
-  { name: "りんご留学生", email: "fan6@email", introduction: "台湾から来ました。大学で留学しています。りんご生産に興味あり、農家のお手伝いをしています。" }
+  { name: "りんご留学生", email: "fan6@email", introduction: "台湾から来ました。大学で留学しています。りんご生産に興味あり、農家のお手伝いをしています。" },
+  { name: "りんごマニア", email: "fan7@email", introduction: "台湾在住りんご大好き！" },
+  { name: "りんごマン", email: "fan8@email", introduction: "青い森大学の学生です。東京から来ました。" }
 ]
 
 # ここでDBに登録。（画像添付も行う）
@@ -236,6 +242,38 @@ Comment.create!(
   body: "さすがマメコバチ。働き蜂ですね〜りんごを支えてます。",
   created_at: Time.new(2024, 5, 2),
   updated_at: Time.new(2024, 5, 2)
+)
+
+# 安全りんご農園の投稿
+farmer6= User.find_by(email: 'farmer6@email') # 山の上農園
+post7 = Post.create!(
+  user_id: farmer6.id,
+  title: "無農薬・無化学肥料の「安心して食べられるりんご」栽培の秘訣",
+  body: "今年も無事に施肥が完了しました！若葉農園では、化学肥料や化学農薬を一切使わず、自然の力を大切にした栽培を行っています。
+特に、春先の「施肥」作業は重要で、土壌に優しい有機肥料を使って健康な土作りをしています。
+その結果、皮ごと食べられる安心で美味しいりんごが育つんです",
+  created_at: Time.new(2025, 4, 5),
+  updated_at: Time.new(2025, 4, 5)
+)
+image_path = Rails.root.join("app", "assets", "images", "aomoringolab_other1.jpg")
+if File.exist?(image_path)
+  post7.image.attach(io: File.open(image_path), filename: "aomoringolab_other1.jpg")
+  puts "Image attached to post 7"
+end
+# コメントを追加
+Comment.create!(
+  post: post7,
+  user_id: fan_users[3].id, # 愛好家ユーザーID
+  body: "安全で美味しいりんご大好きです！！応援しています〜",
+  created_at: Time.new(2025, 4, 6),
+  updated_at: Time.new(2025, 4, 6)
+)
+Comment.create!(
+  post: post7,
+  user_id: fan_users[4].id, # 愛好家ユーザーID
+  body: "早く食べたい",
+  created_at: Time.new(2025, 4, 6),
+  updated_at: Time.new(2024, 4, 6)
 )
 
 # アップルパイは弘前で決まり！
