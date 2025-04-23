@@ -29,7 +29,11 @@ class Post < ApplicationRecord
     # 未ログイン時にTop画面呼び出しなどで、current_userが呼ばれてエラーになるのを防ぐ。
     return false if user.nil?
     favorites.exists?(user_id: user.id)
-  end  
+  end
+
+  def likes_count
+    favorites.count
+  end
   
   # タグ登録処理用
   attr_accessor :tag_names

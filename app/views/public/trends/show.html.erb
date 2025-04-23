@@ -1,1 +1,22 @@
-フェーズ３にて実装
+<% @top_posts.each do |post| %>
+  <div class="trend-item">
+    <p><%= post.title %></p>
+    <div class="apples">
+      <% post.likes_count.times do %>
+        <i class="fas fa-apple-alt" style="color: crimson;"></i>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+
+<canvas id="trendChart"></canvas>
+
+<script type="application/json" id="chart-data">
+  <%= {
+    labels: @top_posts.map(&:title),
+    data: @top_posts.map(&:likes_count),
+    ids: @top_posts.map(&:id)
+  }.to_json.html_safe %>
+</script>
