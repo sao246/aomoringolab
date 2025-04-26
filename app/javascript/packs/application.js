@@ -17,3 +17,6 @@ import "../stylesheets/application";
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+// Chart.jsをインポート trendビューに表描画をするために設定。2025/04/23
+import Chart from 'chart.js/auto';

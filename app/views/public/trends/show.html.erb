@@ -1,1 +1,68 @@
-フェーズ３にて実装
+<div class="sticky-top" style="background-image: url(<%= asset_path('aomoringolab_profile.jpg') %>); background-size: cover; background-position: center; z-index: 1040; top: 80px; width: 100%; height: 86px;">
+  <div class="text-center py-3">
+    <h1><i class="fa-solid fa-arrow-trend-up" style="color: #04b6f1;"></i>トレンド<i class="fa-solid fa-arrow-trend-up" style="color: #04b6f1;"></i></h1>
+  </div>
+</div>
+
+<%#% 月ごとの全体タグランキング（グラフ） %>
+<div class="container mx-auto p-4">
+  <h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>アオモリンゴラボのトレンド</strong></h4>
+  <%= render partial: 'monthly_tag_ranking' %>
+</div>
+
+<div class="container mx-auto p-4 mb-4" style="max-width: 50rem;">
+  <%# あなたの人気投稿 %>
+  <section class="w-full px-4">
+  <h4 class="m-4" style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>あなたの人気投稿</strong></h4>
+    <% if @popular_posts.any? %>
+      <% @popular_posts.each_with_index do |post, index| %>
+        <div class="border p-3 rounded shadow bg-white my-2">
+          <p><strong>第<%= index + 1 %>位：</strong><%= link_to post.title, post_path(post), class: "text-blue-600 underline text-sm"%></p>
+          
+          <%# いいね数のアイコン表示処理 %>
+          <p class="text-sm text-gray-600">いいね数:
+            <% like_count = post.favorites.count %>
+            <% if like_count >= 10 %>
+              <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= "×#{like_count}" %>
+            <% else %>
+              <% like_count.times do %>
+                <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i>
+              <% end %>
+            <% end %>
+          </p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>まだ投稿がありません</p>
+    <% end %>
+  </section>
+
+  <%# あなたの興味関心が高いタグ %>
+  <section class="w-full px-4">
+    <h4 class="mt-4 mb-2" style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>あなたの興味関心が高いタグ</strong></h4>
+    <% if @liked_tags.any? %>
+      <% @liked_tags.each_with_index do |tag, index| %>
+        <div class="border p-3 rounded shadow bg-white my-2" style="min-height: 80px;">
+          <p><strong>第<%= index + 1 %>位：</strong><%= link_to "##{tag.name}", tag_path(tag.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 16px;" %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>まだ投稿がありません</p>
+    <% end %>
+  </section>
+
+    <section class="w-full px-4">
+    <h4 class="mt-4 mb-2" style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>あなたにおすすめの投稿</strong></h4>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
+      <% @recommended_posts.each do |post| %>
+        <div class="border p-3 rounded shadow bg-white my-2">
+          <p class="text-gray-800 font-bold"><%= link_to post.title, post_path(post), class: "text-blue-600 underline text-sm"  %></p>
+          <p class="text-sm text-gray-500"><p class="text-sm text-gray-500">関連タグ <i class="fa-solid fa-tag" style="color: #019367;"></i><%= link_to "##{post.tags.first.name}", tag_path(post.tags.first.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 16px;" %>他</p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</div>
+
+  <%# あなたにおすすめの投稿 %>
+
