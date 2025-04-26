@@ -73,6 +73,11 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
+  # フォロー中ユーザーの投稿を取得
+  def following_posts
+    followed_users.joins(:posts).select('posts.*')
+  end
+  
   private
   def introduction_length_within_limit
     if introduction && introduction.mb_chars.length > 200

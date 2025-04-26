@@ -1,2 +1,55 @@
-<h1>Public::Homes#feed</h1>
-<p>Find me in app/views/public/homes/feed.html.erb</p>
+<div class="followed_post-list" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+  <div class="container mx-auto p-4 mb-4" style="max-width: 50rem;">
+    <div class="position-sticky" style="top: 100px; background-color: white;">
+      <%# フォローしているユーザーの新着投稿一覧 %>
+      <h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px;">
+        <strong><i class="fa-solid fa-user-group" style="color: #FFD43B;"></i> フォローしているユーザーの新着投稿 <i class="fa-solid fa-user-group" style="color: #FFD43B;"></i></strong>
+      </h4>
+    </div>
+    <section class="w-full px-4">
+      <% if @following_posts.any? %>
+        <% @following_posts.each do |post| %>
+          <div class="border p-3 rounded shadow bg-white my-2">
+            <h6><strong><%= post.title %></strong></h6>
+            <p>投稿者: <%= post.user.name %> <h6> 最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6> </p>
+            <div class="post-list-detail" style="display: flex; justify-content: end; flex-wrap: wrap;">
+              <%= link_to '投稿詳細画面へ', post_path(post) %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p>フォローしているユーザーの新着投稿はありません。</p>
+      <% end %>
+    </section>
+  </div>
+
+  <%# いいねした投稿一覧 %>
+  <div class="container mx-auto p-4 mb-4" style="max-width: 50rem;">
+    <div class="position-sticky" style="top: 100px; background-color: white;">
+      <h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px;">
+        <strong><i class="fa-solid fa-apple-whole" style="color: #ff000d;"></i> いいねした投稿 <i class="fa-solid fa-apple-whole" style="color: #ff000d;"></i></strong>
+      </h4>
+
+      <%= form_with url: feed_path, method: :get, local: true do %>
+        <%= label_tag :year, "年" %>
+        <%= select_tag :year, options_for_select((2020..Date.today.year).to_a.reverse, params[:year]), prompt: "年を選択" %>
+        
+        <%= label_tag :month, "月" %>
+        <%= select_tag :month, options_for_select((1..12).to_a, params[:month]), prompt: "月を選択" %>
+
+        <%= submit_tag "年月でフィルター検索" %>
+      <% end %>
+    </div>
+
+      <% @liked_posts.each do |post| %>
+        <div class="post border p-3 rounded shadow bg-white my-2">
+          <h6><strong><%= post.title %></strong></h6>
+          <p>投稿者: <%= post.user.name %></p>
+          <h6>最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
+          <div class="post-list-detail" style="display: flex; justify-content: end; flex-wrap: wrap; margin-top: 20px;">
+            <%= link_to '投稿詳細画面へ', post_path(post) %>
+          </div>
+        </div>
+      <% end %>
+  </div>
+</div>
