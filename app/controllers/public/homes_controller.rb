@@ -28,9 +28,9 @@ class Public::HomesController < ApplicationController
 
     @liked_posts = @liked_posts.distinct
 
-    # フォローしているユーザーの投稿を取得（新着順5件以内）
+    # フォローしているユーザーの投稿を取得（新着順5件以内、1ヶ月以内の期間）
     @following_posts = Post.where(user_id: @user.followings.pluck(:id))
-                            .where('created_at >= ?', 2.month.ago)  # ここはポートフォリオのデータ上2ヶ月で広めに取っておく。
+                            .where('created_at >= ?', 1.month.ago)
                             .order(created_at: :desc)
                             .limit(5)
   end
