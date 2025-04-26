@@ -129,13 +129,20 @@ tag42 = Tag.find_or_create_by(name: "アオモリンゴラボ企画")
 tag43 = Tag.find_or_create_by(name: "美味しい")
 tag44 = Tag.find_or_create_by(name: "農作業体験")
 tag45 = Tag.find_or_create_by(name: "絶品レシピ")
+tag46 = Tag.find_or_create_by(name: "枝剪定")
+tag47 = Tag.find_or_create_by(name: "選果")
+tag48 = Tag.find_or_create_by(name: "実まわし")
+tag49 = Tag.find_or_create_by(name: "袋かけ")
+tag50 = Tag.find_or_create_by(name: "作業手伝い募集！")
+tag51 = Tag.find_or_create_by(name: "草刈り")
+
 # 投稿１
 post1 = Post.create!(
   user_id: farmer_users[0].id,
   title: "摘果作業が始まりました",
   body: "GWも終わり、今年もいよいよ摘果作業の季節。無駄な実を落とすことで、残ったりんごがしっかり育ってくれます。",
-  created_at: Time.new(2024, 5, 15),
-  updated_at: Time.new(2024, 5, 15)
+  created_at: Time.new(2024, 6, 15),
+  updated_at: Time.new(2024, 6, 15)
 )
 # タグ
 post1.tags << tag2
@@ -143,7 +150,6 @@ post1.tags << tag3
 post1.tags << tag11
 post1.tags << tag29
 post1.tags << tag30
-
 # いいね登録
 Favorite.create!(user_id: farmer_users[1].id, post: post1)
 Favorite.create!(user_id: fan_users[0].id, post: post1)
@@ -159,15 +165,15 @@ Comment.create!(
   post: post1,
   user_id: fan_users[0].id,
   body: "摘果作業がうまくいくと良いですね！毎年応援しています！",
-  created_at: Time.new(2024, 5, 16),
-  updated_at: Time.new(2024, 5, 16)
+  created_at: Time.new(2024, 6, 16),
+  updated_at: Time.new(2024, 6, 16)
 )
 Comment.create!(
   post: post1,
   user_id: fan_users[4].id,
   body: "無駄な実を落とすことで美味しいりんごが作られているんですね！",
-  created_at: Time.new(2024, 5, 16),
-  updated_at: Time.new(2024, 5, 16)
+  created_at: Time.new(2024, 6, 16),
+  updated_at: Time.new(2024, 6, 16)
 )
 
 # 投稿２
@@ -375,7 +381,6 @@ post7 = Post.create!(
 post7.tags << tag2
 post7.tags << tag3
 post7.tags << tag21
-post7.tags << tag30
 post7.tags << tag31
 # いいね登録
 Favorite.create!(user_id: farmer_users[3].id, post: post7)
@@ -407,7 +412,6 @@ if File.exist?(image_path)
   puts "Image attached to post 8"
 end
 # タグ
-post8.tags << tag1
 post8.tags << tag3
 post8.tags << tag27
 post8.tags << tag32
@@ -435,7 +439,6 @@ post9 = Post.create!(
   updated_at: Time.new(2024, 9, 30)
 )
 # タグ
-post9.tags << tag1
 post9.tags << tag6
 post9.tags << tag9
 post9.tags << tag38
@@ -474,7 +477,6 @@ post10 = Post.create!(
   updated_at: Time.new(2024, 10, 20)
 )
 # タグ
-post10.tags << tag1
 post10.tags << tag2
 post10.tags << tag4
 post10.tags << tag13
@@ -553,8 +555,8 @@ post12 = Post.create!(
   user_id: fan_users[1].id,
   title: "王林の香りが好き",
   body: "他のりんごにはない独特の芳香、ついついリピ買いしちゃいます。アップルパイも作ろうかな。いいレシピがあれば教えて下さい〜",
-  created_at: Time.new(2024, 9, 20),
-  updated_at: Time.new(2024, 9, 20)
+  created_at: Time.new(2024, 12, 20),
+  updated_at: Time.new(2024, 12, 20)
 )
 # タグ
 post12.tags << tag4
@@ -571,15 +573,15 @@ Comment.create!(
   post: post12,
   user_id: farmer_users[4].id,
   body: "王林、私も大好きです！香りが本当に魅力的ですよね。",
-  created_at: Time.new(2024, 9, 21),
-  updated_at: Time.new(2024, 9, 22)
+  created_at: Time.new(2024, 12, 21),
+  updated_at: Time.new(2024, 12, 22)
 )
 Comment.create!(
   post: post12,
   user_id: fan_users[0].id,
   body: "いいレシピありますよ！",
-  created_at: Time.new(2024, 9, 21),
-  updated_at: Time.new(2024, 9, 22)
+  created_at: Time.new(2024, 12, 21),
+  updated_at: Time.new(2024, 12, 22)
 )
 
 # 投稿１３：
@@ -591,12 +593,12 @@ post13 = Post.create!(
   updated_at: Time.new(2024, 10, 10)
 )
 # タグ
-post13.tags << tag16
-post13.tags << tag17
-post13.tags << tag25
-post13.tags << tag26
 post13.tags << tag30
 post13.tags << tag42
+post13.tags << tag16
+post13.tags << tag25
+post13.tags << tag26
+post13.tags << tag17
 # いいね登録
 Favorite.create!(user_id: farmer_users[2].id, post: post13)
 Favorite.create!(user_id: farmer_users[8].id, post: post13)
@@ -610,4 +612,244 @@ Comment.create!(
   body: "日本の農家の手作業の丁寧さを素晴らしいと言ってもらえて農家として誇らしいです。勉強頑張って下さいね。",
   created_at: Time.new(2024, 10, 11),
   updated_at: Time.new(2024, 10, 11)
+)
+
+# 投稿１4：
+post14 = Post.create!(
+  user_id: farmer_users[0].id,
+  title: "枝剪定",
+  body: "雪もだいぶ解け始め、今年もりんごの枝剪定の時期がやってきました。腰が痛いですが、頑張って作業するぞ！",
+  created_at: Time.new(2025, 3, 10),
+  updated_at: Time.new(2025, 3, 10)
+)
+# タグ
+post14.tags << tag46
+post14.tags << tag2
+post14.tags << tag29
+# いいね登録
+Favorite.create!(user_id: farmer_users[1].id, post: post14)
+Favorite.create!(user_id: farmer_users[2].id, post: post14)
+Favorite.create!(user_id: farmer_users[3].id, post: post14)
+Favorite.create!(user_id: fan_users[1].id, post: post14)
+Favorite.create!(user_id: fan_users[2].id, post: post14)
+Favorite.create!(user_id: fan_users[4].id, post: post14)
+# コメントを追加
+Comment.create!(
+  post: post14,
+  user_id: farmer_users[1].id,
+  body: "枝剪定の時期ですね！うちも始めました。冬の間になまってしまった体を動かします〜笑！",
+  created_at: Time.new(2025, 3, 11),
+  updated_at: Time.new(2025, 3, 11)
+)
+
+post15 = Post.create!(
+  user_id: fan_users[0].id,
+  title: "アップルパイの絶品レシピ紹介します",
+  body: "最近アップルパイのレシピ研究してます！！今日は好評だったふじを使った美味しいレシピを紹介します。甘さ控えめでスイーツ苦手な人にもおすすめ！
+  材料：ふじりんご（２個）、砂糖（30g）、パイシート（２枚）、無塩バター（20g）、薄力粉（少々）、溶き卵（少々）
+  りんごはみじん切りにし、鍋に投入、砂糖を加えて30分程度置いたあと、10分程度煮混んでジャム状になったら火からおろします。
+  パイシートをグラタン皿に敷き、その上にりんごジャムを入れます。パイシートをさらに被せて溶き卵を表面に塗り、200度のオーブンで20分程度焼きます。
+  簡単に美味しくできるレシピです！",
+  created_at: Time.new(2025, 2, 5),
+  updated_at: Time.new(2025, 2, 5)
+)
+# タグ
+post15.tags << tag46
+post15.tags << tag2
+post15.tags << tag29
+# いいね登録
+Favorite.create!(user_id: farmer_users[1].id, post: post15)
+Favorite.create!(user_id: farmer_users[7].id, post: post15)
+Favorite.create!(user_id: fan_users[1].id, post: post15)
+Favorite.create!(user_id: fan_users[3].id, post: post15)
+Favorite.create!(user_id: fan_users[5].id, post: post15)
+# コメントを追加
+Comment.create!(
+  post: post15,
+  user_id: fan_users[1].id,
+  body: "美味しそう！自分もやってみます！レシピ探してたから嬉しい。",
+  created_at: Time.new(2025, 2, 10),
+  updated_at: Time.new(2025, 2, 10)
+)
+
+# 投稿１６
+post16 = Post.create!(
+  user_id: farmer_users[4].id,
+  title: "選果も終わりに近づきました",
+  body: "今年の選果作業もシーズンオフに近づきました。天候に恵まれ形・色づきともに例年になくいい出来です！道の駅「いたやなぎ」の直売所にも売り出していますのでみなさんたくさん食べてくださいね。",
+  created_at: Time.new(2024, 11, 5),
+  updated_at: Time.new(2024, 11, 5)
+)
+# タグ
+post16.tags << tag47
+post16.tags << tag2
+post16.tags << tag3
+post16.tags << tag8
+post16.tags << tag19
+# いいね登録
+Favorite.create!(user_id: farmer_users[0].id, post: post16)
+Favorite.create!(user_id: farmer_users[1].id, post: post16)
+Favorite.create!(user_id: farmer_users[2].id, post: post16)
+Favorite.create!(user_id: fan_users[3].id, post: post16)
+Favorite.create!(user_id: fan_users[4].id, post: post16)
+Favorite.create!(user_id: fan_users[5].id, post: post16)
+Favorite.create!(user_id: fan_users[7].id, post: post16)
+# コメントを追加
+Comment.create!(
+  post: post16,
+  user_id: fan_users[0].id,
+  body: "私のところももうそろそろ終わりです。お疲れ様でした！もう少し頑張りましょ!",
+  created_at: Time.new(2024, 11, 6),
+  updated_at: Time.new(2024, 11, 6)
+)
+
+# 投稿１７
+post17 = Post.create!(
+  user_id: farmer_users[1].id,
+  title: "実まわし頑張るぞ",
+  body: "りんごに綺麗に色がつくよう、実まわしを行なって、お日様の光がまんべんなくりんごに当たるように作業しています。もう1ヶ月もすれば収穫の時期になります。もう少し！頑張るぞー！",
+  created_at: Time.new(2024, 8, 5),
+  updated_at: Time.new(2024, 8, 5)
+)
+# タグ
+post17.tags << tag48
+post17.tags << tag7
+post17.tags << tag3
+# いいね登録
+Favorite.create!(user_id: farmer_users[0].id, post: post17)
+Favorite.create!(user_id: farmer_users[2].id, post: post17)
+Favorite.create!(user_id: farmer_users[4].id, post: post17)
+Favorite.create!(user_id: fan_users[3].id, post: post17)
+Favorite.create!(user_id: fan_users[5].id, post: post17)
+Favorite.create!(user_id: fan_users[7].id, post: post17)
+# コメントを追加
+Comment.create!(
+  post: post17,
+  user_id: fan_users[0].id,
+  body: "実まわしの時期ですね！",
+  created_at: Time.new(2024, 8, 6),
+  updated_at: Time.new(2024, 8, 6)
+)
+
+# 投稿１８
+post18 = Post.create!(
+  user_id: farmer_users[1].id,
+  title: "タルトタタン作りに挑戦！",
+  body: "アオモリンゴラボのイベントで、タルトタタン作りに挑戦しました！！キャラメリゼ難しいけどできたら美味しかった〜家でも再挑戦したいな。",
+  created_at: Time.new(2025, 1, 15),
+  updated_at: Time.new(2025, 1, 15)
+)
+# タグ
+post18.tags << tag42
+post18.tags << tag37
+post18.tags << tag9
+post18.tags << tag18
+# いいね登録
+Favorite.create!(user_id: farmer_users[0].id, post: post18)
+Favorite.create!(user_id: farmer_users[2].id, post: post18)
+Favorite.create!(user_id: farmer_users[4].id, post: post18)
+Favorite.create!(user_id: fan_users[1].id, post: post18)
+Favorite.create!(user_id: fan_users[3].id, post: post18)
+Favorite.create!(user_id: fan_users[5].id, post: post18)
+Favorite.create!(user_id: fan_users[7].id, post: post18)
+# コメントを追加
+Comment.create!(
+  post: post18,
+  user_id: fan_users[7].id,
+  body: "楽しかったですね〜",
+  created_at: Time.new(2025, 1, 16),
+  updated_at: Time.new(2025, 1, 16)
+)
+
+# 投稿１９
+post19 = Post.create!(
+  user_id: farmer_users[4].id,
+  title: "袋かけが始まりました！",
+  body: "袋かけをやっています。例年親戚に手伝いに来てもらっているのですが、今年は予定が合わず袋かけを手伝ってくれる人が足りていません。
+  アオモリンゴラボ愛好ユーザーの皆様、どなたかお手伝いしてくれませんか。詳しくはコメント欄にてご連絡ください！よろしくお願いします。",
+  created_at: Time.new(2024, 7, 15),
+  updated_at: Time.new(2024, 7, 15)
+)
+# タグ
+post19.tags << tag49
+post19.tags << tag50
+post19.tags << tag22
+# いいね登録
+Favorite.create!(user_id: farmer_users[0].id, post: post19)
+Favorite.create!(user_id: farmer_users[1].id, post: post19)
+Favorite.create!(user_id: farmer_users[2].id, post: post19)
+Favorite.create!(user_id: fan_users[5].id, post: post19)
+Favorite.create!(user_id: fan_users[7].id, post: post19)
+Favorite.create!(user_id: fan_users[3].id, post: post19)
+Favorite.create!(user_id: fan_users[6].id, post: post19)
+# コメントを追加
+Comment.create!(
+  post: post19,
+  user_id: fan_users[5].id,
+  body: "来週なら行けるかもしれません！お電話します。",
+  created_at: Time.new(2025, 1, 16),
+  updated_at: Time.new(2025, 1, 16)
+)
+Comment.create!(
+  post: post19,
+  user_id: fan_users[5].id,
+  body: "7月20日〜23日なら空いてます〜！",
+  created_at: Time.new(2025, 1, 16),
+  updated_at: Time.new(2025, 1, 16)
+)
+
+# 投稿２０
+post20 = Post.create!(
+  user_id: farmer_users[8].id,
+  title: "今年収穫したてのりんごシードル",
+  body: "毎年恒例、山の上農園さんとのコラボ企画で、シードルの試飲会を開催いたします。山の上農園さんはシードル工場を自ら開設し、お酒の開発・販売を行っています！
+  日時は2024年12月5日を予定。詳細は追って発表します。先着順数量限定での試飲会となりますが、みなさんのご参加をお待ちしています！",
+  created_at: Time.new(2024, 11, 15),
+  updated_at: Time.new(2024, 11, 15)
+)
+# タグ
+post20.tags << tag38
+post20.tags << tag42
+post20.tags << tag43
+# いいね登録
+Favorite.create!(user_id: farmer_users[0].id, post: post20)
+Favorite.create!(user_id: farmer_users[1].id, post: post20)
+Favorite.create!(user_id: farmer_users[2].id, post: post20)
+Favorite.create!(user_id: fan_users[5].id, post: post20)
+Favorite.create!(user_id: fan_users[7].id, post: post20)
+Favorite.create!(user_id: fan_users[3].id, post: post20)
+Favorite.create!(user_id: fan_users[6].id, post: post20)
+# コメントを追加
+Comment.create!(
+  post: post20,
+  user_id: fan_users[0].id,
+  body: "残念。遠征してでもいいから参加したかった〜。東京に出荷されるのを楽しみに待っています。東京でもやってほしい。",
+  created_at: Time.new(2024, 11, 16),
+  updated_at: Time.new(2024, 11, 16)
+)
+
+# 投稿２１
+post21 = Post.create!(
+  user_id: farmer_users[1].id,
+  title: "急募！草刈り手伝い",
+  body: "いつもはおじいちゃんが草刈りをやってくれてるのですが、先日急に腰を痛めてしまって草刈りしてくれる人が不足しています。どなたか草刈りをお手伝いいただけないでしょうか。",
+  created_at: Time.new(2024, 8, 15),
+  updated_at: Time.new(2024, 8, 15)
+)
+# タグ
+post21.tags << tag24
+post21.tags << tag50
+post21.tags << tag51
+# いいね登録
+Favorite.create!(user_id: farmer_users[0].id, post: post21)
+Favorite.create!(user_id: farmer_users[1].id, post: post21)
+Favorite.create!(user_id: fan_users[4].id, post: post21)
+Favorite.create!(user_id: fan_users[5].id, post: post21)
+# コメントを追加
+Comment.create!(
+  post: post21,
+  user_id: farmer_users[0].id,
+  body: "来週でよければ手伝いに行きましょうか。草刈機あります。",
+  created_at: Time.new(2024, 8, 16),
+  updated_at: Time.new(2024, 8, 16)
 )
