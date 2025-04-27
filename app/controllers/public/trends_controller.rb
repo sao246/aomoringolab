@@ -44,34 +44,26 @@ class Public::TrendsController < ApplicationController
     selected_year = @selected_month.to_s[0..3]
     selected_month = @selected_month.to_s[4..5].rjust(2, '0')  # ゼロ埋めして2桁にする
 
-    # 月ごとのタグランキングを取得（Ruby側で日付を処理）
+    # 月ごとのタグランキングを取得（SQL側で日付を処理しない）
     start_date = Date.new(selected_year.to_i, selected_month.to_i, 1)
     end_date = start_date.end_of_month
 
-    # データベースに応じて異なるSQLを生成
-    if ActiveRecord::Base.connection.adapter_name == 'SQLite'
-      # SQLite用: strftimeを使って年月形式に
-      date_format = "strftime('%Y-%m', posts.created_at) AS formatted_date"
-    else
-      # MySQL用: DATE_FORMATを使って年月形式に
-      date_format = "DATE_FORMAT(posts.created_at, '%Y-%m') AS formatted_date"
-    end
-
+    # SQLiteでもMySQLでも同じ方法で取得（SQL内で年月抽出をしない）
     top_tags = Tag.joins(:posts)
-                  .select("tags.name, #{date_format}")
+                  .select("tags.name, posts.created_at")
                   .where(posts: { created_at: start_date..end_date })
                   .group("tags.id")
                   .order("COUNT(posts.id) DESC")
                   .limit(10)
-                  .pluck("tags.name, COUNT(posts.id) as count, formatted_date")
+                  .pluck("tags.name, posts.created_at")
 
-    # グラフ用データを整形
+    # Rails側で年月を分解
     @chart_data = {
-      labels: top_tags.map(&:first),
+      labels: top_tags.map { |tag| "#{tag[1].year}年#{tag[1].month}月" },
       datasets: [{
         label: "#{selected_year}年#{selected_month.to_i}月のタグ別投稿数(上位10件のみ)",
-        data: top_tags.map(&:second),
-        backgroundColor: top_tags.map { |tag| generate_fixed_color(tag.first) }
+        data: top_tags.map { |tag| top_tags.count { |t| t[0] == tag[0] } },
+        backgroundColor: top_tags.map { |tag| generate_fixed_color(tag[0]) }
       }]
     }
   end
