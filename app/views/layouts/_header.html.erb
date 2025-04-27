@@ -53,11 +53,6 @@
           <%# adminログイン時の設定 %>
           <% elsif admin_signed_in? %>
             <li class="nav-item">
-              <%= link_to admin_homes_top_path, class: 'nav-link text-light' do %>
-                <i class="fa-solid fa-apple-whole" style="color:red;"></i>トップ
-              <% end %>
-            </li>
-            <li class="nav-item">
               <%= link_to admin_posts_path, class: 'nav-link text-light' do %>
                 <i class="fa-regular fa-newspaper"></i> 投稿一覧
               <% end %>
