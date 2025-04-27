@@ -10,18 +10,21 @@
 
 <%# グラフ描画のスクリプト %>
 <script>
+  // @chart_data からデータを受け取る
   const chartData = <%= raw @chart_data.to_json %>;
+
+  // グラフの描画処理
   const ctx = document.getElementById('trendChart').getContext('2d');
   new Chart(ctx, {
-    type: 'pie',
-    data: chartData,
+    type: 'pie', // 円グラフを描画
+    data: chartData, // コントローラから受け取ったデータを使用
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         title: {
           display: true,
-          text: chartData.datasets[0].label
+          text: chartData.datasets[0].label // タイトルにデータセットのラベルを表示
         },
         legend: {
           position: 'right',
@@ -40,12 +43,12 @@
             size: 8
           },
           formatter: function (value, context) {
-            return context.chart.data.labels[context.dataIndex];
+            return context.chart.data.labels[context.dataIndex]; // ラベルを表示
           }
         }
       }
     },
-    plugins: [ChartDataLabels]
+    plugins: [ChartDataLabels] // DataLabels プラグインを使用
   });
 </script>
 
