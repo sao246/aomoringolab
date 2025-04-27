@@ -1,14 +1,16 @@
-<%# Chart.js本体 %>
+<%# Chart.js本体を読み込む（まずはこれをやる。）%>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<%# Chart.js の DataLabels プラグイン %>
+<%# Chart.js の DataLabels プラグインを読み込む。（まずはこれをやる。）%>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
-<%# タグ累積ランキング円グラフ %>
+<%# タグ付けキーワードの累積ランキング円グラフ：trendChartという名前で領域を作ってグラフを描画する。 %>
 <div class="w-full overflow-x-auto mb-4">
   <canvas id="trendChart" class="max-w-full h-auto"></canvas>
 </div>
 
 <%# グラフ描画のスクリプト %>
+<%# chart.jsでグラフを書くには、JSONという形式に変換し、JavaScript(Chart.jsを稼働させる)に渡してあげる必要あり。 %>
+<%# ここにグラフの情報本体が集結する。またここから先がjavascriptのスクリプトになる。 %>
 <script>
   // @chart_data からデータを受け取る
   const chartData = <%= raw @chart_data.to_json %>;
@@ -16,10 +18,10 @@
   // グラフの描画処理
   const ctx = document.getElementById('trendChart').getContext('2d');
   new Chart(ctx, {
-    type: 'pie', // 円グラフを描画
-    data: chartData, // コントローラから受け取ったデータを使用
+    type: 'pie', // 円グラフの指定をする。
+    data: chartData, // コントローラから受け取ったデータを使用すると明記
     options: {
-      responsive: true,
+      responsive: true, // レスポンシブ対応したいので、ここでtrueにしておく。
       maintainAspectRatio: false,
       plugins: {
         title: {
@@ -27,12 +29,12 @@
           text: chartData.datasets[0].label // タイトルにデータセットのラベルを表示
         },
         legend: {
-          position: 'right',
+          position: 'right',  // 汎用の出す位置を指定。今回は右サイドに出したいのでright指定。
           labels: {
-            color: '#333',
+            color: '#333', // ラベルの色指定
             font: {
               size: 15,
-              weight: 'bold'
+              weight: 'bold' //フォントはボールド設定
             }
           }
         },
@@ -48,7 +50,7 @@
         }
       }
     },
-    plugins: [ChartDataLabels] // DataLabels プラグインを使用
+    plugins: [ChartDataLabels] // DataLabels プラグインを使用。（円グラフの数字などを出すために必要）
   });
 </script>
 
@@ -58,11 +60,12 @@
     <strong>青森のりんご作りを知ろう</strong>
   </h4>
   <p>青森のりんご農家さんの1年の作業をまとめています。作業名をタグ付けしている農家さんもいるので、どのような作業をいつ行なっているのか一緒に勉強してりんごマスターになりましょう！気になる作業は検索で投稿チェック！</p>
-
+  <%# ここから２個目のガントチャートグラフの表示のための領域を以下のCanvasで指定する %>
   <div class="w-full overflow-x-auto mb-4">
     <canvas id="ganttChart" class="w-full" style="height: 400px;"></canvas>
   </div>
 
+  <%# ここからガントチャートのJavascript。turbolinks:loadで、Javascriptの初期処理が呼ばれない（画面にグラフ表示されない現象）が起きないように処置。%>
   <script>
     document.addEventListener("turbolinks:load", function() {
       const ctx = document.getElementById('ganttChart').getContext('2d');
@@ -74,14 +77,14 @@
         ],
         datasets: [
           {
-            label: '作業開始！',
+            label: '作業開始',
             data: [3, 4, 5, 5, 6, 7, 8, 8, 8, 8, 8, 8, 2],
             backgroundColor: 'rgba(0,0,0,0)' // 透明バーで位置調整
           },
           {
-            label: '作業期間',
+            label: '作業終了',
             data: [2, 4, 1, 4, 2, 1, 1, 2, 2, 2, 3, 6, 2],
-            backgroundColor: 'rgba(75,192,192,0.8)' // 実際のバー
+            backgroundColor: 'rgba(75,192,192,0.8)' // 実際のバーの色指定
           }
         ]
       };
@@ -115,7 +118,6 @@
           }
         }
       };
-
       new Chart(ctx, config); // グラフを描画
     });
   </script>

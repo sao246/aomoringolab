@@ -1,12 +1,14 @@
+<%# 見出しだけ固定にしたいので、sticky-top使う。%>
 <div class="sticky-top" style="background-image: url(<%= asset_path('aomoringolab_profile.jpg') %>); background-size: cover; background-position: center; z-index: 1040; top: 80px; width: 100%; height: 86px;">
   <div class="text-center py-3">
     <h1><i class="fa-solid fa-arrow-trend-up" style="color: #04b6f1;"></i>トレンド<i class="fa-solid fa-arrow-trend-up" style="color: #04b6f1;"></i></h1>
   </div>
 </div>
 
-<%#% 月ごとの全体タグランキング（グラフ） %>
+<%#% 月ごとの全体タグランキング（円グラフ） %>
 <div class="container mx-auto p-4">
   <h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>アオモリンゴラボのトレンド</strong></h4>
+  <%# 円グラフ/ガントチャートのテンプレ呼び出し %>
   <%= render partial: 'monthly_tag_ranking' %>
 </div>
 
@@ -22,6 +24,7 @@
           <%# いいね数のアイコン表示処理 %>
           <p class="text-sm text-gray-600">いいね数:
             <% like_count = post.favorites.count %>
+            <%# いいねが10件以上ならりんご×何個という表示で省略する。%>
             <% if like_count >= 10 %>
               <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= "×#{like_count}" %>
             <% else %>
