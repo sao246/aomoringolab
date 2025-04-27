@@ -1,5 +1,4 @@
 class Public::TrendsController < ApplicationController
-  # コントローラ追加 2025/04/07
   def show
     @user = current_user
 
@@ -9,7 +8,8 @@ class Public::TrendsController < ApplicationController
                         .group('tags.id')
                         .order('COUNT(tags.id) DESC')
 
-    liked_top_tags = liked_top_tags.limit(3)
+    # Ruby側で上位3つを取得
+    liked_top_tags = liked_top_tags.take(3)
 
     # 上位タグが含まれる他の人の投稿を取得（自分の投稿は除外）
     @recommended_posts = Post.joins(:tags)
@@ -17,32 +17,35 @@ class Public::TrendsController < ApplicationController
                               .where.not(user_id: @user.id)
                               .distinct
 
-    @recommended_posts = @recommended_posts.limit(3)
+    # Ruby側で上位3つを取得
+    @recommended_posts = @recommended_posts.take(3)
 
     # あなたの人気投稿用（いいねが多い順に並べる）
     @popular_posts = current_user.posts
                                   .left_joins(:favorites)
                                   .group('posts.id')
                                   .order('COUNT(favorites.id) DESC')
-                                  .limit(3)
 
-    @popular_posts = @popular_posts.limit(3)
+    # Ruby側で上位3つを取得
+    @popular_posts = @popular_posts.take(3)
 
     # 自分がいいねしている投稿でタグ使用回数の多い順に並べる
     @liked_tags = Tag.joins(posts: :favorites)
                      .where(favorites: { user_id: @user.id })
                      .group('tags.id')
                      .order('COUNT(tags.id) DESC')
-                     .limit(3)
 
-    @liked_tags = @liked_tags.limit(3)
+    # Ruby側で上位3つを取得
+    @liked_tags = @liked_tags.take(3)
     
     # アオモリンゴラボ全体のタグ付けランキング用円グラフ（上位10件）
     overall_top_tags = Tag.joins(:posts)
                           .group('tags.id')
                           .order('COUNT(posts.id) DESC')
-    # ここでTOP10に絞り込む
-    overall_top_tags = overall_top_tags.limit(10).pluck('tags.name', 'COUNT(posts.id) as count')
+                          .pluck('tags.name', 'COUNT(posts.id) as count')
+
+    # Ruby側で上位10件を取得
+    overall_top_tags = overall_top_tags.first(10)
 
     # グラフ用データを整形
     @chart_data = {
