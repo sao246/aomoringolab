@@ -6,19 +6,30 @@ class Public::FavoritesController < ApplicationController
     before_action :set_post
 
     def create
-      # いいね処理の対象となっている投稿現在のログインユーザーを関連づけていいねレコードを増やす。
-      @post.favorites.create(user_id: current_user.id)
+      # ゲストユーザーの処理を制御
+      if current_user.guest_user?
+        flash[:notice] = "ゲストユーザーでの「いいね」処理は保存されません。"
+      else
+        # いいね処理の対象となっている投稿現在のログインユーザーを関連づけていいねレコードを増やす。
+        @post.favorites.create(user_id: current_user.id)
+        flash[:notice] = 'いいねしました！'
+      end
       # 失敗した場合は元の画面（リファラー）に戻る
       redirect_back fallback_location: root_path
     end
 
     def destroy
-      # いいね処理の対象となっている投稿にユーザーがいいねしているか確認し情報を取ってくる。
-      favorite = @post.favorites.find_by(user_id: current_user.id)
-      # ユーザーが投稿にいいねをしている場合は、いいねを解除する
-      favorite.destroy if favorite
-      # 失敗した場合は元の画面（リファラー）にに戻る
-      redirect_back fallback_location: root_path
+      # ゲストユーザーの処理を制御
+      if current_user.guest_user?
+        flash[:notice] = "ゲストユーザーでの「いいね」処理は保存されません。"
+      else
+        # いいね処理の対象となっている投稿にユーザーがいいねしているか確認し情報を取ってくる。
+        favorite = @post.favorites.find_by(user_id: current_user.id)
+        # ユーザーが投稿にいいねをしている場合は、いいねを解除する
+        favorite.destroy if favorite
+        # 失敗した場合は元の画面（リファラー）にに戻る
+        redirect_back fallback_location: root_path
+      end
     end
 
     private
