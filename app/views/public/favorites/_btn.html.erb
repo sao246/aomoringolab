@@ -1,14 +1,16 @@
 <%# いいね（りんご）ボタンの実装 2025/04/20 %>
 <%# favoriteモデルのメソッド呼び出しで、ログインユーザーが投稿にいいねをしているかを確認する。 %>
-<% if post.favorited_by?(current_user) %>
-<% favorite = post.favorites.find_by(user_id: current_user.id) %>
-<%# いいね解除のロジック  %>
-  <%= link_to post_favorite_path(post, favorite), method: :delete, style: "color: red;" do %>
-      <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= post.favorites.count %>
+<div id="favorite-button-<%= post.id %>">
+  <% if post.favorited_by?(current_user) %>
+  <% favorite = post.favorites.find_by(user_id: current_user.id) %>
+  <%# いいね解除のロジック  %>
+    <%= link_to post_favorite_path(post, favorite), method: :delete, style: "color: red;", remote: true do %>
+        <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= post.favorites.count %>
+    <% end %>
+  <% else %>
+  <%# いいねロジック  %>
+    <%= link_to post_favorites_path(post), method: :post, style: "color: red;", remote: true do %>
+        <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= post.favorites.count %>
+    <% end %>
   <% end %>
-<% else %>
-<%# いいねロジック  %>
-  <%= link_to post_favorites_path(post), method: :post, style: "color: red;" do %>
-      <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= post.favorites.count %>
-  <% end %>
-<% end %>
+</div>

@@ -20,3 +20,8 @@ ActiveStorage.start()
 
 // Chart.jsをインポート trendビューに表描画をするために設定。2025/04/23
 import Chart from 'chart.js/auto';
+
+// 非同期処理のために追加。
+//= require jquery
+//= require rails-ujs
+//= require_tree .

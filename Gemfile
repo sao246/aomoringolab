@@ -70,3 +70,5 @@ gem "net-smtp"
 gem "net-pop"
 # IMAPプロトコル（メール受信・操作）
 gem "net-imap"
+
+gem 'jquery-rails'
