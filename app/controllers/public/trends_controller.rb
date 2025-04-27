@@ -11,7 +11,7 @@ class Public::TrendsController < ApplicationController
     # Ruby側で上位3つを取得
     liked_top_tags = liked_top_tags.take(3)
 
-    # 上位タグが含まれる他の人の投稿を取得（自分の投稿は除外）
+    # 上位タグが含まれる他の人の投稿を取得（自分の投稿は除外。おすすめの投稿表示用）
     @recommended_posts = Post.joins(:tags)
                               .where(tags: { id: liked_top_tags })
                               .where.not(user_id: @user.id)
