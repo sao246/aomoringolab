@@ -45,6 +45,10 @@ class User < ApplicationRecord
     end
   end
 
+  def guest_user?
+    self.email == 'guest@example.com'
+  end
+  
   # 検索ボックス追加用のメソッド 2025/04/14
   # 部分一致検索だけ、名前かemail検索ができるように変更。2025/04/19
   def self.search_for(content, method)

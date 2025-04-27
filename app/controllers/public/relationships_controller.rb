@@ -4,34 +4,45 @@ class Public::RelationshipsController < ApplicationController
   def create
     # フォロー対象のユーザーを検索（ユーザーIDで）
     user = User.find(params[:user_id])
-    # 今ログインしているユーザー（フォロー処理をしようとしているユーザー）が
-    # フォロー（userモデルのfollowメソッド）を呼び出す。
-    current_user.follow(user)
-    # 元のページへ戻る
-    redirect_to request.referer
+
+    if current_user.guest_user?
+      redirect_to user_path(user), notice: "ゲストユーザーでのフォローはできません。閲覧のみ可能です。"
+    else
+      # 今ログインしているユーザー（フォロー処理をしようとしているユーザー）が
+      # フォロー（userモデルのfollowメソッド）を呼び出す。
+      current_user.follow(user)
+      # 元のページへ戻る
+      redirect_to request.referer
+    end
   end
   
   def destroy
-    # フォロー解除対象のユーザーを検索（ユーザーIDで）
-    user = User.find(params[:user_id])
-    # 今ログインしているユーザー（フォロー処理をしようとしているユーザー）が
-    # アンフォロー（userモデルのunfollowメソッド）を呼び出す。
-    current_user.unfollow(user)
-    # 元のページへ戻る
-    redirect_to request.referer
+    # フォロー対象のユーザーを検索（ユーザーIDで）
+      user = User.find(params[:user_id])
+    if current_user.guest_user?
+      redirect_to user_path(user), notice: "ゲストユーザーの他ユーザーフォロー解除はできません。フォローを行いたい場合は会員登録をお願いします。"
+    else
+      # 今ログインしているユーザー（フォロー処理をしようとしているユーザー）が
+      # アンフォロー（userモデルのunfollowメソッド）を呼び出す。
+      current_user.unfollow(user)
+      # 元のページへ戻る
+      redirect_to request.referer
+    end
   end
   
   def followings
     # 現在見ているユーザーが誰かを特定
     @user = User.find(params[:id])
     # 特定したユーザーがフォローしている人のデータを一式取得
-    @users = @user.followings
+    @owner = User.find(params[:id]) # ← 追加
+    @users = @owner.followings
   end
 
   def followers
     # 現在見ているユーザーが誰かを特定
     @user = User.find(params[:id])
     # 特定したユーザーをフォローしている人（フォロワー）のデータを一式取得
-    @users = @user.followers
+    @owner = User.find(params[:id])
+    @users = @owner.followers
   end
 end
