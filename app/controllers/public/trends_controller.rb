@@ -1,34 +1,34 @@
 class Public::TrendsController < ApplicationController
-  #コントローラ追加 2025/04/07
+  # コントローラ追加 2025/04/07
   def show
     # ログインユーザーがいいねした投稿添付のタグ上位を取得
     @user = current_user
     top_tags = Tag.joins(posts: :favorites)
-    .where(favorites: { user_id: current_user.id })
-    .group('tags.id')
-    .order('COUNT(tags.id) DESC')
-    .limit(3)
+                  .where(favorites: { user_id: current_user.id })
+                  .group('tags.id')
+                  .order('COUNT(tags.id) DESC')
+                  .limit(3)
 
     # 上位タグが含まれる他の人の投稿を取得
     @recommended_posts = Post.joins(:tags)
-    .where(tags: { id: top_tags })
-    .where.not(user_id: @user.id)
-    .distinct
-    .limit(3)
+                             .where(tags: { id: top_tags })
+                             .where.not(user_id: @user.id)
+                             .distinct
+                             .limit(3)
 
     # あなたの人気投稿用（いいねが多い順に並べる）
     @popular_posts = current_user.posts
-      .left_joins(:favorites)
-      .group('posts.id')
-      .order('COUNT(favorites.id) DESC')
-      .limit(3)
+                                 .left_joins(:favorites)
+                                 .group('posts.id')
+                                 .order('COUNT(favorites.id) DESC')
+                                 .limit(3)
 
     # 自分がいいねしている投稿でタグ使用回数の多い順に並べる
     @liked_tags = Tag.joins(posts: :favorites)
-      .where(favorites: { user_id: current_user.id })
-      .group('tags.id')
-      .order('COUNT(tags.id) DESC')
-      .limit(3)
+                     .where(favorites: { user_id: current_user.id })
+                     .group('tags.id')
+                     .order('COUNT(tags.id) DESC')
+                     .limit(3)
 
     # アオモリンゴラボ全体のタグ付けランキング用円グラフ
     # 直近12ヶ月分の年月（表示用とvalue用）を作成
@@ -42,7 +42,7 @@ class Public::TrendsController < ApplicationController
 
     # 年と月に分解
     selected_year = @selected_month.to_s[0..3]
-    selected_month = @selected_month.to_s[4..5]
+    selected_month = @selected_month.to_s[4..5].rjust(2, '0')  # ゼロ埋めして2桁にする
 
     # 月ごとのタグランキングを取得
     if Rails.env.production?
