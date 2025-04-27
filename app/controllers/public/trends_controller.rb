@@ -48,13 +48,22 @@ class Public::TrendsController < ApplicationController
     start_date = Date.new(selected_year.to_i, selected_month.to_i, 1)
     end_date = start_date.end_of_month
 
+    # データベースに応じて異なるSQLを生成
+    if ActiveRecord::Base.connection.adapter_name == 'SQLite'
+      # SQLite用: strftimeを使って年月形式に
+      date_format = "strftime('%Y-%m', posts.created_at) AS formatted_date"
+    else
+      # MySQL用: DATE_FORMATを使って年月形式に
+      date_format = "DATE_FORMAT(posts.created_at, '%Y-%m') AS formatted_date"
+    end
+
     top_tags = Tag.joins(:posts)
-                  .select("tags.name, posts.created_at")
+                  .select("tags.name, #{date_format}")
                   .where(posts: { created_at: start_date..end_date })
                   .group("tags.id")
                   .order("COUNT(posts.id) DESC")
                   .limit(10)
-                  .pluck("tags.name, COUNT(posts.id) as count")
+                  .pluck("tags.name, COUNT(posts.id) as count, formatted_date")
 
     # グラフ用データを整形
     @chart_data = {
