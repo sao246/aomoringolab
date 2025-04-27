@@ -34,7 +34,7 @@ class Public::RelationshipsController < ApplicationController
     # 現在見ているユーザーが誰かを特定
     @user = User.find(params[:id])
     # 特定したユーザーがフォローしている人のデータを一式取得
-    @owner = User.find(params[:id]) # ← 追加
+    @owner = User.find(params[:id])
     @users = @owner.followings
   end
 
