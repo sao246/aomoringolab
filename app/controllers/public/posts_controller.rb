@@ -46,6 +46,10 @@ class Public::PostsController < ApplicationController
 
   def edit
     #set_postメソッドを用意しているので個別の変数設定は不要。
+    if current_user.guest_user?
+      redirect_to post_path(@post), notice: "ゲストユーザーでの投稿編集はできません。閲覧のみ可能です。"
+    else
+    end
   end
 
   def update
@@ -63,8 +67,12 @@ class Public::PostsController < ApplicationController
 
   def destroy
     #set_postメソッドを用意しているので個別の変数設定は不要。
-    @post.destroy
-    redirect_to posts_path, notice: '投稿を削除しました。'
+    if current_user.guest_user?
+      redirect_to post_path(@post), notice: "ゲストユーザーでの投稿編集はできません。閲覧のみ可能です。"
+    else
+      @post.destroy
+      redirect_to posts_path, notice: '投稿を削除しました。'
+    end
   end
 
   private

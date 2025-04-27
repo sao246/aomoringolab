@@ -25,11 +25,11 @@
             <div class="user" style="margin-bottom: 10px; text-align: left;">
               <p><strong>アカウント名: </strong><%= current_user.name %></p>
               <p><strong>自己紹介： </strong><br><%= current_user.introduction %></p>
-              <p><strong>興味関心：</strong><br>自分が好きなタグを後ほどここに設定できるようにする。</p>
               <p>
               <strong><%= link_to "フォロー数: #{current_user.followings.count}", followings_user_path(current_user) %></strong>
               <i class="fa-solid fa-apple-whole" style="color: #ff7f7f;"></i>
-              <strong><%= link_to "フォロワー数: #{current_user.followers.count}", followers_user_path(current_user) %></strong></p>
+              <strong><%= link_to "フォロワー数: #{current_user.followers.count}", followers_user_path(current_user) %></strong>
+              </p>
             </div>
             <div class='row'>
             <%# マイページはログインユーザーしか表示されない。ただし、ゲストユーザーは編集されると困るのでcurrent_userがゲストユーザーではない場合に限り、ユーザー編集ボタンを表示。%>
@@ -37,9 +37,9 @@
                 <%= link_to edit_user_path(current_user), class: "btn btn-outline-secondary btn-block" do %>
                   <i class="fas fa-user-cog">会員情報編集</i>
                 <% end %>
-                <%= link_to feed_path, class: "btn btn-outline-secondary btn-block" do %>
-                  <i class="fa-solid fa-square-rss"></i> フィードを見る
-                <% end %>
+              <% end %>
+              <%= link_to feed_path, class: "btn btn-outline-secondary btn-block" do %>
+                <i class="fa-solid fa-square-rss"></i> フィードを見る
               <% end %>
             </div>
           </div>

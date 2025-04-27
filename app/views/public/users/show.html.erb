@@ -26,7 +26,6 @@
             <div class="user" style="margin-bottom: 10px; text-aligned">
               <p><strong>アカウント名:  </strong><%= @user.name %></p>
               <p><strong>自己紹介：</strong><br> <%= @user.introduction %></p>
-              <p><strong>興味関心：</strong><br>自分が好きなタグを後ほどここに設定できるようにする。</p>
               <p><strong><%= link_to "フォロー数: #{@user.followings.count}", followings_user_path(@user) %></strong>
               <i class="fa-solid fa-apple-whole" style="color: #ff7f7f;"></i>
               <strong><%= link_to "フォロワー数: #{@user.followers.count}", followers_user_path(@user) %></strong></p>

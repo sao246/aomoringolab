@@ -83,6 +83,118 @@ farmer_users = User.where("email LIKE ?", "farmer%").order(:id)
 # 愛好家のアカウントをDB登録順に変数格納。（[]配列要素番号は0から）
 fan_users = User.where("email LIKE ?", "fan%").order(:id)
 
+# ゲストユーザーを作成
+guest_user = User.guest
+# ゲストユーザーが他ユーザーをフォローする
+guest_user.follow(farmer_users[0])
+guest_user.follow(farmer_users[1])
+guest_user.follow(farmer_users[2])
+guest_user.follow(farmer_users[3])
+guest_user.follow(farmer_users[4])
+guest_user.follow(fan_users[0])
+guest_user.follow(fan_users[1])
+guest_user.follow(fan_users[2])
+guest_user.follow(fan_users[3])
+guest_user.follow(fan_users[4])
+guest_user.follow(fan_users[5])
+
+# ゲストユーザー以外の相互フォローデータ作成
+farmer_users[0].follow(farmer_users[1])
+farmer_users[0].follow(farmer_users[4])
+farmer_users[0].follow(fan_users[0])
+farmer_users[0].follow(fan_users[1])
+farmer_users[0].follow(fan_users[4])
+farmer_users[1].follow(farmer_users[0])
+farmer_users[1].follow(farmer_users[2])
+farmer_users[1].follow(farmer_users[4])
+farmer_users[1].follow(fan_users[2])
+farmer_users[1].follow(fan_users[5])
+farmer_users[2].follow(farmer_users[1])
+farmer_users[2].follow(farmer_users[3])
+farmer_users[2].follow(farmer_users[4])
+farmer_users[2].follow(farmer_users[5])
+farmer_users[2].follow(farmer_users[6])
+farmer_users[2].follow(fan_users[2])
+farmer_users[2].follow(fan_users[3])
+farmer_users[2].follow(fan_users[4])
+farmer_users[2].follow(fan_users[5])
+farmer_users[3].follow(farmer_users[2])
+farmer_users[3].follow(farmer_users[5])
+farmer_users[3].follow(farmer_users[6])
+farmer_users[3].follow(farmer_users[7])
+farmer_users[3].follow(fan_users[0])
+farmer_users[3].follow(fan_users[3])
+farmer_users[4].follow(farmer_users[0])
+farmer_users[4].follow(farmer_users[1])
+farmer_users[4].follow(farmer_users[2])
+farmer_users[4].follow(farmer_users[3])
+farmer_users[4].follow(fan_users[5])
+farmer_users[4].follow(fan_users[7])
+farmer_users[5].follow(farmer_users[2])
+farmer_users[5].follow(farmer_users[3])
+farmer_users[5].follow(farmer_users[6])
+farmer_users[6].follow(farmer_users[0])
+farmer_users[6].follow(farmer_users[1])
+farmer_users[6].follow(farmer_users[2])
+farmer_users[6].follow(farmer_users[3])
+farmer_users[6].follow(farmer_users[4])
+farmer_users[7].follow(farmer_users[2])
+farmer_users[7].follow(farmer_users[3])
+farmer_users[7].follow(fan_users[0])
+farmer_users[7].follow(fan_users[1])
+farmer_users[8].follow(farmer_users[0])
+farmer_users[8].follow(farmer_users[1])
+farmer_users[8].follow(farmer_users[2])
+farmer_users[8].follow(farmer_users[3])
+farmer_users[8].follow(farmer_users[4])
+farmer_users[8].follow(farmer_users[5])
+farmer_users[8].follow(farmer_users[6])
+farmer_users[8].follow(farmer_users[7])
+farmer_users[8].follow(fan_users[5])
+farmer_users[8].follow(fan_users[6])
+
+fan_users[0].follow(farmer_users[0])
+fan_users[0].follow(farmer_users[2])
+fan_users[0].follow(farmer_users[3])
+fan_users[0].follow(fan_users[1])
+fan_users[0].follow(fan_users[2])
+fan_users[1].follow(farmer_users[1])
+fan_users[1].follow(farmer_users[4])
+fan_users[1].follow(fan_users[0])
+fan_users[1].follow(fan_users[4])
+fan_users[2].follow(farmer_users[2])
+fan_users[2].follow(farmer_users[3])
+fan_users[2].follow(fan_users[3])
+fan_users[2].follow(fan_users[4])
+fan_users[3].follow(farmer_users[2])
+fan_users[3].follow(farmer_users[3])
+fan_users[3].follow(farmer_users[6])
+fan_users[3].follow(fan_users[0])
+fan_users[3].follow(fan_users[1])
+fan_users[3].follow(fan_users[2])
+fan_users[3].follow(fan_users[4])
+fan_users[4].follow(farmer_users[0])
+fan_users[4].follow(farmer_users[1])
+fan_users[4].follow(farmer_users[2])
+fan_users[4].follow(farmer_users[3])
+fan_users[4].follow(farmer_users[6])
+fan_users[4].follow(farmer_users[7])
+fan_users[4].follow(fan_users[1])
+fan_users[4].follow(fan_users[3])
+fan_users[5].follow(farmer_users[0])
+fan_users[5].follow(farmer_users[1])
+fan_users[5].follow(farmer_users[2])
+fan_users[5].follow(farmer_users[3])
+fan_users[5].follow(fan_users[0])
+fan_users[5].follow(fan_users[7])
+fan_users[6].follow(farmer_users[5])
+fan_users[6].follow(farmer_users[6])
+fan_users[6].follow(farmer_users[7])
+fan_users[6].follow(farmer_users[8])
+fan_users[7].follow(farmer_users[2])
+fan_users[7].follow(farmer_users[3])
+fan_users[7].follow(fan_users[4])
+fan_users[7].follow(fan_users[5])
 # タグ作成
 tag1 = Tag.find_or_create_by(name: "りんご")
 tag2 = Tag.find_or_create_by(name: "りんご農家")
@@ -154,6 +266,8 @@ post1.tags << tag30
 Favorite.create!(user_id: farmer_users[1].id, post: post1)
 Favorite.create!(user_id: fan_users[0].id, post: post1)
 Favorite.create!(user_id: fan_users[4].id, post: post1)
+Favorite.create!(user_id: guest_user.id, post: post1)
+
 # 画像添付
 image_path = Rails.root.join("app", "assets", "images", "tekika.jpg")
 if File.exist?(image_path)
@@ -327,13 +441,9 @@ post6 = Post.create!(
   user_id: farmer_users[3].id,
   title: "マメコバチの受粉",
   body: "こんにちは、山の上農園です。
-りんごの花が満開のこの季節、僕らの畑では“マメコバチ”たちが大活躍中です。
-ミツバチに比べて体は小さいけれど、働きぶりはすごいんです。
-マメコバチは花の近くを地道にコツコツまわって、確実に受粉してくれます。
-特に寒い日や曇りの日でも動いてくれるのがありがたい。
-最近はミツバチの数が減ってきていることもあり、こういう在来種の存在がますます大事になってきてます。
-ちなみに、マメコバチは刺さないので人にも優しい！
-受粉の手助けをしてくれる小さなヒーローたちに感謝しながら、今日もりんごの花を見守ってます。",
+りんごの花が満開ですね。毎年恒例、私たちの畑でもマメコバチたちが大活躍しています。
+マメコバチは花の近くをまわってくれて受粉をします。ちなみに、マメコバチは刺さないので人にも優しいからご安心を。
+小さいけど心強い、お助けヒーローに感謝しながら今日もりんごの花を見守ります。",
   created_at: Time.new(2024, 5, 1),
   updated_at: Time.new(2024, 5, 1)
 )
@@ -353,6 +463,7 @@ post6.tags << tag30
 Favorite.create!(user_id: farmer_users[1].id, post: post6)
 Favorite.create!(user_id: fan_users[3].id, post: post6)
 Favorite.create!(user_id: fan_users[4].id, post: post6)
+Favorite.create!(user_id: guest_user.id, post: post6)
 # コメントを追加
 Comment.create!(
   post: post6,
@@ -452,6 +563,7 @@ Favorite.create!(user_id: fan_users[1].id, post: post9)
 Favorite.create!(user_id: fan_users[3].id, post: post9)
 Favorite.create!(user_id: fan_users[5].id, post: post9)
 Favorite.create!(user_id: fan_users[7].id, post: post9)
+Favorite.create!(user_id: guest_user.id, post: post9)
 # コメントを追加
 Comment.create!(
   post: post9,
@@ -496,6 +608,7 @@ Favorite.create!(user_id: fan_users[0].id, post: post10)
 Favorite.create!(user_id: fan_users[1].id, post: post10)
 Favorite.create!(user_id: fan_users[3].id, post: post10)
 Favorite.create!(user_id: fan_users[6].id, post: post10)
+Favorite.create!(user_id: guest_user.id, post: post10)
 # コメントを追加
 Comment.create!(
   post: post10,
@@ -534,6 +647,7 @@ Favorite.create!(user_id: fan_users[6].id, post: post11)
 Favorite.create!(user_id: farmer_users[3].id, post: post11)
 Favorite.create!(user_id: farmer_users[4].id, post: post11)
 Favorite.create!(user_id: farmer_users[8].id, post: post11)
+Favorite.create!(user_id: guest_user.id, post: post11)
 # コメントを追加
 Comment.create!(
   post: post11,
@@ -792,7 +906,7 @@ Comment.create!(
 )
 Comment.create!(
   post: post19,
-  user_id: fan_users[5].id,
+  user_id: fan_users[7].id,
   body: "7月20日〜23日なら空いてます〜！",
   created_at: Time.new(2025, 1, 16),
   updated_at: Time.new(2025, 1, 16)
@@ -853,3 +967,25 @@ Comment.create!(
   created_at: Time.new(2024, 8, 16),
   updated_at: Time.new(2024, 8, 16)
 )
+
+# 投稿２２：
+post22 = Post.create!(
+  user_id: guest_user.id,
+  title: "ゲストユーザーのためのデモ投稿です",
+  body: "ゲストユーザーログインの方のためのデモ投稿です。実際に新規投稿する際はまず新規会員登録を行なってください。皆さんの会員登録をお待ちしております。",
+  created_at: Time.new(2023, 12, 31),
+  updated_at: Time.new(2023, 12, 31)
+)
+image_path = Rails.root.join("app", "assets", "images", "aomoringolab_about.jpg")
+if File.exist?(image_path)
+  post22.image.attach(io: File.open(image_path), filename: "aomoringolab_about.jpg")
+  puts "Image attached to post 6"
+end
+# タグ
+post22.tags << tag1
+post22.tags << tag3
+post22.tags << tag42
+# いいね登録
+Favorite.create!(user_id: farmer_users[0].id, post: post22)
+Favorite.create!(user_id: fan_users[1].id, post: post22)
+Favorite.create!(user_id: fan_users[2].id, post: post22)
