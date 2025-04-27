@@ -39,6 +39,7 @@ class Public::UsersController < ApplicationController
   def destroy
     #devise標準（＝データベースの物理削除のケース）ならば記載不要。
     #論理削除であればここに記載が必要。
+    redirect_to about_path
   end
 
   def favorited_post

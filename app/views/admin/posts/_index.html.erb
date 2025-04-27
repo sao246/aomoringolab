@@ -1,8 +1,4 @@
 <%# 投稿一覧表示用の部分テンプレート %>
-<h4 style="text-align: center; border-bottom: 2px solid #ccc; padding-bottom: 8px; margin-bottom: 30px;">
-  <strong>投稿一覧</strong>
-</h4>
-
 <div class="post-list" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
   <% posts.each do |post| %>
     <div class="post-item" style="max-width: 90%; width: 1000px; margin: 10px auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
@@ -42,12 +38,12 @@
         </div>
 
         <%# Adminユーザーはいいね（りんご）カウント数のみ閲覧できるようにする（いいねはできない）%>
-        <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i><%= post.favorites.count %><br>
+        <i class="fa-solid fa-apple-whole" style="color: #fa0000;" aria-hidden="true"></i> <%= post.favorites.count %><br>
 
         <%# コメント件数表示、投稿詳細画面へのリンク（コメントマーク） %>
         <div class="post-comment">
           <%= link_to admin_post_path(post), style: "text-decoration: none;" do %>
-            <i class="fa-solid fa-comment text-success icon-hover" style="color: #07e921;"></i>
+            <i class="fa-solid fa-comment icon-hover" style="color: #7fbfff;"></i>
             コメント<%= post.comments.count %>件 
           <% end %>
         </div>
