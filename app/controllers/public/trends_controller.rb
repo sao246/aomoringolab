@@ -29,15 +29,17 @@ class Public::TrendsController < ApplicationController
                      .order('COUNT(tags.id) DESC')
                      .limit(3)
 
-    # アオモリンゴラボ全体のタグ付けランキング用円グラフ
-    # 直近12ヶ月分の年月（表示用とvalue用）を作成
-    @months = (0..11).map do |i|
-      date = Date.today.prev_month(i)
-      ["#{date.year}年#{date.month}月", date.strftime("%Y%m").to_i]
-    end
+# アオモリンゴラボ全体のタグ付けランキング用円グラフ
+# 直近12ヶ月分の年月（表示用とvalue用）を作成
+@months = (0..11).map do |i|
+  date = Date.today.prev_month(i)
+  # 年と月を直接取り出す
+  year_month = "#{date.year}年#{date.month}月"
+  [year_month, date.year * 100 + date.month]  # 年と月を組み合わせて数値に
+end
 
-    # 選択された年月。なければ今月（例：202504）
-    @selected_month = (params[:month] || Date.today.strftime("%Y%m")).to_i
+# 選択された年月。なければ今月（例：202504）
+@selected_month = (params[:month] || Date.today.year * 100 + Date.today.month).to_i
 
     # 年と月に分解
     selected_year = @selected_month.to_s[0..3]
