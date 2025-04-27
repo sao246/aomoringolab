@@ -3,18 +3,6 @@
 <%# Chart.js の DataLabels プラグイン %>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
-<%# 月選択フォーム %>
-<div class="flex justify-between items-center mb-4">
-  <form method="get" action="<%= request.path %>">
-    <label for="month" class="mr-2">月を選択:</label>
-    <select name="month" id="month" onchange="this.form.submit()" class="border p-1 rounded">
-      <% @months.each do |label, value| %>
-        <option value="<%= value %>" <%= "selected" if value == @selected_month %>><%= label %></option>
-      <% end %>
-    </select>
-  </form>
-</div>
-
 <%# タグ累積ランキング円グラフ %>
 <div class="w-full overflow-x-auto mb-4">
   <canvas id="trendChart" class="max-w-full h-auto"></canvas>
