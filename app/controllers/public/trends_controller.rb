@@ -41,8 +41,8 @@ class Public::TrendsController < ApplicationController
     overall_top_tags = Tag.joins(:posts)
                           .group('tags.id')
                           .order('COUNT(posts.id) DESC')
-                          .limit(10)
-                          .pluck('tags.name', 'COUNT(posts.id) as count')
+    # ここでTOP10に絞り込む
+    overall_top_tags = overall_top_tags.limit(10).pluck('tags.name', 'COUNT(posts.id) as count')
 
     # グラフ用データを整形
     @chart_data = {
