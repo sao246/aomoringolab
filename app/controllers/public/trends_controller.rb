@@ -43,27 +43,14 @@ class Public::TrendsController < ApplicationController
     selected_year = @selected_month.to_s[0..3]
     selected_month = @selected_month.to_s[4..5].rjust(2, '0')  # ゼロ埋めして2桁にする
 
-    # 月ごとのタグランキングを取得
-    if Rails.env.production?
-      # 本番環境（MySQLの場合）: 年と月を一度SELECTで取得し、その後GROUP BYで集計する
-      top_tags = Tag.joins(posts: :favorites)
-                    .select("tags.name, COUNT(posts.id) as count")
-                    .where("DATE_FORMAT(posts.created_at, '%Y') = ?", selected_year)
-                    .where("DATE_FORMAT(posts.created_at, '%m') = ?", selected_month)
-                    .group("tags.id")
-                    .order("count DESC")
-                    .limit(10)
-                    .pluck("tags.name, count")
-    else
-      # 開発環境（SQLiteの場合）
-      top_tags = Tag.joins(:posts)
-                    .where("strftime('%Y', posts.created_at) = ?", selected_year)
-                    .where("strftime('%m', posts.created_at) = ?", selected_month)
-                    .group('tags.id')
-                    .order('COUNT(posts.id) DESC')
-                    .limit(10)
-                    .pluck('tags.name', 'COUNT(posts.id) as count')
-    end
+    # 月ごとのタグランキングを取得（Ruby側で日付を処理）
+    top_tags = Tag.joins(:posts)
+                  .select("tags.name, posts.created_at")
+                  .where(posts: { created_at: Date.new(selected_year.to_i, selected_month.to_i, 1)..Date.new(selected_year.to_i, selected_month.to_i).end_of_month })
+                  .group("tags.id")
+                  .order("COUNT(posts.id) DESC")
+                  .limit(10)
+                  .pluck("tags.name, COUNT(posts.id) as count")
 
     # グラフ用データを整形
     @chart_data = {
