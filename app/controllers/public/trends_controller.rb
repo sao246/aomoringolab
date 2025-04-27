@@ -29,26 +29,28 @@ class Public::TrendsController < ApplicationController
                      .order('COUNT(tags.id) DESC')
                      .limit(3)
 
-# アオモリンゴラボ全体のタグ付けランキング用円グラフ
-# 直近12ヶ月分の年月（表示用とvalue用）を作成
-@months = (0..11).map do |i|
-  date = Date.today.prev_month(i)
-  # 年と月を直接取り出す
-  year_month = "#{date.year}年#{date.month}月"
-  [year_month, date.year * 100 + date.month]  # 年と月を組み合わせて数値に
-end
+    # アオモリンゴラボ全体のタグ付けランキング用円グラフ
+    # 直近12ヶ月分の年月（表示用とvalue用）を作成
+    @months = (0..11).map do |i|
+      date = Date.today.prev_month(i)
+      year_month = "#{date.year}年#{date.month}月"
+      [year_month, date.year * 100 + date.month]  # 年と月を組み合わせて数値に
+    end
 
-# 選択された年月。なければ今月（例：202504）
-@selected_month = (params[:month] || Date.today.year * 100 + Date.today.month).to_i
+    # 選択された年月。なければ今月（例：202504）
+    @selected_month = (params[:month] || Date.today.year * 100 + Date.today.month).to_i
 
     # 年と月に分解
     selected_year = @selected_month.to_s[0..3]
     selected_month = @selected_month.to_s[4..5].rjust(2, '0')  # ゼロ埋めして2桁にする
 
     # 月ごとのタグランキングを取得（Ruby側で日付を処理）
+    start_date = Date.new(selected_year.to_i, selected_month.to_i, 1)
+    end_date = start_date.end_of_month
+
     top_tags = Tag.joins(:posts)
                   .select("tags.name, posts.created_at")
-                  .where(posts: { created_at: Date.new(selected_year.to_i, selected_month.to_i, 1)..Date.new(selected_year.to_i, selected_month.to_i).end_of_month })
+                  .where(posts: { created_at: start_date..end_date })
                   .group("tags.id")
                   .order("COUNT(posts.id) DESC")
                   .limit(10)
