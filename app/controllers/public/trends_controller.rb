@@ -45,13 +45,25 @@ class Public::TrendsController < ApplicationController
     selected_month = @selected_month.to_s[4..5]
 
     # 月ごとのタグランキングを取得
-    top_tags = Tag.joins(:posts)
-                  .where("strftime('%Y', posts.created_at) = ?", selected_year)
-                  .where("strftime('%m', posts.created_at) = ?", selected_month)
-                  .group('tags.id')
-                  .order('COUNT(posts.id) DESC')
-                  .limit(10)
-                  .pluck('tags.name', 'COUNT(posts.id) as count')
+    if Rails.env.production?
+      # 本番環境（MySQLの場合）
+      top_tags = Tag.joins(:posts)
+                    .where("DATE_FORMAT(posts.created_at, '%Y') = ?", selected_year)
+                    .where("DATE_FORMAT(posts.created_at, '%m') = ?", selected_month)
+                    .group('tags.id')
+                    .order('COUNT(posts.id) DESC')
+                    .limit(10)
+                    .pluck('tags.name', 'COUNT(posts.id) as count')
+    else
+      # 開発環境（SQLiteの場合）
+      top_tags = Tag.joins(:posts)
+                    .where("strftime('%Y', posts.created_at) = ?", selected_year)
+                    .where("strftime('%m', posts.created_at) = ?", selected_month)
+                    .group('tags.id')
+                    .order('COUNT(posts.id) DESC')
+                    .limit(10)
+                    .pluck('tags.name', 'COUNT(posts.id) as count')
+    end
 
     # グラフ用データを整形
     @chart_data = {
