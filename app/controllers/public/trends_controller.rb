@@ -1,5 +1,4 @@
 class Public::TrendsController < ApplicationController
-  # コントローラ追加 2025/04/07
   def show
     # ログインユーザーがいいねした投稿添付のタグ上位を取得
     @user = current_user
@@ -46,14 +45,15 @@ class Public::TrendsController < ApplicationController
 
     # 月ごとのタグランキングを取得
     if Rails.env.production?
-      # 本番環境（MySQLの場合）
-      top_tags = Tag.joins(:posts)
+      # 本番環境（MySQLの場合）: 年と月を一度SELECTで取得し、その後GROUP BYで集計する
+      top_tags = Tag.joins(posts: :favorites)
+                    .select("tags.name, COUNT(posts.id) as count")
                     .where("DATE_FORMAT(posts.created_at, '%Y') = ?", selected_year)
                     .where("DATE_FORMAT(posts.created_at, '%m') = ?", selected_month)
-                    .group('tags.id')
-                    .order('COUNT(posts.id) DESC')
+                    .group("tags.id")
+                    .order("count DESC")
                     .limit(10)
-                    .pluck('tags.name', 'COUNT(posts.id) as count')
+                    .pluck("tags.name, count")
     else
       # 開発環境（SQLiteの場合）
       top_tags = Tag.joins(:posts)
