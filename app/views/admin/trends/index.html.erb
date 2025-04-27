@@ -1,63 +1,68 @@
-<h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px; text-align: center;">
-  <strong>投稿へのいいねが多いユーザーランキング</strong>
-</h4>
-<div class="container mx-auto p-4 m-4" style="max-width: 50rem;">
-  <canvas id="trendChart"></canvas>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('trendChart').getContext('2d');
-    const likesRankingChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: <%= raw @user_likes.map(&:name).to_json %>,
-        datasets: [{
-          label: 'いいね数',
-          data: <%= raw @user_likes.map(&:favorites_count).to_json %>,
-          backgroundColor: 'rgba(54, 162, 235, 0.5)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 2
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        scales: {
-          x: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  });
-</script>
-
-<h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px; text-align: center;">
-  <strong>タグ累積ランキングTOP20</strong>
-</h4>
-<div class="container mx-auto p-4 mb-4" style="max-width: 50rem;">
-  <p>累積でアオモリンゴラボの投稿にタグ付けされたキーワードの上位20位までを表示します。</p>
-  <section class="w-full px-4">
-    <div class="table-responsive">
-      <table class="table table-bordered w-full">
-        <thead>
-          <tr>
-            <th></th>
-            <th>#タグ名</th>
-            <th>タグ付けされた総投稿数（件）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @tag_ranking.each_with_index do |(tag_name, count), index| %>
-            <tr>
-              <td><%= index + 1 %>位</td>
-              <td><%= tag_name %></td>
-              <td><%= count %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+<div class='container my-4'>
+  <div class='row justify-content-center'>
+    <h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px; text-align: center;">
+      <strong>いいねが多い投稿ランキング（直近半年のデータ）</strong>
+    </h4>
+    <div class="container mx-auto p-4 m-4" style="max-width: 50rem;">
+      <canvas id="trendChart" style="height: 600px; width: 100%;"></canvas>
     </div>
-  </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        const likesRankingChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: <%= raw @post_likes.map { |post| post.title }.to_json %>,
+            datasets: [{
+              label: 'いいね数',
+              data: <%= raw @post_likes.map { |post| post.favorites_count }.to_json %>,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 2
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            scales: {
+              x: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+    </script>
+  </div>
+
+
+  <h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px; text-align: center;">
+    <strong>タグ累積ランキングTOP20</strong>
+  </h4>
+  <div class="container mx-auto p-4 mb-4" style="max-width: 50rem;">
+    <p>累積でアオモリンゴラボの投稿にタグ付けされたキーワードの上位20位までを表示します。</p>
+    <section class="w-full px-4">
+      <div class="table-responsive">
+        <table class="table table-bordered w-full">
+          <thead>
+            <tr>
+              <th></th>
+              <th>#タグ名</th>
+              <th>タグ付けされた総投稿数（件）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tag_ranking.each_with_index do |(tag_name, count), index| %>
+              <tr>
+                <td><%= index + 1 %>位</td>
+                <td><%= tag_name %></td>
+                <td><%= count %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
 </div>
