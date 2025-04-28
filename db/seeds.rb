@@ -29,21 +29,8 @@ farmers = [
 # ここでDBに登録。（画像添付も行う）
 farmers.each do |user_data|
   # ユーザー作成
-
-  random_password = SecureRandom.hex(10)
-  user = User.create!(user_data.merge(password: random_password))  
-  puts "Created #{user.name} with random password: #{random_password}"
-  
-  # プロフィール画像を添付
-  # メールアドレスの先頭部分（@の前）を取り出し
-  user_prefix = user_data[:email].split('@').first
-  image_path = Rails.root.join("app", "assets", "images", "#{user_prefix}_profile.jpg")
-  if File.exist?(image_path)
-    user.profile_image.attach(io: File.open(image_path), filename: "#{user_prefix}_profile.jpg")
-    puts "Attached profile image for #{user.name}"
-  else
-    puts "No profile image found for #{user.name}"
-  end
+  random_password = ENV['FARMER_PASSWORD']
+  user = User.create!(user_data.merge(password: random_password))
 end
 
 # 愛好家ユーザー作成
@@ -60,17 +47,8 @@ fans = [
 
 # ここでDBに登録。（画像添付も行う）
 fans.each do |user_data|
-  random_password = SecureRandom.hex(10)
-  user = User.create!(user_data.merge(password: random_password))  
-  puts "Created #{user.name} with random password: #{random_password}"
-  # メールアドレスの先頭部分（@の前）を取り出し
-  user_prefix = user_data[:email].split('@').first
-  # プロフィール画像を添付
-  image_path = Rails.root.join("app", "assets", "images", "#{user_prefix}_profile.jpg")
-  if File.exist?(image_path)
-    user.profile_image.attach(io: File.open(image_path), filename: "#{user_prefix}_profile.jpg")
-    puts "Attached profile image for #{user.name}"
-  end
+  random_password = ENV['FAN_PASSWORD']
+  user = User.create!(user_data.merge(password: random_password))
 end
 
 # 投稿・投稿コメントデータの作成
