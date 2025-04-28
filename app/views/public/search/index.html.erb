@@ -5,12 +5,20 @@
       <h5>投稿の検索 "<%= @content %>"</h5>
       <%= link_to "投稿一覧に戻る", posts_path %>
       <%= render 'public/posts/index', posts: @records %>
+    <% elsif @model == 'user' %>
+      <h5>会員の検索 "<%= @content %>"</h5>
+      <%= link_to "マイページに戻る", mypage_path %>
+      <%= render 'public/users/index', users: @records %>
     <% end %>
   <% elsif @content.present? %>
     <% if @model == 'post' %>
       <h5>投稿の検索 "<%= @content %>"</h5>
       <p>該当する結果が見つかりませんでした。</p>
       <%= link_to "投稿一覧に戻る", posts_path %>
+    <% elsif @model == 'user' %>
+      <h5>会員の検索 "<%= @content %>"</h5>
+      <p>該当する結果が見つかりませんでした。</p>
+      <%= link_to "マイページに戻る", mypage_path %>
     <% end %>
   <% end %>
 </div>

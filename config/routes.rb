@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       registrations: 'public/registrations',
       sessions: 'public/sessions',
     }
+    # ゲストユーザーログイン設定
     devise_scope :user do
       post '/guest_sign_in', to: 'sessions#guest_sign_in'
     end
@@ -15,7 +16,6 @@ Rails.application.routes.draw do
       member do
         # 会員の退会処理（unsubscribe）用のルーティング 2025/04/09
         get 'unsubscribe'
-        get 'favorited_post'
         # GET /users/:id/followings と GET /users/:id/followers というパスを作る。
         # 特定のユーザーのフォロー・フォロワー一覧の表示が必要なためmember doに含めてルーティングを行う。
         get 'followings' => 'relationships#followings', as: 'followings'

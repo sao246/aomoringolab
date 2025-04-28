@@ -15,7 +15,7 @@ class Admin::SearchController < ApplicationController
     if @model == 'user'
     # モデルがUserなら、Userモデルにおいて部分一致でキーワード検索する。
       @records = User.search_for(@content, @method)
-    else
+    elsif @model == 'post'
     # モデルがPostなら、Postモデルにおいて部分一致でキーワード検索する。
       @records = Post.search_for(@content, @method)
     end
