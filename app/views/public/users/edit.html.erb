@@ -5,8 +5,14 @@
     <%= form_with model:@user, local:true do |f| %>
       <%# エラーメッセージ処理%>
       <%= render 'layouts/errors', resource: @user %>
+      <%# メールアドレス変更フォーム %>
       <div class="form-group">
+        <%= f.label :email, "メールアドレス" %>
+        <%= f.email_field :email, class: "form-control email" %>
+        <small class="form-text text-muted">新しいメールアドレスに変更する場合は入力してください</small>
+      </div>
       <%# アカウント名設定フォーム %>
+      <div class="form-group">
         <%= f.label :name, "アカウント名" %>
         <%= f.text_field :name, class: "form-control name" %>
       </div>
