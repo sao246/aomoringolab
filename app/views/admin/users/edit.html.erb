@@ -4,8 +4,13 @@
     <h2 class="m-4">会員情報の編集</h2>
     <%= form_with model: @user, url: admin_user_path(@user), method: :patch, local: true do |f| %>
       <%= render 'layouts/errors', resource: @user %>
+      <%# adminはアドレスの閲覧のみ %>
       <div class="form-group">
-        <%# アカウント名編集 %>
+        <%= f.label :email, "メールアドレス" %>
+        <%= f.text_field :email, value: @user.email, class: "form-control", disabled: true %>
+      </div>
+      <%# アカウント名編集 %>
+      <div class="form-group">
         <%= f.label :name, "アカウント名" %>
         <%= f.text_field :name, class: "form-control name" %>
       </div>
