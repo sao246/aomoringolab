@@ -40,6 +40,7 @@ class Public::TrendsController < ApplicationController
     
     # アオモリンゴラボ全体のタグ付けランキング用円グラフ（上位10件）
     overall_top_tags = Tag.joins(:posts)
+                          .where(posts: { created_at: 1.month.ago..Time.current })
                           .group('tags.id')
                           .order('COUNT(posts.id) DESC')
                           .pluck('tags.name', 'COUNT(posts.id) as count')
@@ -51,7 +52,7 @@ class Public::TrendsController < ApplicationController
     @chart_data = {
       labels: overall_top_tags.map(&:first),
       datasets: [{
-        label: "タグ別投稿数(上位10件)",
+        label: "タグ別投稿数(過去１ヶ月上位10件)",
         data: overall_top_tags.map(&:second),
         backgroundColor: overall_top_tags.map { |tag| generate_fixed_color(tag.first) }
       }]
