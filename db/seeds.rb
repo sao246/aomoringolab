@@ -8,9 +8,9 @@
 
 # 管理者ログインアカウント作成
 Admin.create!(
-  email: "admin@example.com",
-  password: "password123",
-  password_confirmation: "password123"
+  email: ENV['ADMIN_EMAIL'],
+  password: ENV['ADMIN_PASSWORD'],
+  password_confirmation: ENV['ADMIN_PASSWORD']
 )
 
 # 農家・企業ユーザー作成
