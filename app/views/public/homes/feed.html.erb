@@ -29,18 +29,8 @@
       <h4 style="border-bottom: 2px solid #ccc; padding-bottom: 8px;">
         <strong><i class="fa-solid fa-apple-whole" style="color: #ff000d;"></i> いいねした投稿 <i class="fa-solid fa-apple-whole" style="color: #ff000d;"></i></strong>
       </h4>
-
-      <%= form_with url: feed_path, method: :get, local: true do %>
-        <%= label_tag :year, "年" %>
-        <%= select_tag :year, options_for_select((2020..Date.today.year).to_a.reverse, params[:year]), prompt: "年を選択" %>
-        
-        <%= label_tag :month, "月" %>
-        <%= select_tag :month, options_for_select((1..12).to_a, params[:month]), prompt: "月を選択" %>
-
-        <%= submit_tag "年月でフィルター検索" %>
-      <% end %>
     </div>
-
+    <% if @liked_posts.any? %>
       <% @liked_posts.each do |post| %>
         <div class="post border p-3 rounded shadow bg-white my-2">
           <h6><strong><%= post.title %></strong></h6>
@@ -51,5 +41,8 @@
           </div>
         </div>
       <% end %>
+    <% else %>
+      <p>まだ投稿がありません。他ユーザーへのいいねをしてみましょう！</p>
+    <% end %>
   </div>
 </div>

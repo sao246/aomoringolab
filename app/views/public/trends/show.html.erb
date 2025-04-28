@@ -36,7 +36,7 @@
         </div>
       <% end %>
     <% else %>
-      <p>まだ投稿がありません</p>
+      <p>まだ投稿がありません。他ユーザーへのいいねをしてみましょう！</p>
     <% end %>
   </section>
 
@@ -50,22 +50,26 @@
         </div>
       <% end %>
     <% else %>
-      <p>まだ投稿がありません</p>
+      <p>まだ投稿がありません。他ユーザーへのいいねをしてみましょう！</p>
     <% end %>
   </section>
 
+    <%# あなたにおすすめの投稿 %>
     <section class="w-full px-4">
     <h4 class="mt-4 mb-2" style="border-bottom: 2px solid #ccc; padding-bottom: 8px;"><strong>あなたにおすすめの投稿</strong></h4>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
-      <% @recommended_posts.each do |post| %>
-        <div class="border p-3 rounded shadow bg-white my-2">
-          <p class="text-gray-800 font-bold"><%= link_to post.title, post_path(post), class: "text-blue-600 underline text-sm"  %></p>
-          <p class="text-sm text-gray-500"><p class="text-sm text-gray-500">関連タグ <i class="fa-solid fa-tag" style="color: #019367;"></i><%= link_to "##{post.tags.first.name}", tag_path(post.tags.first.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 16px;" %>他</p>
-        </div>
+      <% if @recommended_posts.any? %>
+        <% @recommended_posts.each do |post| %>
+          <div class="border p-3 rounded shadow bg-white my-2">
+            <p class="text-gray-800 font-bold"><%= link_to post.title, post_path(post), class: "text-blue-600 underline text-sm"  %></p>
+            <p class="text-sm text-gray-500"><p class="text-sm text-gray-500">関連タグ <i class="fa-solid fa-tag" style="color: #019367;"></i><%= link_to "##{post.tags.first.name}", tag_path(post.tags.first.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 16px;" %>他</p>
+          </div>
+        <% end %>
+      <% else %>
+        <p>まだ投稿がありません。他ユーザーへのいいねをしてみましょう！</p>
       <% end %>
     </div>
   </section>
 </div>
 
-  <%# あなたにおすすめの投稿 %>
 
