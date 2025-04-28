@@ -25,10 +25,10 @@
 ![ER図](./app/assets/images/ER.png)
 
 #### 画面
+![トップ画面](./app/assets/images/README_sample1.png)
+![マイページ](./app/assets/images/README_sample2.png)
+​![投稿一覧](./app/assets/images/README_sample3.png)
 
-
-
-​
 ## 開発環境
 - OS：Amazon Linux
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
@@ -37,11 +37,10 @@
 - IDE：VS Code（リモートSSH接続 / EC2）
 ​
 ## 使用素材
-#### 著作権を考慮し、サイトに掲載する企業名等のデータは架空のデータを扱う予定です。
+#### 著作権を考慮し、サイトに掲載する企業名等のデータは全て架空のデータです。
 #### なお今後、実在するデータを利用する際には、事前に著作権保持者と契約を結んだ上で利用します。
 
 #### 利用した外部サービス
-#### <u>注：修正が入る予定！現時点では、開発前に利用を想定しているサイトを以下に記載します</u>
 #### photoAC （ https://www.photo-ac.com/ ）
 #### illustAC （ https://www.ac-illust.com/ ）
 #### Fontawesome （ https://fontawesome.com/ ）
