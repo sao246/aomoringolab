@@ -15,28 +15,28 @@ Admin.create!(
 
 # 農家・企業ユーザー作成
 farmers = [
-  { name: "頑張る農家", email: "farmer1@email", introduction: "弘前市で農家をやっています。" },
-  { name: "農家はなこ", email: "farmer2@email", introduction: "黒石市で農家をやっています。" },
-  { name: "山の上農園", email: "farmer3@email", introduction: "西目屋村でりんご農園を営んでいます。（直通）電話番号：01xx-xx-xx" },
-  { name: "石川農園", email: "farmer4@email", introduction: "平川市のりんご農園です。直売所あります。お問い合わせは（直通）電話番号：01xx-xx-xx までよろしくお願いいたします。"},
-  { name: "りんご一筋", email: "farmer5@email", introduction: "板柳町の農家です。" },
-  { name: "安全りんご農園", email: "farmer6@email", introduction: "無農薬・無化学肥料の栽培に挑戦しづけます！弘前のりんご農園です。（直通）01xx-xx-xx" },
-  { name: "ナチュラルファーム", email: "farmer7@email", introduction: "自然のままに。美味しいりんごをお届けします！平川市のりんご農家です。（直通）01xx-xx-xx" },
-  { name: "スイーツ農園", email: "farmer8@email", introduction: "自然で美味しいりんごを大事に育てます。平川市のりんご農家です。（直通）01xx-xx-xx" },
-  { name: "株式会社りんごワールド", email: "farmer9@email", introduction: "日本の美味しい果物を世界に！東京都の青果輸出企業です。HPはこちら：https://xxx.com" }
+  { name: "頑張る農家", email: "farmer1@example.email", introduction: "弘前市で農家をやっています。" },
+  { name: "農家はなこ", email: "farmer2@example.email", introduction: "黒石市で農家をやっています。" },
+  { name: "山の上農園", email: "farmer3@example.email", introduction: "西目屋村でりんご農園を営んでいます。（直通）電話番号：01xx-xx-xx" },
+  { name: "石川農園", email: "farmer4@example.email", introduction: "平川市のりんご農園です。直売所あります。お問い合わせは（直通）電話番号：01xx-xx-xx までよろしくお願いいたします。"},
+  { name: "りんご一筋", email: "farmer5@example.email", introduction: "板柳町の農家です。" },
+  { name: "安全りんご農園", email: "farmer6@example.email", introduction: "無農薬・無化学肥料の栽培に挑戦しづけます！弘前のりんご農園です。（直通）01xx-xx-xx" },
+  { name: "ナチュラルファーム", email: "farmer7@example.email", introduction: "自然のままに。美味しいりんごをお届けします！平川市のりんご農家です。（直通）01xx-xx-xx" },
+  { name: "スイーツ農園", email: "farmer8@example.email", introduction: "自然で美味しいりんごを大事に育てます。平川市のりんご農家です。（直通）01xx-xx-xx" },
+  { name: "株式会社りんごワールド", email: "farmer9@example.email", introduction: "日本の美味しい果物を世界に！東京都の青果輸出企業です。HPはこちら：https://xxx.com" }
 ]
 
 # ここでDBに登録。（画像添付も行う）
 farmers.each do |user_data|
-  # メールアドレスの先頭部分（@の前）を取り出して、それに"password"を追加
-  user_prefix = user_data[:email].split('@').first
-  generated_password = "#{user_prefix}password"
-  
   # ユーザー作成
-  user = User.create!(user_data.merge(password: generated_password))  
-  puts "Created #{user.name} with password: #{generated_password}"  # 作成したユーザーとそのパスワードを表示
+
+  random_password = SecureRandom.hex(10)
+  user = User.create!(user_data.merge(password: random_password))  
+  puts "Created #{user.name} with random password: #{random_password}"
   
   # プロフィール画像を添付
+  # メールアドレスの先頭部分（@の前）を取り出し
+  user_prefix = user_data[:email].split('@').first
   image_path = Rails.root.join("app", "assets", "images", "#{user_prefix}_profile.jpg")
   if File.exist?(image_path)
     user.profile_image.attach(io: File.open(image_path), filename: "#{user_prefix}_profile.jpg")
@@ -48,26 +48,23 @@ end
 
 # 愛好家ユーザー作成
 fans = [
-  { name: "りんご大好き子", email: "fan1@email", introduction: "東京都在住ですが青森大好き！りんごスイーツに興味あり" },
-  { name: "ご当地マニア", email: "fan2@email", introduction: "青森在住歴ありりんごの品種マスターです。神奈川県在住" },
-  { name: "りんご大好きカメラマン", email: "fan3@email", introduction: "写真が趣味。千葉県住みですが青森を旅行してはりんご農家さんにお邪魔しています。" },
-  { name: "りんご親子", email: "fan4@email", introduction: "弘前市の主婦です。子供にも農体験をさせたく親子でチャレンジ中" },
-  { name: "りんごソムリエ", email: "fan5@email", introduction: "板柳在住。りんごの食べ比べが趣味です。甘味酸味などにうるさいです笑" },
-  { name: "りんご留学生", email: "fan6@email", introduction: "台湾から来ました。大学で留学しています。りんご生産に興味あり、農家のお手伝いをしています。" },
-  { name: "りんごマニア", email: "fan7@email", introduction: "台湾在住りんご大好き！" },
-  { name: "りんごマン", email: "fan8@email", introduction: "青い森大学の学生です。東京から来ました。" }
+  { name: "りんご大好き子", email: "fan1@example.email", introduction: "東京都在住ですが青森大好き！りんごスイーツに興味あり" },
+  { name: "ご当地マニア", email: "fan2@example.email", introduction: "青森在住歴ありりんごの品種マスターです。神奈川県在住" },
+  { name: "りんご大好きカメラマン", email: "fan3@example.email", introduction: "写真が趣味。千葉県住みですが青森を旅行してはりんご農家さんにお邪魔しています。" },
+  { name: "りんご親子", email: "fan4@example.email", introduction: "弘前市の主婦です。子供にも農体験をさせたく親子でチャレンジ中" },
+  { name: "りんごソムリエ", email: "fan5@example.email", introduction: "板柳在住。りんごの食べ比べが趣味です。甘味酸味などにうるさいです笑" },
+  { name: "りんご留学生", email: "fan6@example.email", introduction: "台湾から来ました。大学で留学しています。りんご生産に興味あり、農家のお手伝いをしています。" },
+  { name: "りんごマニア", email: "fan7@example.email", introduction: "台湾在住りんご大好き！" },
+  { name: "りんごマン", email: "fan8@example.email", introduction: "青い森大学の学生です。東京から来ました。" }
 ]
 
 # ここでDBに登録。（画像添付も行う）
 fans.each do |user_data|
-  # メールアドレスの先頭部分（@の前）を取り出して、それに"password"を追加
+  random_password = SecureRandom.hex(10)
+  user = User.create!(user_data.merge(password: random_password))  
+  puts "Created #{user.name} with random password: #{random_password}"
+  # メールアドレスの先頭部分（@の前）を取り出し
   user_prefix = user_data[:email].split('@').first
-  generated_password = "#{user_prefix}password"  # 例: "fan1password"
-  
-  # ユーザー作成
-  user = User.create!(user_data.merge(password: generated_password))  
-  puts "Created #{user.name} with password: #{generated_password}"  # 作成したユーザーとそのパスワードを表示
-  
   # プロフィール画像を添付
   image_path = Rails.root.join("app", "assets", "images", "#{user_prefix}_profile.jpg")
   if File.exist?(image_path)
