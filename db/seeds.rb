@@ -28,9 +28,13 @@ farmers = [
 
 # ここでDBに登録。（画像添付も行う）
 farmers.each do |user_data|
+  # メールアドレスの先頭部分（@の前）を取り出して、それに"password"を追加
+  user_prefix = user_data[:email].split('@').first
+  generated_password = "#{user_prefix}password"  # 例: "fan1password"
+  
   # ユーザー作成
-  random_password = ENV['FARMER_PASSWORD']
-  user = User.create!(user_data.merge(password: random_password))
+  user = User.create!(user_data.merge(password: generated_password))  
+  puts "Created #{user.name} with password: #{generated_password}" 
 end
 
 # 愛好家ユーザー作成
@@ -47,8 +51,13 @@ fans = [
 
 # ここでDBに登録。（画像添付も行う）
 fans.each do |user_data|
-  random_password = ENV['FAN_PASSWORD']
-  user = User.create!(user_data.merge(password: random_password))
+  # メールアドレスの先頭部分（@の前）を取り出して、それに"password"を追加
+  user_prefix = user_data[:email].split('@').first
+  generated_password = "#{user_prefix}password"  # 例: "fan1password"
+  
+  # ユーザー作成
+  user = User.create!(user_data.merge(password: generated_password))  
+  puts "Created #{user.name} with password: #{generated_password}" 
 end
 
 # 投稿・投稿コメントデータの作成
