@@ -33,7 +33,7 @@
               <%# 当画面自体がadmin権限でログインした場合のみしか閲覧できないようにコントローラ側で制御実装済み。ゲストユーザーへの制限のみ念の為かける。 %>
               <% if current_admin.email != "guest@example.com" %>
                   <%= link_to edit_admin_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
-                  <i class="fas fa-user-cog"></i>
+                  <i class="fas fa-user-cog">会員情報編集</i>
                 <% end %>
               <% end %>
             </div>
