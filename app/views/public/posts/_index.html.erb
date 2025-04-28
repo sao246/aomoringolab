@@ -1,5 +1,6 @@
 <%# 投稿一覧表示用の部分テンプレート %>
 <div class="post-list" style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+  <% if posts.any? %>
   <% posts.each do |post| %>
 
     <%# ユーザープロフィール画像と、名前の表示%>
@@ -54,5 +55,8 @@
         <h6>投稿日：<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %><br>最終更新： <%= post.updated_at.strftime("%Y年%m月%d日 %H:%M") %><h6>
       </div>
     </div>
+  <% end %>
+  <% else %>
+    <h4>まだ投稿がありません。アオモリンゴラボで楽しい投稿を始めてみましょう！</h4>
   <% end %>
 </div>

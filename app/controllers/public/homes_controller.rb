@@ -20,18 +20,15 @@ class Public::HomesController < ApplicationController
     # ログインしているユーザーがいいね(FavoriteテーブルのID)を登録しているデータを抽出する
     @liked_posts = Post.joins(:favorites)
                        .where(favorites: { user_id: @user.id })
-    
-    # 年月でフィルタリングする。先に選んだ年月で絞る。
-    if selected_year.present? && selected_month.present?
-      @liked_posts = @liked_posts.where(created_at: Time.new(selected_year, selected_month)..Time.new(selected_year, selected_month).end_of_month)
-    end
-
+                       .order(created_at: :desc)
+    # 重複排除
     @liked_posts = @liked_posts.distinct
 
     # フォローしているユーザーの投稿を取得（新着順5件以内、3ヶ月以内の期間 ※PFのため、広めに期間を取る。）
     @following_posts = Post.where(user_id: @user.followings.pluck(:id))
                             .where('created_at >= ?', 3.month.ago)
                             .order(created_at: :desc)
-                            .limit(5)
+
+    @following_posts = @following_posts.take(5)
   end
 end

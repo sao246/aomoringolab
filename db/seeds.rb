@@ -294,9 +294,9 @@ Comment.create!(
 post2 = Post.create!(
   user_id: farmer_users[1].id,
   title: "害虫対策奮闘中",
-  body: "こんにちは。先日農作業の合間にお休みを取って弘前公園へ行ってきました。弘前の桜は最高ですね。今年はカメムシが多くて葉っぱに被害が出ています。防除のタイミングが重要で、例年以上に気を使っています。写真はカメムシ、ではなく桜の綺麗な写真です笑",
-  created_at: Time.new(2025, 4, 25),
-  updated_at: Time.new(2025, 4, 25)
+  body: "こんにちは。先日農作業の合間にお休みを取って弘前公園へ行ってきました。弘前の桜は最高ですね。さて、今年も暖かくなってきてカメムシ対策のための防除を始めました。カメムシさんには悪いですが、りんごを食べられては困るのでしっかり対策をしようと思います。りんごと関係ないですが弘前公園の写真をアップします。",
+  created_at: Time.new(2024, 4, 25),
+  updated_at: Time.new(2024, 4, 25)
 )
 # タグ
 post2.tags << tag4
@@ -319,15 +319,15 @@ Comment.create!(
   post: post2,
   user_id: fan_users[3].id,
   body: "害虫対策がしっかりしているので安心です。今年も美味しいりんごを楽しみにしています!!頑張って下さい〜",
-  created_at: Time.new(2025, 4, 26),
-  updated_at: Time.new(2025, 4, 26)
+  created_at: Time.new(2024, 4, 26),
+  updated_at: Time.new(2024, 4, 26)
 )
 Comment.create!(
   post: post2,
   user_id: farmer_users[0].id,
-  body: "今年は例年に比べて多いですね。互いに頑張りましょう！！",
-  created_at: Time.new(2025, 4, 26),
-  updated_at: Time.new(2025, 4, 26)
+  body: "互いに頑張りましょう！！",
+  created_at: Time.new(2024, 4, 26),
+  updated_at: Time.new(2024, 4, 26)
 )
 
 # 投稿３：
@@ -438,7 +438,7 @@ Comment.create!(
 
 # 投稿６：
 post6 = Post.create!(
-  user_id: farmer_users[3].id,
+  user_id: farmer_users[2].id,
   title: "マメコバチの受粉",
   body: "こんにちは、山の上農園です。
 りんごの花が満開ですね。毎年恒例、私たちの畑でもマメコバチたちが大活躍しています。
@@ -461,6 +461,7 @@ post6.tags << tag20
 post6.tags << tag30
 # いいね登録
 Favorite.create!(user_id: farmer_users[1].id, post: post6)
+Favorite.create!(user_id: farmer_users[3].id, post: post6)
 Favorite.create!(user_id: fan_users[3].id, post: post6)
 Favorite.create!(user_id: fan_users[4].id, post: post6)
 Favorite.create!(user_id: guest_user.id, post: post6)
@@ -513,8 +514,8 @@ post8 = Post.create!(
   user_id: fan_users[0].id,
   title: "アップルパイは弘前で決まり！",
   body: "久々に弘前を訪れました！3軒はしごして食べ比べしてみました。ふじを使ったタイプが美味しかったです〜。",
-  created_at: Time.new(2024, 5, 15),
-  updated_at: Time.new(2024, 5, 15)
+  created_at: Time.new(2025, 2, 15),
+  updated_at: Time.new(2025, 2, 15)
 )
 # 画像添付
 image_path = Rails.root.join("app", "assets", "images", "applepie.jpg")
@@ -537,8 +538,8 @@ Comment.create!(
   post: post8,
   user_id: fan_users[4].id, # 愛好家ユーザーID
   body: "ふじのアップルパイ、美味しそう！私も行ってみます〜！",
-  created_at: Time.new(2024, 5, 16),
-  updated_at: Time.new(2024, 5, 16)
+  created_at: Time.new(2025, 2, 16),
+  updated_at: Time.new(2025, 2, 16)
 )
 
 # 投稿９：
@@ -574,7 +575,7 @@ Comment.create!(
 )
 Comment.create!(
   post: post9,
-  user_id: farmer_users[7].id,
+  user_id: fan_users[7].id,
   body: "そんなイベントがあったとは！見逃しました、残念。",
   created_at: Time.new(2024, 10, 1),
   updated_at: Time.new(2024, 10, 1)
@@ -651,7 +652,7 @@ Favorite.create!(user_id: guest_user.id, post: post11)
 # コメントを追加
 Comment.create!(
   post: post11,
-  user_id: farmer_users[4].id,
+  user_id: fan_users[4].id,
   body: "農業体験、楽しそうですね！子供たちにも農業の楽しさが伝わるはず。",
   created_at: Time.new(2024, 10, 1),
   updated_at: Time.new(2024, 10, 1)
@@ -760,17 +761,23 @@ post15 = Post.create!(
   user_id: fan_users[0].id,
   title: "アップルパイの絶品レシピ紹介します",
   body: "最近アップルパイのレシピ研究してます！！今日は好評だったふじを使った美味しいレシピを紹介します。甘さ控えめでスイーツ苦手な人にもおすすめ！
-  材料：ふじりんご（２個）、砂糖（30g）、パイシート（２枚）、無塩バター（20g）、薄力粉（少々）、溶き卵（少々）
-  りんごはみじん切りにし、鍋に投入、砂糖を加えて30分程度置いたあと、10分程度煮混んでジャム状になったら火からおろします。
-  パイシートをグラタン皿に敷き、その上にりんごジャムを入れます。パイシートをさらに被せて溶き卵を表面に塗り、200度のオーブンで20分程度焼きます。
-  簡単に美味しくできるレシピです！",
-  created_at: Time.new(2025, 2, 5),
-  updated_at: Time.new(2025, 2, 5)
+  材料>> ふじりんご（２個）、砂糖（30g）、パイシート（２枚）、無塩バター（20g）、薄力粉（少々）、溶き卵（少々）  作り方>> 1. りんごはみじん切りにし、鍋に投入、砂糖を加えて30分程度置いたあと、10分程度煮混んでジャム状になったら火からおろします。  
+  2. パイシートをグラタン皿に敷き、その上にりんごジャムを入れます。パイシートをさらに被せて溶き卵を表面に塗り、200度のオーブンで20分程度焼きます。
+  簡単に美味しくできるレシピです！パイシートがなければそのままジャムでだけでも美味しくいただけますよ〜",
+  created_at: Time.new(2024, 4, 5),
+  updated_at: Time.new(2024, 4, 5)
 )
+# 画像添付
+image_path = Rails.root.join("app", "assets", "images", "applepie.jpg")
+if File.exist?(image_path)
+  post15.image.attach(io: File.open(image_path), filename: "applepie.jpg")
+  puts "Image attached to post 15"
+end
 # タグ
-post15.tags << tag46
-post15.tags << tag2
-post15.tags << tag29
+post15.tags << tag27
+post15.tags << tag40
+post15.tags << tag45
+post15.tags << tag35
 # いいね登録
 Favorite.create!(user_id: farmer_users[1].id, post: post15)
 Favorite.create!(user_id: farmer_users[7].id, post: post15)
@@ -782,8 +789,8 @@ Comment.create!(
   post: post15,
   user_id: fan_users[1].id,
   body: "美味しそう！自分もやってみます！レシピ探してたから嬉しい。",
-  created_at: Time.new(2025, 2, 10),
-  updated_at: Time.new(2025, 2, 10)
+  created_at: Time.new(2024, 4, 10),
+  updated_at: Time.new(2024, 4, 10)
 )
 
 # 投稿１６
@@ -811,7 +818,7 @@ Favorite.create!(user_id: fan_users[7].id, post: post16)
 # コメントを追加
 Comment.create!(
   post: post16,
-  user_id: fan_users[0].id,
+  user_id: farmer_users[0].id,
   body: "私のところももうそろそろ終わりです。お疲れ様でした！もう少し頑張りましょ!",
   created_at: Time.new(2024, 11, 6),
   updated_at: Time.new(2024, 11, 6)
@@ -989,3 +996,49 @@ post22.tags << tag42
 Favorite.create!(user_id: farmer_users[0].id, post: post22)
 Favorite.create!(user_id: fan_users[1].id, post: post22)
 Favorite.create!(user_id: fan_users[2].id, post: post22)
+
+# 投稿２３：
+post23 = Post.create!(
+  user_id: farmer_users[2].id,
+  title: "毎年恒例マメコバチ隊出動！",
+  body: "こんにちは、山の上農園です。
+りんごの花が満開ですね。桜も綺麗ですが、私はりんごの白い花も好きです。さて今年もそろそろマメコバチさんたちがりんご畑に出動します。
+マメコバチはりんごの実をつけるための「受粉」をしてくれるんです。蜂と聞くとびっくりする方もいるかもしれませんが、
+この蜂さんたちは人に害を加えませんので大丈夫なんですよ。今年も頑張ってくれ〜。",
+  created_at: Time.new(2025, 4, 27),
+  updated_at: Time.new(2025, 4, 27)
+)
+image_path = Rails.root.join("app", "assets", "images", "aomoringolab_other1.jpg")
+if File.exist?(image_path)
+  post23.image.attach(io: File.open(image_path), filename: "aomoringolab_other1.jpg")
+  puts "Image attached to post 6"
+end
+# タグ
+post23.tags << tag2
+post23.tags << tag5
+post23.tags << tag7
+post23.tags << tag15
+post23.tags << tag20
+post23.tags << tag30
+# いいね登録
+Favorite.create!(user_id: farmer_users[0].id, post: post23)
+Favorite.create!(user_id: farmer_users[1].id, post: post23)
+Favorite.create!(user_id: fan_users[0].id, post: post23)
+Favorite.create!(user_id: fan_users[3].id, post: post23)
+Favorite.create!(user_id: fan_users[7].id, post: post23)
+Favorite.create!(user_id: guest_user.id, post: post23)
+# コメントを追加
+Comment.create!(
+  post: post23,
+  user_id: farmer_users[0].id,
+  body: "我らのお助け隊ですね！",
+  created_at: Time.new(2025, 4, 28),
+  updated_at: Time.new(2025, 4, 28)
+)
+Comment.create!(
+  post: post23,
+  user_id: fan_users[3].id,
+  body: "マメコバチを昨年知ってから何だか身近に感じます。子供と一緒に応援してます〜！",
+  created_at: Time.new(2025, 4, 28),
+  updated_at: Time.new(2025, 4, 28)
+)
