@@ -41,10 +41,7 @@ class Public::UsersController < ApplicationController
     #論理削除であればここに記載が必要。
     redirect_to about_path
   end
-
-  def favorited_post
-  end
-
+  
   private
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
