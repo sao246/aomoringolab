@@ -60,7 +60,23 @@ class Post < ApplicationRecord
     tags = tag_list.map { |name| Tag.find_or_create_by(name: name) }
     self.tags = tags
   end
-  
+
+  # Google NLP利用したタグ付け自動処理のメソッド
+  def generate_tags_from_text
+    # 投稿タイトル、本文の情報を取得し、文字列に並べた上で変数格納。（APIで送信する）
+    entities = GoogleNlpService.get_entities(self.title + " " + self.body)
+
+    # 変数entitiesの内容（配列）をカンマ区切りでtag_namesに格納する。（こちらはAPIから取得したタグの羅列になる。）
+    # APIで文字列の中から単語だけを抜き出しする。今回これがタグの候補ワードになり、配列に登録される。
+    if entities && entities.is_a?(Array)
+      tag_names = entities.map { |entity| entity['name'] }.join(',')
+      self.tag_names = tag_names
+    else
+      # 念の為エラー時はログ出力
+      Rails.logger.warn("タグ生成に失敗：エンティティが nil または配列ではありません")
+    end
+  end
+
   private
   def title_length_within_limit
     if title.present? && title.mb_chars.length > 20

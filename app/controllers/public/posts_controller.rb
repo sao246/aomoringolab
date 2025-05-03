@@ -34,14 +34,23 @@ class Public::PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     @post.tag_names = params[:tag_names]
-  
-    if @post.valid?
-      @post.save
-      @post.save_tags
-      redirect_to post_path(@post), notice: '投稿が完了しました'
-    else
-      render :new
+    # Google NLPで自動生成したタグを追加
+    @post.generate_tags_from_text
+
+    if @post.invalid? || @post.tag_names.blank?
+      flash[:alert] = "タグ生成に失敗しました（エンティティの取得に失敗）"
+      render :new and return
     end
+
+    @post.save!
+    # 既存のタグ保存処理
+    @post.save_tags
+    redirect_to post_path(@post), notice: '投稿しました'
+    
+    # 上段で例外発生時エラーを受け止める(rescue:eという変数に例外を格納して後続処理する。メッセージがここに入る。)
+    rescue => e
+      flash[:alert] = "投稿処理中にエラーが発生しました: #{e.message}"
+      render :new
   end
 
   def edit
@@ -55,11 +64,14 @@ class Public::PostsController < ApplicationController
   def update
     @post.assign_attributes(post_params)
     @post.tag_names = params[:tag_names]
-    
+    @post.generate_tags_from_text
+
     if @post.valid?
-      @post.save
-      @post.save_tags
-      redirect_to post_path(@post), notice: '投稿を更新しました。'
+      ActiveRecord::Base.transaction do
+        @post.save!
+        @post.save_tags
+      end
+        redirect_to post_path(@post), notice: '投稿を更新しました。'
     else
       render :edit
     end

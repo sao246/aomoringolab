@@ -36,6 +36,7 @@
                 <i class="fa-solid fa-tag" style="color: #019367;"></i>
                   <% @post.tags.each do |tag| %>
                     <%= link_to "##{tag.name}", tag_path(tag.name), class: "badge", style: "background-color: #ffff93 ; color: brown; font-size: 14px;" %>
+                  <%= tag.name %>（カテゴリ: <%= tag.category || '未分類' %>）
                   <% end %>
               </div>
             <% end %>

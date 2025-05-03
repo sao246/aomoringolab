@@ -23,5 +23,10 @@ module Aomoringolab
     # 日本時間（JST）に設定 2025/04/15
     config.time_zone = 'Tokyo' # ビュー・コントローラ表示用の時間設定
     config.active_record.default_timezone = :local # DB保存の時間設定
+
+    # lib フォルダ内のファイルを自動的に読み込む(Google API処理用に追加)
+    # API処理ロジックで追加したlibフォルダのソースはRailsの自動読み込みが効かないためにこの設定が必要。
+    # Wの設定：配列作成時に ["a", "b", "c"] の形式にするため！
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end
