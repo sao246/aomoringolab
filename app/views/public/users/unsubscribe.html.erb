@@ -26,7 +26,7 @@
   </div>
 
   <div class="d-flex justify-content-center">
-    <%= link_to "マイページに戻る", user_path(current_user), class: "btn", style: "background-color: #00bfff ; color: white;"%>
+    <%= link_to "マイページに戻る", mypage_path, class: "btn", style: "background-color: #00bfff ; color: white;"%>
     <%= button_to "それでも退会する", user_registration_path, method: :delete, data: { confirm: "OKを押すと退会処理がされます。本当によろしいですか？" }, class: "btn btn-danger" %>
   </div>
 </section>
