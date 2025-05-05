@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         get 'followings' => 'relationships#followings', as: 'followings'
         get 'followers' => 'relationships#followers', as: 'followers'
       end
-      # usersとネストしているのでパスは POST   /users/:user_id/relationships と DELETE /users/:user_id/relationshipsになる
+      # usersとネストしているのでパスは POST /users/:user_id/relationships と DELETE /users/:user_id/relationshipsになる
       resource :relationships, only: [:create, :destroy]
     end
 
@@ -29,6 +29,10 @@ Rails.application.routes.draw do
     resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
       resources :comments, only: [:create, :index, :destroy]
       resources :favorites, only: [:create, :destroy]
+      # AIタグ生成用Postモデルを/posts/newから呼び出すためのルーティングを個別に設定。2025/05/05
+      collection do
+        post :generate_tags # AIタグ生成のAPI
+      end
     end
 
     resources :search, only: [:index]
