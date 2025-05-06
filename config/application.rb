@@ -28,5 +28,8 @@ module Aomoringolab
     # API処理ロジックで追加したlibフォルダのソースはRailsの自動読み込みが効かないためにこの設定が必要。
     # Wの設定：配列作成時に ["a", "b", "c"] の形式にするため！
     config.autoload_paths += %W(#{config.root}/lib)
+
+    # 本番環境でAPI接続するためのenvファイルの設定を入れる 2025/05/06
+    Dotenv.load('.env', '.env.production')
   end
 end
