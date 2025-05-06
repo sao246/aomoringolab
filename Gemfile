@@ -58,7 +58,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 
 # MySQLを利用するためのGEM追加 2025/04/12
-gem 'dotenv-rails'
+# Google APIの本番環境利用のためにgroupsを追記 2025/05/06
+gem 'dotenv-rails', groups: [:development, :test, :production]
+
 group :production do
   gem 'mysql2'
 end
