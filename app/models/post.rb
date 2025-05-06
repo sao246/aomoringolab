@@ -31,12 +31,15 @@ class Post < ApplicationRecord
     favorites.exists?(user_id: user.id)
   end
 
+  # いいねカウント
   def likes_count
     favorites.count
   end
   
   # タグ登録処理用
+  # フォームには1つの文字列（カンマ区切り）として入力されるので、その値を一時的に保管する変数を作る。
   attr_accessor :tag_names
+  # バリデーションチェックメソッドの呼び出しで、一時的な変数の値チェックをする（以下のメソッド利用）
   validate :validate_tag_names
 
   # 登録タグのバリデーションチェック
@@ -52,28 +55,36 @@ class Post < ApplicationRecord
     end
   end
 
-  # タグの登録処理
+  # タグの登録処理（フォームに入力された全量を処理するところ）
   def save_tags
     return if tag_names.blank?
-  
     tag_list = tag_names.split(',').map(&:strip).reject(&:blank?).uniq
     tags = tag_list.map { |name| Tag.find_or_create_by(name: name) }
     self.tags = tags
   end
 
-  # Google NLP利用したタグ付け自動処理のメソッド
+  # Google NLPを呼び出し、タグ付け自動処理を行うメソッド
   def generate_tags_from_text
-    # 投稿タイトル、本文の情報を取得し、文字列に並べた上で変数格納。（APIで送信する）
-    entities = GoogleNlpService.get_entities(self.title + " " + self.body)
+    text = [self.title, self.body].compact.join(" ")
+    entities = GoogleNlpService.get_entities(text) # ここでAPI呼び出し get_entities()はコントローラ側の処理
 
     # 変数entitiesの内容（配列）をカンマ区切りでtag_namesに格納する。（こちらはAPIから取得したタグの羅列になる。）
     # APIで文字列の中から単語だけを抜き出しする。今回これがタグの候補ワードになり、配列に登録される。
-    if entities && entities.is_a?(Array)
-      tag_names = entities.map { |entity| entity['name'] }.join(',')
-      self.tag_names = tag_names
+    # UIを考慮し、最初から10件までの候補ワードのみを配列に格納するロジックにする。
+    Rails.logger.info("Google NLP返り値: #{entities.inspect}")
+    if entities.is_a?(Array) # 配列が存在しているか？
+      tag_names = entities.map { |e| e['name'] }.uniq.first(10).join(',')
+
+      if tag_names.present?
+        self.tag_names = tag_names
+        Rails.logger.info("自動生成されたタグ: #{tag_names}")
+      else
+        Rails.logger.warn("タグが空のままでした（エンティティは存在するが無効の可能性）")
+        self.tag_names = "" # ビュー側で受け取り時に、原因不明のエラーなのか判別するために空文字列をセット
+      end
     else
-      # 念の為エラー時はログ出力
       Rails.logger.warn("タグ生成に失敗：エンティティが nil または配列ではありません")
+      self.tag_names = "" # ビュー側で受け取り時に、原因不明のエラーなのか判別するために空文字列をセット
     end
   end
 

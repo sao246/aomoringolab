@@ -24,15 +24,76 @@
 
     <%# 投稿画像添付フォーム %>
     <div class="form-group m-4 text-left">
-      <p><i class="fa-solid fa-tag"></i>
-        タグ カンマ（,）でタグワードを区切ると複数のタグが設定できます！<br>（例：りんご,農家と入力すると#りんご #農家 の2件のタグが登録されます）
-      <%= text_field_tag :tag_names, nil, placeholder: "タグをカンマで区切って入力", class: "form-control" %>
+      <p>
+        <strong>
+          <i class="fa-solid fa-tag"></i>
+          タグ
+        </strong>
+        <br>カンマ（,）でタグワードを区切ると複数のタグが設定できます！<br>（例：りんご,農家と入力すると#りんご #農家 の2件のタグが登録されます）
+      <%= text_field_tag :tag_names, params[:tag_names], placeholder: "タグ入力", class: "form-control", id: "tag_names_field" %>
       </p>
     </div>
-    
+
+    <!-- AIタグ生成ボタン 2025/05/05 -->
+    <div class="form-group m-4 text-left">
+      <strong><i class="fa-solid fa-hexagon-nodes"> AIタグ自動生成 </strong></i><br>
+      <p>
+        投稿本文を元にGoogle Natural Language API（AI機能）でタグの予測入力ができます。<br>
+        AIの精度の都合上、単語の区切りが不正確な場合や、短すぎる文章ではタグ検知ができずエラーとなる場合がございます。<br>
+        あらかじめご了承ください。<br>
+        ボタンを押すと予測されたタグが自動入力されますが、フォーム上で自由に編集できますので、ぜひご活用ください！
+      </p>
+      <button type="button" class="btn btn-secondary" id="generate-tags-btn">
+        AIタグを生成
+      </button>
+    </div>
+
     <%# 投稿submit %>
     <div class="form-group m-4 text-left">
       <%= f.submit "投稿する", class: 'btn', style: "background-color: #66cdaa ; color: white;" %>
     </div>
   <% end %>
 </div>
+
+<%# new画面でsubmit前にタグをAPI経由で取得したいので、javascriptを使ってコントローラにデータを送信する。2025/05/05%>
+<script>
+  // まず、イベントリスナーを使い、上記でgenerate-tags-btnで定義したAIタグ抽出ボタンをクリックすると処理が発生するようにする。
+  document.getElementById("generate-tags-btn").addEventListener("click", function () {
+    // APIに送信する、投稿タイトル、本文をそれぞれ設定する。
+    const title = document.querySelector(".post_title").value; // formコントロールで設定したpost_titleの値(value)を取得する
+    const body  = document.querySelector(".post_body").value; // formコントロールで設定したpost_bodyの値を取得する
+
+    // 非同期通信でpostコントローラのgenerate_tagsメソッドに上記のデータ2種類を送信する。（ここもJSON形式でPOST送信）
+    // ここまでの制作では、formを使ったデータ授受を行なってきたが、今回は画面遷移せずにタグ候補ワードのみをフォームに反映させる
+    // ということを実施したいので、JSONデータ形式を使用する。
+    fetch("/posts/generate_tags", { // fetchを使うことで、非同期の通信を実現する
+      method: "POST", // HTTPメソッド指定
+      headers: { // 送信データのヘッダー部（JSONであることを明記）
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content") // CSRF攻撃対策（リクエストの正当性をサーバで担保できるように送る）
+      },
+      body: JSON.stringify({ title: title, body: body })  // titleとbodyのそれぞれのデータを結合し文字列化
+    })
+    .then(response => response.json()) // レスポンスもJSONで受け取る
+    .then(data => {
+        console.log(data); // ここでレスポンスを確認
+      if (data.tags && data.tags.length > 0) {
+        document.getElementById("tag_names_field").value = data.tags;  // 受け取ったデータをタグ入力欄に反映
+        } else if (data.tags === "") {
+        // タグが見つからない場合（文字数不足なども想定）
+        alert("タグ候補が見つかりませんでした。お手数ですが手動で入力してください");
+      } else if (data.error) {
+        // API側でエラーが発生した場合
+        alert("エラー: " + data.error);
+      } else {
+        // その他不明なケース
+        alert("タグ生成に失敗しました: 不明なエラー");
+      }
+    })
+    .catch(error => {  // ここからエラーハンドリング（エラー発生時にここで捕まえる）
+      console.error("タグ生成通信エラー:", error);
+      alert("タグ生成中にエラーが発生しました");
+    });
+  });
+</script>
+

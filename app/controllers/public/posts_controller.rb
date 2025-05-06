@@ -34,25 +34,41 @@ class Public::PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     @post.tag_names = params[:tag_names]
-    # Google NLPで自動生成したタグを追加
-    @post.generate_tags_from_text
-
-    if @post.invalid? || @post.tag_names.blank?
-      flash[:alert] = "タグ生成に失敗しました（エンティティの取得に失敗）"
+  
+    if @post.invalid? # 通常のバリデーションチェック
       render :new and return
     end
 
-    @post.save!
-    # 既存のタグ保存処理
-    @post.save_tags
-    redirect_to post_path(@post), notice: '投稿しました'
-    
-    # 上段で例外発生時エラーを受け止める(rescue:eという変数に例外を格納して後続処理する。メッセージがここに入る。)
-    rescue => e
-      flash[:alert] = "投稿処理中にエラーが発生しました: #{e.message}"
+    # AI実装に向けて記載修正 2025/05/05
+    # begin~rescue~endで想定外のエラーハンドリングをする。
+    # 単にSaveだけでなくsave_tagsという独自メソッドを入れたためエラーのケアをする
+    begin
+      @post.save!
+      @post.save_tags
+      redirect_to post_path(@post), notice: '投稿が完了しました'
+    rescue => e # save!で発生したエラーを捕まえる（想定外のエラーになった場合に500サーバーエラー画面にならないようにする）
+      flash.now[:alert] = "投稿処理中にエラーが発生しました: #{e.message}"
       render :new
+    end
   end
 
+  # AIタグ付け自動化メソッド 2025/05/05
+  def generate_tags
+    # /posts/new.htmlのフォームから送られてきたタイトルと本文を設定する。
+    title = params[:title]
+    body = params[:body]
+  
+    # 一時的なPostインスタンス変数を作って、postモデルのAIタグ生成メソッドを呼び出す
+    post = Post.new(title: title, body: body)
+    begin
+      post.generate_tags_from_text # postモデルの処理用メソッド
+      tags = post.tag_names.present? ? post.tag_names.split(',') : []
+      render json: { tags: post.tag_names }, status: :ok
+    rescue => e # 想定外エラーのハンドリング
+      render json: { error: e.message }, status: :unprocessable_entity
+    end
+  end
+  
   def edit
     #set_postメソッドを用意しているので個別の変数設定は不要。
     if current_user.guest_user?
