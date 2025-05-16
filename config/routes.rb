@@ -48,8 +48,9 @@ Rails.application.routes.draw do
 
   # Admin（管理者）用のルーティング
   # 管理者のページはコントローラもURLも明示的にadminとわかるように管理する。
-  devise_for :admins, skip: [:registrations, :passwords], controllers: {
-    sessions: 'admin/sessions'
+  devise_for :admins, skip: [:passwords], controllers: {
+    sessions: 'admin/sessions',
+    registrations: 'admin/registrations'
   }, path: 'admin'
 
   namespace :admin do
