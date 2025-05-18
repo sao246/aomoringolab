@@ -35,9 +35,13 @@ class Public::SessionsController < Devise::SessionsController
   end
   # ゲストログイン 2025/04/11 追加
   def guest_sign_in
-    user = User.guest  # これは User モデルに定義するメソッド（下に例あり）
-    sign_in user
-    redirect_to mypage_path, notice: "ゲストユーザーでログインしました。"
+    if user_signed_in?
+      redirect_to mypage_path, alert: "すでにログインしています。ゲストログインするには一度ログアウトしてください。"
+    else
+      user = User.guest  # これは User モデルに定義するメソッド（下に例あり）
+      sign_in user
+      redirect_to mypage_path, notice: "ゲストユーザーでログインしました。"
+    end
   end
 end
 
