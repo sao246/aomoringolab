@@ -3,7 +3,7 @@ class Public::PostsController < ApplicationController
   # パラメータ設定の処理追加
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   # ログインしていない人への処理制御
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :index, :edit, :update, :destroy]
   # ログインユーザーではない人の編集ができないように制御 2025/04/13
   before_action :is_matching_post_login_user, only: [:edit, :update, :destroy, :unsubscribe]
   def new
