@@ -59,4 +59,9 @@ class Admin::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  # 管理者画面で更新後の遷移先を指定。
+  def after_update_path_for(resource)
+    admin_homes_top_path
+  end
 end
