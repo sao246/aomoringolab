@@ -80,7 +80,6 @@ class Public::PostsController < ApplicationController
   def update
     @post.assign_attributes(post_params)
     @post.tag_names = params[:tag_names]
-    @post.generate_tags_from_text
 
     if @post.valid?
       ActiveRecord::Base.transaction do

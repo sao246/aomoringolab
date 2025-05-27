@@ -57,10 +57,13 @@ class Post < ApplicationRecord
 
   # タグの登録処理（フォームに入力された全量を処理するところ）
   def save_tags
-    return if tag_names.blank?
-    tag_list = tag_names.split(',').map(&:strip).reject(&:blank?).uniq
-    tags = tag_list.map { |name| Tag.find_or_create_by(name: name) }
-    self.tags = tags
+    if tag_names.blank?
+      self.tags = []  # 空ならタグを全解除
+    else
+      tag_list = tag_names.split(',').map(&:strip).reject(&:blank?).uniq
+      tags = tag_list.map { |name| Tag.find_or_create_by(name: name) }
+      self.tags = tags
+    end
   end
 
   # Google NLPを呼び出し、タグ付け自動処理を行うメソッド
